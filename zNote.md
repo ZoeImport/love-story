@@ -9544,7 +9544,16 @@ git branch -d <name> # 删除分支
 > ./test
 > ```
 >
-> 
+
+## make
+
+***make：利用makefile对多个c++文件进行编译，链接，生成目标可执行文件***
+
+## Cmake
+
+***跨平台自动生成makefile,不需要手动编写makefile***
+
+
 
 ## C++11
 
