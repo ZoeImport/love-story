@@ -27,7 +27,7 @@ bool isEmpty(Node* list){
 
 void insertNode(Node*list,int data){
     if(isEmpty(list)){
-        Node* newNode=new Node*;
+        Node* newNode=new Node;
         newNode->data=data;
         list->head=newNode;
     }
@@ -41,8 +41,8 @@ int main(){
     no1.data=20;
     std::cout<<no1.data<<std::endl;
     Node *list;
-    insertNode(*list,no1.data);
-    std::cout<<list->head.data<<std::endl;
+    insertNode(list,no1.data);
+    std::cout<<list->head->data<<std::endl;
 return 0;
 }
 ```
