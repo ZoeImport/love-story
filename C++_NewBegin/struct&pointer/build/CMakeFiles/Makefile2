@@ -54,10 +54,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer"
+CMAKE_SOURCE_DIR = "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build"
+CMAKE_BINARY_DIR = "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build"
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/structAndPointer.dir/clean
 CMakeFiles/structAndPointer.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/structAndPointer.dir/build.make CMakeFiles/structAndPointer.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/structAndPointer.dir/build.make CMakeFiles/structAndPointer.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build/CMakeFiles" --progress-num=1,2,3 "Built target structAndPointer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir="/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build/CMakeFiles" --progress-num=1,2,3 "Built target structAndPointer"
 .PHONY : CMakeFiles/structAndPointer.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/structAndPointer.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build/CMakeFiles" 3
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build/CMakeFiles" 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/structAndPointer.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build/CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build/CMakeFiles" 0
 .PHONY : CMakeFiles/structAndPointer.dir/rule
 
 # Convenience name for target.

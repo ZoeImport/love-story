@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/main.cpp" "CMakeFiles/structAndPointer.dir/main.cpp.o" "gcc" "CMakeFiles/structAndPointer.dir/main.cpp.o.d"
-  "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/struct&pointerViod.cpp" "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o" "gcc" "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o.d"
+  "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/main.cpp" "CMakeFiles/structAndPointer.dir/main.cpp.o" "gcc" "CMakeFiles/structAndPointer.dir/main.cpp.o.d"
+  "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/struct&pointerViod.cpp" "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o" "gcc" "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

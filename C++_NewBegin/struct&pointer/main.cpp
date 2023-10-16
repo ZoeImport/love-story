@@ -65,7 +65,26 @@ int main(){
   //结构体的嵌套
   //假设现存teacher student结构体，对于其中类型的可以进行结构体的嵌套即一位老师可以包含一个或多个学生对象，此处只举单个的例子
   Teacher tech1={"Miss Li",{"Lucy","Ch"}};
-  cout<<"teacher name:"<<tech1.name<<"  tearcher's student's name and whose class is :"<<tech1.stu.name<<"|"<<tech1.stu.lesson<<endl;
+  cout<<"teacher name:"<<tech1.name<<"  teacher's student's name and whose class is :"<<tech1.stu.name<<"|"<<tech1.stu.lesson<<endl;
+  
+  /*
+    new关键字
+    new关键字用于在堆开辟内存，需要使用delete关键字进行内存的释放
+  */
+  int *ptr4=new int(66);
+  cout<<*ptr4<<endl;
+  delete(ptr4);
+  int *intArr=new int[5];
+  for(int i=0;i<5;i++){
+    intArr[i]=i;
+  }
+  for(int i=0;i<5;i++){
+    cout<<intArr[i]<<endl;
+  }
+  delete[]intArr;
+  for(int i=0;i<5;i++){
+    cout<<intArr[i]<<endl;
+  }
   
   
 }

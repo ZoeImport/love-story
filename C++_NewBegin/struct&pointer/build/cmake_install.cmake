@@ -1,4 +1,4 @@
-# Install script for directory: /home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer
+# Install script for directory: /home/zoe/Learning/Notes/C++_NewBegin/struct&pointer
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

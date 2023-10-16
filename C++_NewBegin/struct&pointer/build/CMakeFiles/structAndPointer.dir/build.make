@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer"
+CMAKE_SOURCE_DIR = "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build"
+CMAKE_BINARY_DIR = "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build"
 
 # Include any dependencies generated for this target.
 include CMakeFiles/structAndPointer.dir/depend.make
@@ -70,32 +70,32 @@ include CMakeFiles/structAndPointer.dir/progress.make
 include CMakeFiles/structAndPointer.dir/flags.make
 
 CMakeFiles/structAndPointer.dir/main.cpp.o: CMakeFiles/structAndPointer.dir/flags.make
-CMakeFiles/structAndPointer.dir/main.cpp.o: /home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/main.cpp
+CMakeFiles/structAndPointer.dir/main.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/main.cpp
 CMakeFiles/structAndPointer.dir/main.cpp.o: CMakeFiles/structAndPointer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/structAndPointer.dir/main.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/structAndPointer.dir/main.cpp.o -MF CMakeFiles/structAndPointer.dir/main.cpp.o.d -o CMakeFiles/structAndPointer.dir/main.cpp.o -c "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/main.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/structAndPointer.dir/main.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/structAndPointer.dir/main.cpp.o -MF CMakeFiles/structAndPointer.dir/main.cpp.o.d -o CMakeFiles/structAndPointer.dir/main.cpp.o -c "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/main.cpp"
 
 CMakeFiles/structAndPointer.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/structAndPointer.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/main.cpp" > CMakeFiles/structAndPointer.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/main.cpp" > CMakeFiles/structAndPointer.dir/main.cpp.i
 
 CMakeFiles/structAndPointer.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/structAndPointer.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/main.cpp" -o CMakeFiles/structAndPointer.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/main.cpp" -o CMakeFiles/structAndPointer.dir/main.cpp.s
 
 CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o: CMakeFiles/structAndPointer.dir/flags.make
-CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o: /home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/struct&pointerViod.cpp
+CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/struct&pointerViod.cpp
 CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o: CMakeFiles/structAndPointer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o" -MF "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o.d" -o "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o" -c "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/struct&pointerViod.cpp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o" -MF "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o.d" -o "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o" -c "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/struct&pointerViod.cpp"
 
 CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/struct&pointerViod.cpp" > "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/struct&pointerViod.cpp" > "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.i"
 
 CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/struct&pointerViod.cpp" -o "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/struct&pointerViod.cpp" -o "CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.s"
 
 # Object files for target structAndPointer
 structAndPointer_OBJECTS = \
@@ -109,7 +109,7 @@ structAndPointer: CMakeFiles/structAndPointer.dir/main.cpp.o
 structAndPointer: CMakeFiles/structAndPointer.dir/struct&pointerViod.cpp.o
 structAndPointer: CMakeFiles/structAndPointer.dir/build.make
 structAndPointer: CMakeFiles/structAndPointer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable structAndPointer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable structAndPointer"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/structAndPointer.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -121,6 +121,6 @@ CMakeFiles/structAndPointer.dir/clean:
 .PHONY : CMakeFiles/structAndPointer.dir/clean
 
 CMakeFiles/structAndPointer.dir/depend:
-	cd "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer" "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer" "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build" "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build" "/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build/CMakeFiles/structAndPointer.dir/DependInfo.cmake" "--color=$(COLOR)"
+	cd "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build" && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer" "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer" "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build" "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build" "/home/zoe/Learning/Notes/C++_NewBegin/struct&pointer/build/CMakeFiles/structAndPointer.dir/DependInfo.cmake" "--color=$(COLOR)"
 .PHONY : CMakeFiles/structAndPointer.dir/depend
 
