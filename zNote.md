@@ -9586,6 +9586,15 @@ git branch -d <name> # 删除分支
 
 ***make：利用makefile对多个c++文件进行编译，链接，生成目标可执行文件***
 
+> ```shell
+> #编译
+> make
+> #清除生成的中间文件和可执行文件
+> make clean
+> ```
+>
+> 
+
 ## Cmake
 
 ***跨平台自动生成makefile,不需要手动编写makefile***

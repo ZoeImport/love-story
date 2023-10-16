@@ -1,0 +1,71 @@
+#include<iostream>
+#include<string>
+#include"struct.h"
+#include"struct&pointerViod.h"
+using namespace std;
+
+int main(){
+  //结构体声明以及初始化
+  Person p1={"tom",18,'M'};
+  cout<<"name:"<<p1.name<<":age:"<<p1.age<<":gender"<<p1.gender<<endl;
+  //创建结构体数组
+  Person stu[3]={
+    {"aaa",1,'M'},
+    {"bbb",2,'M'},
+    {"ccc",3,'W'}
+  };
+  for(int i=0;i<3;i++){
+    cout<<"name:"<<stu[i].name<<"|age:"<<stu[i].age<<"|gender:"<<stu[i].gender<<endl;
+  }
+  //对于结构体对象的属性读写需要通过.操作符进行，即以上使用的stu[i].age以及p1.name等
+  //但是对于结构体指针的属性读写则不同具体在指针后进行叙述
+  cout<<"=============================================================================="<<endl;
+  //pointer
+  //指针的创建（int 类型为例）
+  int num_1=10;
+  int num_2=20;
+  int *ptr1=&num_1;
+  cout<<"p1:"<<ptr1<<endl;
+  cout<<"sizeof(ptr1):"<<sizeof(ptr1)<<endl;
+  cout<<"*p1:"<<*ptr1<<endl;
+  /*
+  输出结果：
+  p1:0x7ffcf1f417fc
+  sizeof(ptr1):8
+  *p1:10
+  */
+  /*
+    所以对于指针一个关键性的概念就是，指针是用于存放地址的变量
+    两个重要的操作符：& *
+    &：取址符
+    *：解引用
+  */
+
+  //对于结构体指针属性的读写需要的操作符为->，例如下方的
+  Person p2={"Jack",18,'M'};
+  Person *ptr3=&p2;
+  cout<<"name:"<<ptr3->name<<":age:"<<ptr3->age<<":gender"<<ptr3->gender<<endl;
+
+  cout<<"====================================================================="<<endl;
+
+  //值传递与地址传递
+  //利用头文件中的swap_byme函数进行测试
+  //地址传递
+  int num_3=33;
+  int num_4=44;
+  swap_byme(&num_3,&num_4);
+  cout<<"num_3:"<<num_3<<"|num_4:"<<num_4<<endl;
+  //使用const关键字以确保地址传递在节省空间的同时不会修改原数据（需要时）
+  showInfo(&p2);
+  //值传递
+  int num_5=numSum(num_3,num_4);
+  cout<<"num_5:"<<num_5<<endl;
+
+  cout<<"======================================================================"<<endl;
+  //结构体的嵌套
+  //假设现存teacher student结构体，对于其中类型的可以进行结构体的嵌套即一位老师可以包含一个或多个学生对象，此处只举单个的例子
+  Teacher tech1={"Miss Li",{"Lucy","Ch"}};
+  cout<<"teacher name:"<<tech1.name<<"  tearcher's student's name and whose class is :"<<tech1.stu.name<<"|"<<tech1.stu.lesson<<endl;
+  
+  
+}

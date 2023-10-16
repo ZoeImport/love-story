@@ -1,0 +1,3 @@
+/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build/CMakeFiles/structAndPointer.dir
+/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build/CMakeFiles/edit_cache.dir
+/home/zoe/Learning/learningInCollege/C++_home/C++_NewBegin/struct&pointer/build/CMakeFiles/rebuild_cache.dir
