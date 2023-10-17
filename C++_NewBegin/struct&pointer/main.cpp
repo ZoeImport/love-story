@@ -57,13 +57,7 @@ int main(){
   cout<<"num_3:"<<num_3<<"|num_4:"<<num_4<<endl;
   //使用const关键字以确保地址传递在节省空间的同时不会修改原数据（需要时）
   showInfo(&p2);
-  //值传递
-  int num_5=numSum(num_3,num_4);
-  cout<<"num_5:"<<num_5<<endl;
-
-  cout<<"======================================================================"<<endl;
-  //结构体的嵌套
-  //假设现存teacher student结构体，对于其中类型的可以进行结构体的嵌套即一位老师可以包含一个或多个学生对象，此处只举单个的例子
+  //值传递cout<<"ref2:"<<ref2<<endl;可以进行结构体的嵌套即一位老师可以包含一个或多个学生对象，此处只举单个的例子
   Teacher tech1={"Miss Li",{"Lucy","Ch"}};
   cout<<"teacher name:"<<tech1.name<<"  teacher's student's name and whose class is :"<<tech1.stu.name<<"|"<<tech1.stu.lesson<<endl;
   
@@ -85,6 +79,42 @@ int main(){
   for(int i=0;i<5;i++){
     cout<<intArr[i]<<endl;
   }
+
+  cout<<"====================================================="<<endl;
+  //引用
+  /*
+    引用的特性：
+    1.引用一旦创建绑定不可以修改（指针常量）
+    2.引用创建必须初始化
+  */
+  int num_6=66;
+  int &ref1=num_6;
+  cout<<"ref1:"<<ref1<<endl;
+  /*
+    引用在作为函数进行地址传递时，不需要像指针一样对参数进行取址符，而是直接进行参数通过引用传递
+    函数不应该局部变量的引用
+    函数的调用可以作为左值
+  */
+  // int &ref2=showRef1();
+  // cout<<"ref2:"<<ref2<<endl;//第一行可以输出局部变量的值
+  // cout<<"ref2:"<<ref2<<endl;//第二行因为变量内存的释放无正确值
+  //此时如果对局部变量加上static关键字就可以使其在整个程序的结束才释放，保持其数据持久
+  //函数的调用作为左值就代表修改了函数内部静态局部变量的值
+  int &ref3=showRef2();
+  cout<<"ref3:"<<ref3<<endl;
+  cout<<"ref3:"<<ref3<<endl;
+  showRef2()=22222;//此处对函数的左值进行赋值相当于对局部静态变量赋值
+  cout<<"ref3:"<<ref3<<endl;
+  cout<<"ref3:"<<ref3<<endl;
+
+  //引用的本质
+  //引用的本质是指针常量，即*const ，其指向是不可以更改的，并且一旦声明必须要进行初始化不可为null
+  
+  //常量引用const &
+  
+  
+
+
   
   
 }

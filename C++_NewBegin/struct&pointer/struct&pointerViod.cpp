@@ -29,3 +29,14 @@ int numSum(int num_1,int num_2){
   return num_1+num_2;
 }
 
+/*
+  无参数传入，同时函数返回值为局部变量的引用类型
+*/
+int &showRef1(){
+  int a=10;
+  return a;
+}
+int & showRef2(){
+  static int a=10;
+  return
+}

@@ -5,4 +5,6 @@
 void swap_byme(int *num_1,int *num_2);
 void showInfo(const Person *p);
 int numSum(int num_1,int num_2);
+int & showRef1();
+int & showRef2();
 #endif
