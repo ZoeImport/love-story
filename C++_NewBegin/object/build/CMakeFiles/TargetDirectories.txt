@@ -1,0 +1,3 @@
+/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles/object.dir
+/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles/edit_cache.dir
+/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles/rebuild_cache.dir
