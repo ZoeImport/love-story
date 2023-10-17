@@ -38,5 +38,34 @@ int &showRef1(){
 }
 int & showRef2(){
   static int a=10;
-  return
+  return a;
 }
+
+void constRef(const int& num){
+  cout<<"num:"<<num<<endl;
+}
+
+//函数的默认参数
+void defaultVoid(int num){
+  cout<<"num:"<<num<<endl;
+}
+
+
+//函数的重载，其中函数的参数个数不同，种类不同
+
+void overLoadVoid(){
+  cout<<"this void is original"<<endl;
+}
+
+void overLoadVoid(int num){
+  cout<<"this void is overload "<<endl;
+}
+
+void overloadFunc(int &num){
+  cout<<"this void has not const"<<endl;
+}
+void overloadFunc(const int &num){
+  cout<<"this void has const"<<endl;
+}
+
+
