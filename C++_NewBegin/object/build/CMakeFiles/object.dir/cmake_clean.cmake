@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/object.dir/Point.cpp.o"
+  "CMakeFiles/object.dir/Point.cpp.o.d"
   "CMakeFiles/object.dir/Student.cpp.o"
   "CMakeFiles/object.dir/Student.cpp.o.d"
   "CMakeFiles/object.dir/Teacher.cpp.o"

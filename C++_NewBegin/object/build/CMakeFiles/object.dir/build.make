@@ -69,10 +69,24 @@ include CMakeFiles/object.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/object.dir/flags.make
 
+CMakeFiles/object.dir/Point.cpp.o: CMakeFiles/object.dir/flags.make
+CMakeFiles/object.dir/Point.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/object/Point.cpp
+CMakeFiles/object.dir/Point.cpp.o: CMakeFiles/object.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/object.dir/Point.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/object.dir/Point.cpp.o -MF CMakeFiles/object.dir/Point.cpp.o.d -o CMakeFiles/object.dir/Point.cpp.o -c /home/zoe/Learning/Notes/C++_NewBegin/object/Point.cpp
+
+CMakeFiles/object.dir/Point.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/object.dir/Point.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/zoe/Learning/Notes/C++_NewBegin/object/Point.cpp > CMakeFiles/object.dir/Point.cpp.i
+
+CMakeFiles/object.dir/Point.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/object.dir/Point.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/zoe/Learning/Notes/C++_NewBegin/object/Point.cpp -o CMakeFiles/object.dir/Point.cpp.s
+
 CMakeFiles/object.dir/Student.cpp.o: CMakeFiles/object.dir/flags.make
 CMakeFiles/object.dir/Student.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/object/Student.cpp
 CMakeFiles/object.dir/Student.cpp.o: CMakeFiles/object.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/object.dir/Student.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/object.dir/Student.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/object.dir/Student.cpp.o -MF CMakeFiles/object.dir/Student.cpp.o.d -o CMakeFiles/object.dir/Student.cpp.o -c /home/zoe/Learning/Notes/C++_NewBegin/object/Student.cpp
 
 CMakeFiles/object.dir/Student.cpp.i: cmake_force
@@ -86,7 +100,7 @@ CMakeFiles/object.dir/Student.cpp.s: cmake_force
 CMakeFiles/object.dir/Teacher.cpp.o: CMakeFiles/object.dir/flags.make
 CMakeFiles/object.dir/Teacher.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/object/Teacher.cpp
 CMakeFiles/object.dir/Teacher.cpp.o: CMakeFiles/object.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/object.dir/Teacher.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/object.dir/Teacher.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/object.dir/Teacher.cpp.o -MF CMakeFiles/object.dir/Teacher.cpp.o.d -o CMakeFiles/object.dir/Teacher.cpp.o -c /home/zoe/Learning/Notes/C++_NewBegin/object/Teacher.cpp
 
 CMakeFiles/object.dir/Teacher.cpp.i: cmake_force
@@ -100,7 +114,7 @@ CMakeFiles/object.dir/Teacher.cpp.s: cmake_force
 CMakeFiles/object.dir/main.cpp.o: CMakeFiles/object.dir/flags.make
 CMakeFiles/object.dir/main.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/object/main.cpp
 CMakeFiles/object.dir/main.cpp.o: CMakeFiles/object.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/object.dir/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/object.dir/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/object.dir/main.cpp.o -MF CMakeFiles/object.dir/main.cpp.o.d -o CMakeFiles/object.dir/main.cpp.o -c /home/zoe/Learning/Notes/C++_NewBegin/object/main.cpp
 
 CMakeFiles/object.dir/main.cpp.i: cmake_force
@@ -113,6 +127,7 @@ CMakeFiles/object.dir/main.cpp.s: cmake_force
 
 # Object files for target object
 object_OBJECTS = \
+"CMakeFiles/object.dir/Point.cpp.o" \
 "CMakeFiles/object.dir/Student.cpp.o" \
 "CMakeFiles/object.dir/Teacher.cpp.o" \
 "CMakeFiles/object.dir/main.cpp.o"
@@ -120,12 +135,13 @@ object_OBJECTS = \
 # External object files for target object
 object_EXTERNAL_OBJECTS =
 
+object: CMakeFiles/object.dir/Point.cpp.o
 object: CMakeFiles/object.dir/Student.cpp.o
 object: CMakeFiles/object.dir/Teacher.cpp.o
 object: CMakeFiles/object.dir/main.cpp.o
 object: CMakeFiles/object.dir/build.make
 object: CMakeFiles/object.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable object"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/zoe/Learning/Notes/C++_NewBegin/object/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable object"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/object.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -129,6 +129,30 @@ object/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/object.dir/build.make CMakeFiles/object.dir/build
 .PHONY : object/fast
 
+Point.o: Point.cpp.o
+.PHONY : Point.o
+
+# target to build an object file
+Point.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/object.dir/build.make CMakeFiles/object.dir/Point.cpp.o
+.PHONY : Point.cpp.o
+
+Point.i: Point.cpp.i
+.PHONY : Point.i
+
+# target to preprocess a source file
+Point.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/object.dir/build.make CMakeFiles/object.dir/Point.cpp.i
+.PHONY : Point.cpp.i
+
+Point.s: Point.cpp.s
+.PHONY : Point.s
+
+# target to generate assembly for a file
+Point.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/object.dir/build.make CMakeFiles/object.dir/Point.cpp.s
+.PHONY : Point.cpp.s
+
 Student.o: Student.cpp.o
 .PHONY : Student.o
 
@@ -210,6 +234,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... object"
+	@echo "... Point.o"
+	@echo "... Point.i"
+	@echo "... Point.s"
 	@echo "... Student.o"
 	@echo "... Student.i"
 	@echo "... Student.s"
