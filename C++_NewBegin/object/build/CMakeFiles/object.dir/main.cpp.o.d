@@ -139,4 +139,6 @@ CMakeFiles/object.dir/main.cpp.o: \
  /home/zoe/Learning/Notes/C++_NewBegin/object/Student.h \
  /home/zoe/Learning/Notes/C++_NewBegin/object/Teacher.h \
  /home/zoe/Learning/Notes/C++_NewBegin/object/Point.h \
- /home/zoe/Learning/Notes/C++_NewBegin/object/Animal.h
+ /home/zoe/Learning/Notes/C++_NewBegin/object/Animal.h \
+ /home/zoe/Learning/Notes/C++_NewBegin/object/Person.h \
+ /home/zoe/Learning/Notes/C++_NewBegin/object/Ball.h

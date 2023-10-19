@@ -4,6 +4,8 @@
 #include"Teacher.h"
 #include"Point.h"
 #include"Animal.h"
+#include "Person.h"
+#include "Ball.h"
 using namespace std;
 //面向对象篇
 //面向对象特性：封装
@@ -150,7 +152,9 @@ int main(){
     Cat().speak();
     Cat().Animal::speak();
     //对于菱形继承问题：解决方法为在继承基类时增加virtual关键字，在创建对象时就会把基类子类所有属性值设置为同一个
+    //菱形问题：当基类存在一个变量并且出现菱形继承的多个子类以及子类的子类没有属于自己同基类的成员变量时，就会出现多个类对于一个变量拥有不同的值
     
+
     DogCat dogCat;
     // dogCat.Animal::Size=3;
     dogCat.Dog::Size=2;
@@ -161,11 +165,54 @@ int main(){
     cout<<dogCat.Cat::Size<<endl;//1
     cout<<dogCat.Size<<endl;     //1
 
-    //面向对象特性：多态
 
-        
+    //面向对象特性：多态
+    //多态满足条件：
+    //1.有继承关系
+    //2.子类重写父类中的虚函数
+
+
+    //静态联编：对于doWork函数，假如在编译阶段函数的地址就确定就是静态联编
+    /*
+    静态联编（Static Binding）：
+        也称为早期绑定或编译时绑定。
+        在编译阶段确定要调用的函数或方法。编译器根据变量的静态类型（在编译时可知）来解析函数调用。
+        静态联编通常用于非多态的情况，例如普通的函数调用或非虚函数的方法调用。
+    */
+    //动态联编：如果在运行阶段才能确定就是动态联编
+    /*
+    动态联编（Dynamic Binding）：
+
+        也称为晚期绑定或运行时绑定。
+        在运行时根据对象的实际类型来确定要调用的函数或方法。这通常与多态性相关，特别是在基类和派生类之间的虚函数调用中。
+        动态联编允许在运行时适应不同的子类对象，使得程序更加灵活和多态。
+    */
+
+    //面对无论传入的是Person Son  Daughter都只会调用Person类的work方法，想要依据传入的对象类型进行不同的调用，就要使用virtual关键字实现多态
+    doWork(Son()); // 若不在Person类中work函数加上virtual关键字 此处输出Person is  working
+    // Son is working
+    
+    //纯虚函数与抽象类
+    //纯虚函数声明: virtual void FuncName()=0;
+    //对于纯虚函数需要在继承该类的子类中重写此函数
+    //假如一个类中有纯虚函数就称这个类为抽象类(abstract),抽象类无法实例化对象
+
+    //例如Action.h中定义与实现
     
 
+    //虚析构和纯虚析构
+    //相同点:
+    //1.可以用来解决父类指针释放子类对象的问题
+    //2.两种都需要具体函数实现
+    //不同点：
+    //如果是纯虚析构函数，就属于抽象类无法实例化，如果是虚析构就可以实例化
 
-
+    ballLife();
+    /*
+    Ball was created
+    Basketball was created
+    Basketball was destroyed
+    Ball was destroyed
+    */
+    
 }

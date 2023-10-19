@@ -2,10 +2,12 @@
 #define _ANIMAL_H
 
 #include<iostream>
+
+
 class Animal{
     public:
     int Size;
-        void speak(){
+         void speak()const {
             std::cout<<"animal speak"<<std::endl;
         }
 };
@@ -13,14 +15,16 @@ class Animal{
 class Cat:virtual public Animal{
     public:
     // int Size;
-        void speak(){
+        void speak()const{
             std::cout<<"cat speak"<<std::endl;
         }
+        
+        
 };
 class Dog:virtual public Animal{
     public:
     // int Size;
-        void speak(){
+        void speak()const{
             std::cout<<"dog speak"<<std::endl;
         }
 };
@@ -31,6 +35,8 @@ class DogCat:public Cat,public Dog{
             std::cout<<"dogCat speak"<<std::endl;
         }
 };
+
+
 
 
 

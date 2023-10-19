@@ -568,6 +568,8 @@ CMakeFiles/object.dir/Teacher.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/objec
 
 CMakeFiles/object.dir/main.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/object/main.cpp \
   /home/zoe/Learning/Notes/C++_NewBegin/object/Animal.h \
+  /home/zoe/Learning/Notes/C++_NewBegin/object/Ball.h \
+  /home/zoe/Learning/Notes/C++_NewBegin/object/Person.h \
   /home/zoe/Learning/Notes/C++_NewBegin/object/Point.h \
   /home/zoe/Learning/Notes/C++_NewBegin/object/Student.h \
   /home/zoe/Learning/Notes/C++_NewBegin/object/Teacher.h \
@@ -757,6 +759,10 @@ CMakeFiles/object.dir/main.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/object/m
   /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stdarg.h \
   /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stddef.h
 
+
+/home/zoe/Learning/Notes/C++_NewBegin/object/Person.h:
+
+/home/zoe/Learning/Notes/C++_NewBegin/object/Ball.h:
 
 /home/zoe/Learning/Notes/C++_NewBegin/object/main.cpp:
 
