@@ -2,9 +2,11 @@
 #include<string>
 #include"Student.h"
 #include"Teacher.h"
+#include"Point.h"
+#include"Animal.h"
 using namespace std;
 //面向对象篇
-//对象需要使用类进行定义,对于其的属性进行权限控制
+//面向对象特性：封装
 //三个权限关键词：private protected public
 //private:  类内可以直接使用，类外不可直接使用
 //protected:类内可以直接使用，类外不可直接使用，子类可以使用
@@ -102,6 +104,7 @@ int main(){
     const Student stu8=Student("Lisa",22,'W');
     stu8.showAge();
 
+    cout<<"===================================================="<<endl;
     //友元
     //使用友元的目的：让一个函数或者类访问另一个类的私有变量
     //友元的三种实现
@@ -111,8 +114,54 @@ int main(){
     
     //运算符重载
     //创建类Point对运算符<< ()++ ++() ()-- --() == !=  = () 几种运算符进行重载
-    
+    Point p1=Point(3,3);
+    cout<<++p1<<endl;
+    cout<<++p1<<endl;
+    cout<<p1<<endl;
+    Point p2;
+    p2=p1;
+    cout<<p2<<endl;
+    cout<<(p1==p2)<<endl;
+    p2++;
+    cout<<(p1!=p2)<<endl;
+    p1(p2);
+    /*
+    输出结果：
+        (3,3)
 
+        (4,4)
+
+        (5,5)
+
+        (5,5)
+
+        1
+        1
+        (6,6)
+    */
+    cout<<"================================================"<<endl;
+    
+    //面向对象特性：继承
+    //创建基类Animal,子类Cat Dog
+    //三种继承中:公有public继承对权限原样保留,保护继承protected会将公有和保护属性继承为protected，私有继承private会将public,protected继承为private
+    
+    //对于继承中的同名函数和同名变量可以利用作用域进行区分
+    //通过子类访问父类同名成员需要加作用域
+    Cat().speak();
+    Cat().Animal::speak();
+    //对于菱形继承问题：解决方法为在继承基类时增加virtual关键字，在创建对象时就会把基类子类所有属性值设置为同一个
+    
+    DogCat dogCat;
+    // dogCat.Animal::Size=3;
+    dogCat.Dog::Size=2;
+    dogCat.Cat::Size=1;
+    
+    // cout<<dogCat.Animal::Size<<endl;
+    cout<<dogCat.Dog::Size<<endl;//1
+    cout<<dogCat.Cat::Size<<endl;//1
+    cout<<dogCat.Size<<endl;     //1
+
+    //面向对象特性：多态
 
         
     

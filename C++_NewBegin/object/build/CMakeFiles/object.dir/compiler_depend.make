@@ -567,6 +567,8 @@ CMakeFiles/object.dir/Teacher.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/objec
   /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stddef.h
 
 CMakeFiles/object.dir/main.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/object/main.cpp \
+  /home/zoe/Learning/Notes/C++_NewBegin/object/Animal.h \
+  /home/zoe/Learning/Notes/C++_NewBegin/object/Point.h \
   /home/zoe/Learning/Notes/C++_NewBegin/object/Student.h \
   /home/zoe/Learning/Notes/C++_NewBegin/object/Teacher.h \
   /usr/include/alloca.h \
@@ -1011,6 +1013,8 @@ CMakeFiles/object.dir/main.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/object/m
 /usr/include/bits/wctype-wchar.h:
 
 /usr/include/bits/wordsize.h:
+
+/home/zoe/Learning/Notes/C++_NewBegin/object/Animal.h:
 
 /usr/include/c++/13.2.1/bit:
 

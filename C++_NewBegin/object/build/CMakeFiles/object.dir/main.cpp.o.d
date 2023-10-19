@@ -137,4 +137,6 @@ CMakeFiles/object.dir/main.cpp.o: \
  /usr/include/c++/13.2.1/bits/ostream.tcc /usr/include/c++/13.2.1/istream \
  /usr/include/c++/13.2.1/bits/istream.tcc \
  /home/zoe/Learning/Notes/C++_NewBegin/object/Student.h \
- /home/zoe/Learning/Notes/C++_NewBegin/object/Teacher.h
+ /home/zoe/Learning/Notes/C++_NewBegin/object/Teacher.h \
+ /home/zoe/Learning/Notes/C++_NewBegin/object/Point.h \
+ /home/zoe/Learning/Notes/C++_NewBegin/object/Animal.h

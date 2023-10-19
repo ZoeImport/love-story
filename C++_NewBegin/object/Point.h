@@ -5,10 +5,11 @@ class Point{
     public:
         int x;
         int y;
+        Point();
         Point(int x,int y);
         //运算符重载声明
         //<<
-        friend std::ostream& operator<<(std::ostream &out,Point &point);
+        friend std::ostream& operator<<(std::ostream &out,const Point &point);
         //++
         //前置++
         Point& operator ++(int);
