@@ -4,12 +4,6 @@
 using namespace std;
 
 
-
-
-
-
-
-
 void catInfo(){
     cout<<"this is catInfo"<<endl;
 }
@@ -156,5 +150,13 @@ namespace {
     命名空间的名称应该具有描述性，以便代码的可读性。
     在头文件中，尽量避免在全局命名空间中定义内容，以减少命名冲突的风险。
     不要在头文件中打开命名空间，应该将命名空间的定义限制在源文件中。
+
+
+    using关键字：
+    1.类型别名：using MyInt=int;
+    2.命名空间别名：using namespaceClass=namespace1::namespace2;
+    3.模板别名：using MyVector=std::vector<T>;
+    4.函数指针别名：using MyFunctionPointer = void(*)(int);
+
     */
 }
