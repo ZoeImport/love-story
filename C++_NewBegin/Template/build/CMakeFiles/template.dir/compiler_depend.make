@@ -114,6 +114,7 @@ CMakeFiles/template.dir/main.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/Templa
   /usr/include/c++/13.2.1/bits/stl_iterator_base_funcs.h \
   /usr/include/c++/13.2.1/bits/stl_iterator_base_types.h \
   /usr/include/c++/13.2.1/bits/stl_pair.h \
+  /usr/include/c++/13.2.1/bits/stream_iterator.h \
   /usr/include/c++/13.2.1/bits/streambuf.tcc \
   /usr/include/c++/13.2.1/bits/streambuf_iterator.h \
   /usr/include/c++/13.2.1/bits/string_view.tcc \
@@ -142,6 +143,7 @@ CMakeFiles/template.dir/main.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/Templa
   /usr/include/c++/13.2.1/iosfwd \
   /usr/include/c++/13.2.1/iostream \
   /usr/include/c++/13.2.1/istream \
+  /usr/include/c++/13.2.1/iterator \
   /usr/include/c++/13.2.1/new \
   /usr/include/c++/13.2.1/ostream \
   /usr/include/c++/13.2.1/pstl/pstl_config.h \
@@ -247,6 +249,8 @@ CMakeFiles/template.dir/main.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/Templa
 
 /usr/include/c++/13.2.1/new:
 
+/usr/include/c++/13.2.1/iterator:
+
 /usr/include/c++/13.2.1/iostream:
 
 /usr/include/c++/13.2.1/ios:
@@ -264,6 +268,8 @@ CMakeFiles/template.dir/main.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/Templa
 /usr/include/c++/13.2.1/exception:
 
 /usr/include/c++/13.2.1/cwctype:
+
+/usr/include/c++/13.2.1/cwchar:
 
 /usr/include/bits/types/timer_t.h:
 
@@ -517,11 +523,11 @@ CMakeFiles/template.dir/main.cpp.o: /home/zoe/Learning/Notes/C++_NewBegin/Templa
 
 /usr/include/c++/13.2.1/bits/std_abs.h:
 
-/usr/include/c++/13.2.1/cwchar:
-
 /usr/include/c++/13.2.1/bits/stl_algobase.h:
 
 /usr/include/c++/13.2.1/bits/stl_construct.h:
+
+/usr/include/c++/13.2.1/bits/stream_iterator.h:
 
 /usr/include/c++/13.2.1/bits/postypes.h:
 
