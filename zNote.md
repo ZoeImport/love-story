@@ -9620,6 +9620,8 @@ git branch -d <name> # 删除分支
 > aux_source_directory(. SON_DIR_CPP)
 > #再将所有的源文件生成为链接库
 > add_library(sonDirlibName ${SON_DIR_CPP})
+> target_compile_options(${EXECUTABLE_NAME} PRIVATE -g)
+> #此处的PRIVATE代表只会依赖于这一个文件
 > ```
 >
 
@@ -9652,9 +9654,33 @@ git branch -d <name> # 删除分支
 >
 > 
 >
+
+## GDB
+
+***描述：C/C++开源命令调试器(GNU debugger)***
+
+> ```shell
+> file                            # 装入想要调试的可执行文件.
+> kill            k              #终止正在调试的程序.
+> list            l               #列出产生执行文件的源代码的一部分.
+> next           	n              #执行一行源代码但不进入函数内部.
+> step          	s              #执行一行源代码而且进入函数内部.
+> continue  		c               #继续执行程序，直至下一中断或者程序结束。
+> run            	r               #执行当前被调试的程序.
+> quit           	q               #终止 gdb.
+> watch                        #使你能监视一个变量的值而不管它何时被改变.
+> catch                         #设置捕捉点.
+> thread       	t               #查看当前运行程序的线程信息.
+> break        	b             #在代码里设置断点, 这将使程序执行到这里时被挂起
+> make                        #使你能不退出 gdb 就可以重新产生可执行文件.
+> shell                         #使你能不离开 gdb 就执行 UNIX shell 命令. 
+> print          	p              #打印数据内容。
+> examine			x               #打印内存内容。
+> backtrace 		bt             #查看函数调用栈的所有信息。
+> info			i				#查看相关信息
+> ```
+>
 > 
-
-
 
 ## C++11
 
