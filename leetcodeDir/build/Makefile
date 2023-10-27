@@ -130,6 +130,19 @@ lCode_1/fast:
 .PHONY : lCode_1/fast
 
 #=============================================================================
+# Target rules for targets named lCode_2
+
+# Build rule for target.
+lCode_2: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_2
+.PHONY : lCode_2
+
+# fast build rule for target.
+lCode_2/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_2.dir/build.make CMakeFiles/lCode_2.dir/build
+.PHONY : lCode_2/fast
+
+#=============================================================================
 # Target rules for targets named lCode_2520
 
 # Build rule for target.
@@ -166,6 +179,30 @@ lCode_1.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_1.dir/build.make CMakeFiles/lCode_1.dir/lCode_1.cpp.s
 .PHONY : lCode_1.cpp.s
 
+lCode_2.o: lCode_2.cpp.o
+.PHONY : lCode_2.o
+
+# target to build an object file
+lCode_2.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_2.dir/build.make CMakeFiles/lCode_2.dir/lCode_2.cpp.o
+.PHONY : lCode_2.cpp.o
+
+lCode_2.i: lCode_2.cpp.i
+.PHONY : lCode_2.i
+
+# target to preprocess a source file
+lCode_2.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_2.dir/build.make CMakeFiles/lCode_2.dir/lCode_2.cpp.i
+.PHONY : lCode_2.cpp.i
+
+lCode_2.s: lCode_2.cpp.s
+.PHONY : lCode_2.s
+
+# target to generate assembly for a file
+lCode_2.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_2.dir/build.make CMakeFiles/lCode_2.dir/lCode_2.cpp.s
+.PHONY : lCode_2.cpp.s
+
 lCode_2520.o: lCode_2520.cpp.o
 .PHONY : lCode_2520.o
 
@@ -199,10 +236,14 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... lCode_1"
+	@echo "... lCode_2"
 	@echo "... lCode_2520"
 	@echo "... lCode_1.o"
 	@echo "... lCode_1.i"
 	@echo "... lCode_1.s"
+	@echo "... lCode_2.o"
+	@echo "... lCode_2.i"
+	@echo "... lCode_2.s"
 	@echo "... lCode_2520.o"
 	@echo "... lCode_2520.i"
 	@echo "... lCode_2520.s"
