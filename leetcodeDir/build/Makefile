@@ -130,6 +130,19 @@ lCode_1/fast:
 .PHONY : lCode_1/fast
 
 #=============================================================================
+# Target rules for targets named lCode_1991
+
+# Build rule for target.
+lCode_1991: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_1991
+.PHONY : lCode_1991
+
+# fast build rule for target.
+lCode_1991/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_1991.dir/build.make CMakeFiles/lCode_1991.dir/build
+.PHONY : lCode_1991/fast
+
+#=============================================================================
 # Target rules for targets named lCode_2
 
 # Build rule for target.
@@ -155,6 +168,32 @@ lCode_2520/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_2520.dir/build.make CMakeFiles/lCode_2520.dir/build
 .PHONY : lCode_2520/fast
 
+#=============================================================================
+# Target rules for targets named lCode_2Varr
+
+# Build rule for target.
+lCode_2Varr: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_2Varr
+.PHONY : lCode_2Varr
+
+# fast build rule for target.
+lCode_2Varr/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_2Varr.dir/build.make CMakeFiles/lCode_2Varr.dir/build
+.PHONY : lCode_2Varr/fast
+
+#=============================================================================
+# Target rules for targets named lCode_3
+
+# Build rule for target.
+lCode_3: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_3
+.PHONY : lCode_3
+
+# fast build rule for target.
+lCode_3/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_3.dir/build.make CMakeFiles/lCode_3.dir/build
+.PHONY : lCode_3/fast
+
 lCode_1.o: lCode_1.cpp.o
 .PHONY : lCode_1.o
 
@@ -178,6 +217,30 @@ lCode_1.s: lCode_1.cpp.s
 lCode_1.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_1.dir/build.make CMakeFiles/lCode_1.dir/lCode_1.cpp.s
 .PHONY : lCode_1.cpp.s
+
+lCode_1991.o: lCode_1991.cpp.o
+.PHONY : lCode_1991.o
+
+# target to build an object file
+lCode_1991.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_1991.dir/build.make CMakeFiles/lCode_1991.dir/lCode_1991.cpp.o
+.PHONY : lCode_1991.cpp.o
+
+lCode_1991.i: lCode_1991.cpp.i
+.PHONY : lCode_1991.i
+
+# target to preprocess a source file
+lCode_1991.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_1991.dir/build.make CMakeFiles/lCode_1991.dir/lCode_1991.cpp.i
+.PHONY : lCode_1991.cpp.i
+
+lCode_1991.s: lCode_1991.cpp.s
+.PHONY : lCode_1991.s
+
+# target to generate assembly for a file
+lCode_1991.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_1991.dir/build.make CMakeFiles/lCode_1991.dir/lCode_1991.cpp.s
+.PHONY : lCode_1991.cpp.s
 
 lCode_2.o: lCode_2.cpp.o
 .PHONY : lCode_2.o
@@ -227,6 +290,54 @@ lCode_2520.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_2520.dir/build.make CMakeFiles/lCode_2520.dir/lCode_2520.cpp.s
 .PHONY : lCode_2520.cpp.s
 
+lCode_2Varr.o: lCode_2Varr.cpp.o
+.PHONY : lCode_2Varr.o
+
+# target to build an object file
+lCode_2Varr.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_2Varr.dir/build.make CMakeFiles/lCode_2Varr.dir/lCode_2Varr.cpp.o
+.PHONY : lCode_2Varr.cpp.o
+
+lCode_2Varr.i: lCode_2Varr.cpp.i
+.PHONY : lCode_2Varr.i
+
+# target to preprocess a source file
+lCode_2Varr.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_2Varr.dir/build.make CMakeFiles/lCode_2Varr.dir/lCode_2Varr.cpp.i
+.PHONY : lCode_2Varr.cpp.i
+
+lCode_2Varr.s: lCode_2Varr.cpp.s
+.PHONY : lCode_2Varr.s
+
+# target to generate assembly for a file
+lCode_2Varr.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_2Varr.dir/build.make CMakeFiles/lCode_2Varr.dir/lCode_2Varr.cpp.s
+.PHONY : lCode_2Varr.cpp.s
+
+lCode_3.o: lCode_3.cpp.o
+.PHONY : lCode_3.o
+
+# target to build an object file
+lCode_3.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_3.dir/build.make CMakeFiles/lCode_3.dir/lCode_3.cpp.o
+.PHONY : lCode_3.cpp.o
+
+lCode_3.i: lCode_3.cpp.i
+.PHONY : lCode_3.i
+
+# target to preprocess a source file
+lCode_3.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_3.dir/build.make CMakeFiles/lCode_3.dir/lCode_3.cpp.i
+.PHONY : lCode_3.cpp.i
+
+lCode_3.s: lCode_3.cpp.s
+.PHONY : lCode_3.s
+
+# target to generate assembly for a file
+lCode_3.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_3.dir/build.make CMakeFiles/lCode_3.dir/lCode_3.cpp.s
+.PHONY : lCode_3.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -236,17 +347,29 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... lCode_1"
+	@echo "... lCode_1991"
 	@echo "... lCode_2"
 	@echo "... lCode_2520"
+	@echo "... lCode_2Varr"
+	@echo "... lCode_3"
 	@echo "... lCode_1.o"
 	@echo "... lCode_1.i"
 	@echo "... lCode_1.s"
+	@echo "... lCode_1991.o"
+	@echo "... lCode_1991.i"
+	@echo "... lCode_1991.s"
 	@echo "... lCode_2.o"
 	@echo "... lCode_2.i"
 	@echo "... lCode_2.s"
 	@echo "... lCode_2520.o"
 	@echo "... lCode_2520.i"
 	@echo "... lCode_2520.s"
+	@echo "... lCode_2Varr.o"
+	@echo "... lCode_2Varr.i"
+	@echo "... lCode_2Varr.s"
+	@echo "... lCode_3.o"
+	@echo "... lCode_3.i"
+	@echo "... lCode_3.s"
 .PHONY : help
 
 
