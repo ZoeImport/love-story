@@ -3,7 +3,10 @@
 using namespace std;
 
 namespace lCode {
-auto findDiagonalOrder(vector<vector<int>> &mat) {}
+auto findDiagonalOrder(vector<vector<int>> &mat) {
+  //对角线的坐标值之和相等，方向依据奇偶性判断
+  
+}
 }
 
 int main(){

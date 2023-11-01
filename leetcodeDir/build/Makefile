@@ -208,6 +208,19 @@ lCode_48/fast:
 .PHONY : lCode_48/fast
 
 #=============================================================================
+# Target rules for targets named lCode_diagonalTraversalForMatrix
+
+# Build rule for target.
+lCode_diagonalTraversalForMatrix: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_diagonalTraversalForMatrix
+.PHONY : lCode_diagonalTraversalForMatrix
+
+# fast build rule for target.
+lCode_diagonalTraversalForMatrix/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_diagonalTraversalForMatrix.dir/build.make CMakeFiles/lCode_diagonalTraversalForMatrix.dir/build
+.PHONY : lCode_diagonalTraversalForMatrix/fast
+
+#=============================================================================
 # Target rules for targets named lCode_set0matrix
 
 # Build rule for target.
@@ -388,6 +401,30 @@ lCode_48.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_48.dir/build.make CMakeFiles/lCode_48.dir/lCode_48.cpp.s
 .PHONY : lCode_48.cpp.s
 
+lCode_diagonalTraversalForMatrix.o: lCode_diagonalTraversalForMatrix.cpp.o
+.PHONY : lCode_diagonalTraversalForMatrix.o
+
+# target to build an object file
+lCode_diagonalTraversalForMatrix.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_diagonalTraversalForMatrix.dir/build.make CMakeFiles/lCode_diagonalTraversalForMatrix.dir/lCode_diagonalTraversalForMatrix.cpp.o
+.PHONY : lCode_diagonalTraversalForMatrix.cpp.o
+
+lCode_diagonalTraversalForMatrix.i: lCode_diagonalTraversalForMatrix.cpp.i
+.PHONY : lCode_diagonalTraversalForMatrix.i
+
+# target to preprocess a source file
+lCode_diagonalTraversalForMatrix.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_diagonalTraversalForMatrix.dir/build.make CMakeFiles/lCode_diagonalTraversalForMatrix.dir/lCode_diagonalTraversalForMatrix.cpp.i
+.PHONY : lCode_diagonalTraversalForMatrix.cpp.i
+
+lCode_diagonalTraversalForMatrix.s: lCode_diagonalTraversalForMatrix.cpp.s
+.PHONY : lCode_diagonalTraversalForMatrix.s
+
+# target to generate assembly for a file
+lCode_diagonalTraversalForMatrix.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_diagonalTraversalForMatrix.dir/build.make CMakeFiles/lCode_diagonalTraversalForMatrix.dir/lCode_diagonalTraversalForMatrix.cpp.s
+.PHONY : lCode_diagonalTraversalForMatrix.cpp.s
+
 lCode_set0matrix.o: lCode_set0matrix.cpp.o
 .PHONY : lCode_set0matrix.o
 
@@ -427,6 +464,7 @@ help:
 	@echo "... lCode_2Varr"
 	@echo "... lCode_3"
 	@echo "... lCode_48"
+	@echo "... lCode_diagonalTraversalForMatrix"
 	@echo "... lCode_set0matrix"
 	@echo "... lCode_1.o"
 	@echo "... lCode_1.i"
@@ -449,6 +487,9 @@ help:
 	@echo "... lCode_48.o"
 	@echo "... lCode_48.i"
 	@echo "... lCode_48.s"
+	@echo "... lCode_diagonalTraversalForMatrix.o"
+	@echo "... lCode_diagonalTraversalForMatrix.i"
+	@echo "... lCode_diagonalTraversalForMatrix.s"
 	@echo "... lCode_set0matrix.o"
 	@echo "... lCode_set0matrix.i"
 	@echo "... lCode_set0matrix.s"

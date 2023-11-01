@@ -5,6 +5,7 @@
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_2Varr.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_3.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_48.dir
+/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_diagonalTraversalForMatrix.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_set0matrix.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/edit_cache.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/rebuild_cache.dir
