@@ -69,6 +69,8 @@ all: CMakeFiles/lCode_2.dir/all
 all: CMakeFiles/lCode_2520.dir/all
 all: CMakeFiles/lCode_2Varr.dir/all
 all: CMakeFiles/lCode_3.dir/all
+all: CMakeFiles/lCode_48.dir/all
+all: CMakeFiles/lCode_set0matrix.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -82,6 +84,8 @@ clean: CMakeFiles/lCode_2.dir/clean
 clean: CMakeFiles/lCode_2520.dir/clean
 clean: CMakeFiles/lCode_2Varr.dir/clean
 clean: CMakeFiles/lCode_3.dir/clean
+clean: CMakeFiles/lCode_48.dir/clean
+clean: CMakeFiles/lCode_set0matrix.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -239,6 +243,58 @@ lCode_3: CMakeFiles/lCode_3.dir/rule
 CMakeFiles/lCode_3.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_3.dir/build.make CMakeFiles/lCode_3.dir/clean
 .PHONY : CMakeFiles/lCode_3.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/lCode_48.dir
+
+# All Build rule for target.
+CMakeFiles/lCode_48.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_48.dir/build.make CMakeFiles/lCode_48.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_48.dir/build.make CMakeFiles/lCode_48.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles --progress-num=13,14 "Built target lCode_48"
+.PHONY : CMakeFiles/lCode_48.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/lCode_48.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/lCode_48.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles 0
+.PHONY : CMakeFiles/lCode_48.dir/rule
+
+# Convenience name for target.
+lCode_48: CMakeFiles/lCode_48.dir/rule
+.PHONY : lCode_48
+
+# clean rule for target.
+CMakeFiles/lCode_48.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_48.dir/build.make CMakeFiles/lCode_48.dir/clean
+.PHONY : CMakeFiles/lCode_48.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/lCode_set0matrix.dir
+
+# All Build rule for target.
+CMakeFiles/lCode_set0matrix.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_set0matrix.dir/build.make CMakeFiles/lCode_set0matrix.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_set0matrix.dir/build.make CMakeFiles/lCode_set0matrix.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles --progress-num=15,16 "Built target lCode_set0matrix"
+.PHONY : CMakeFiles/lCode_set0matrix.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/lCode_set0matrix.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/lCode_set0matrix.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles 0
+.PHONY : CMakeFiles/lCode_set0matrix.dir/rule
+
+# Convenience name for target.
+lCode_set0matrix: CMakeFiles/lCode_set0matrix.dir/rule
+.PHONY : lCode_set0matrix
+
+# clean rule for target.
+CMakeFiles/lCode_set0matrix.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_set0matrix.dir/build.make CMakeFiles/lCode_set0matrix.dir/clean
+.PHONY : CMakeFiles/lCode_set0matrix.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
