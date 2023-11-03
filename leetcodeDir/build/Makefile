@@ -221,6 +221,45 @@ lCode_diagonalTraversalForMatrix/fast:
 .PHONY : lCode_diagonalTraversalForMatrix/fast
 
 #=============================================================================
+# Target rules for targets named lCode_longestCommonPrefix
+
+# Build rule for target.
+lCode_longestCommonPrefix: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_longestCommonPrefix
+.PHONY : lCode_longestCommonPrefix
+
+# fast build rule for target.
+lCode_longestCommonPrefix/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestCommonPrefix.dir/build.make CMakeFiles/lCode_longestCommonPrefix.dir/build
+.PHONY : lCode_longestCommonPrefix/fast
+
+#=============================================================================
+# Target rules for targets named lCode_longestPalindrome
+
+# Build rule for target.
+lCode_longestPalindrome: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_longestPalindrome
+.PHONY : lCode_longestPalindrome
+
+# fast build rule for target.
+lCode_longestPalindrome/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestPalindrome.dir/build.make CMakeFiles/lCode_longestPalindrome.dir/build
+.PHONY : lCode_longestPalindrome/fast
+
+#=============================================================================
+# Target rules for targets named lCode_reverseWords
+
+# Build rule for target.
+lCode_reverseWords: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_reverseWords
+.PHONY : lCode_reverseWords
+
+# fast build rule for target.
+lCode_reverseWords/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseWords.dir/build.make CMakeFiles/lCode_reverseWords.dir/build
+.PHONY : lCode_reverseWords/fast
+
+#=============================================================================
 # Target rules for targets named lCode_set0matrix
 
 # Build rule for target.
@@ -425,6 +464,78 @@ lCode_diagonalTraversalForMatrix.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_diagonalTraversalForMatrix.dir/build.make CMakeFiles/lCode_diagonalTraversalForMatrix.dir/lCode_diagonalTraversalForMatrix.cpp.s
 .PHONY : lCode_diagonalTraversalForMatrix.cpp.s
 
+lCode_longestCommonPrefix.o: lCode_longestCommonPrefix.cpp.o
+.PHONY : lCode_longestCommonPrefix.o
+
+# target to build an object file
+lCode_longestCommonPrefix.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestCommonPrefix.dir/build.make CMakeFiles/lCode_longestCommonPrefix.dir/lCode_longestCommonPrefix.cpp.o
+.PHONY : lCode_longestCommonPrefix.cpp.o
+
+lCode_longestCommonPrefix.i: lCode_longestCommonPrefix.cpp.i
+.PHONY : lCode_longestCommonPrefix.i
+
+# target to preprocess a source file
+lCode_longestCommonPrefix.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestCommonPrefix.dir/build.make CMakeFiles/lCode_longestCommonPrefix.dir/lCode_longestCommonPrefix.cpp.i
+.PHONY : lCode_longestCommonPrefix.cpp.i
+
+lCode_longestCommonPrefix.s: lCode_longestCommonPrefix.cpp.s
+.PHONY : lCode_longestCommonPrefix.s
+
+# target to generate assembly for a file
+lCode_longestCommonPrefix.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestCommonPrefix.dir/build.make CMakeFiles/lCode_longestCommonPrefix.dir/lCode_longestCommonPrefix.cpp.s
+.PHONY : lCode_longestCommonPrefix.cpp.s
+
+lCode_longestPalindrome.o: lCode_longestPalindrome.cpp.o
+.PHONY : lCode_longestPalindrome.o
+
+# target to build an object file
+lCode_longestPalindrome.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestPalindrome.dir/build.make CMakeFiles/lCode_longestPalindrome.dir/lCode_longestPalindrome.cpp.o
+.PHONY : lCode_longestPalindrome.cpp.o
+
+lCode_longestPalindrome.i: lCode_longestPalindrome.cpp.i
+.PHONY : lCode_longestPalindrome.i
+
+# target to preprocess a source file
+lCode_longestPalindrome.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestPalindrome.dir/build.make CMakeFiles/lCode_longestPalindrome.dir/lCode_longestPalindrome.cpp.i
+.PHONY : lCode_longestPalindrome.cpp.i
+
+lCode_longestPalindrome.s: lCode_longestPalindrome.cpp.s
+.PHONY : lCode_longestPalindrome.s
+
+# target to generate assembly for a file
+lCode_longestPalindrome.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestPalindrome.dir/build.make CMakeFiles/lCode_longestPalindrome.dir/lCode_longestPalindrome.cpp.s
+.PHONY : lCode_longestPalindrome.cpp.s
+
+lCode_reverseWords.o: lCode_reverseWords.cpp.o
+.PHONY : lCode_reverseWords.o
+
+# target to build an object file
+lCode_reverseWords.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseWords.dir/build.make CMakeFiles/lCode_reverseWords.dir/lCode_reverseWords.cpp.o
+.PHONY : lCode_reverseWords.cpp.o
+
+lCode_reverseWords.i: lCode_reverseWords.cpp.i
+.PHONY : lCode_reverseWords.i
+
+# target to preprocess a source file
+lCode_reverseWords.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseWords.dir/build.make CMakeFiles/lCode_reverseWords.dir/lCode_reverseWords.cpp.i
+.PHONY : lCode_reverseWords.cpp.i
+
+lCode_reverseWords.s: lCode_reverseWords.cpp.s
+.PHONY : lCode_reverseWords.s
+
+# target to generate assembly for a file
+lCode_reverseWords.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseWords.dir/build.make CMakeFiles/lCode_reverseWords.dir/lCode_reverseWords.cpp.s
+.PHONY : lCode_reverseWords.cpp.s
+
 lCode_set0matrix.o: lCode_set0matrix.cpp.o
 .PHONY : lCode_set0matrix.o
 
@@ -465,6 +576,9 @@ help:
 	@echo "... lCode_3"
 	@echo "... lCode_48"
 	@echo "... lCode_diagonalTraversalForMatrix"
+	@echo "... lCode_longestCommonPrefix"
+	@echo "... lCode_longestPalindrome"
+	@echo "... lCode_reverseWords"
 	@echo "... lCode_set0matrix"
 	@echo "... lCode_1.o"
 	@echo "... lCode_1.i"
@@ -490,6 +604,15 @@ help:
 	@echo "... lCode_diagonalTraversalForMatrix.o"
 	@echo "... lCode_diagonalTraversalForMatrix.i"
 	@echo "... lCode_diagonalTraversalForMatrix.s"
+	@echo "... lCode_longestCommonPrefix.o"
+	@echo "... lCode_longestCommonPrefix.i"
+	@echo "... lCode_longestCommonPrefix.s"
+	@echo "... lCode_longestPalindrome.o"
+	@echo "... lCode_longestPalindrome.i"
+	@echo "... lCode_longestPalindrome.s"
+	@echo "... lCode_reverseWords.o"
+	@echo "... lCode_reverseWords.i"
+	@echo "... lCode_reverseWords.s"
 	@echo "... lCode_set0matrix.o"
 	@echo "... lCode_set0matrix.i"
 	@echo "... lCode_set0matrix.s"
