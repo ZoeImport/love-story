@@ -208,6 +208,19 @@ lCode_48/fast:
 .PHONY : lCode_48/fast
 
 #=============================================================================
+# Target rules for targets named lCode_arrayPairSum
+
+# Build rule for target.
+lCode_arrayPairSum: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_arrayPairSum
+.PHONY : lCode_arrayPairSum
+
+# fast build rule for target.
+lCode_arrayPairSum/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_arrayPairSum.dir/build.make CMakeFiles/lCode_arrayPairSum.dir/build
+.PHONY : lCode_arrayPairSum/fast
+
+#=============================================================================
 # Target rules for targets named lCode_diagonalTraversalForMatrix
 
 # Build rule for target.
@@ -245,6 +258,19 @@ lCode_longestPalindrome: cmake_check_build_system
 lCode_longestPalindrome/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestPalindrome.dir/build.make CMakeFiles/lCode_longestPalindrome.dir/build
 .PHONY : lCode_longestPalindrome/fast
+
+#=============================================================================
+# Target rules for targets named lCode_reverseString
+
+# Build rule for target.
+lCode_reverseString: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_reverseString
+.PHONY : lCode_reverseString
+
+# fast build rule for target.
+lCode_reverseString/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseString.dir/build.make CMakeFiles/lCode_reverseString.dir/build
+.PHONY : lCode_reverseString/fast
 
 #=============================================================================
 # Target rules for targets named lCode_reverseWords
@@ -440,6 +466,30 @@ lCode_48.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_48.dir/build.make CMakeFiles/lCode_48.dir/lCode_48.cpp.s
 .PHONY : lCode_48.cpp.s
 
+lCode_arrayPairSum.o: lCode_arrayPairSum.cpp.o
+.PHONY : lCode_arrayPairSum.o
+
+# target to build an object file
+lCode_arrayPairSum.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_arrayPairSum.dir/build.make CMakeFiles/lCode_arrayPairSum.dir/lCode_arrayPairSum.cpp.o
+.PHONY : lCode_arrayPairSum.cpp.o
+
+lCode_arrayPairSum.i: lCode_arrayPairSum.cpp.i
+.PHONY : lCode_arrayPairSum.i
+
+# target to preprocess a source file
+lCode_arrayPairSum.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_arrayPairSum.dir/build.make CMakeFiles/lCode_arrayPairSum.dir/lCode_arrayPairSum.cpp.i
+.PHONY : lCode_arrayPairSum.cpp.i
+
+lCode_arrayPairSum.s: lCode_arrayPairSum.cpp.s
+.PHONY : lCode_arrayPairSum.s
+
+# target to generate assembly for a file
+lCode_arrayPairSum.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_arrayPairSum.dir/build.make CMakeFiles/lCode_arrayPairSum.dir/lCode_arrayPairSum.cpp.s
+.PHONY : lCode_arrayPairSum.cpp.s
+
 lCode_diagonalTraversalForMatrix.o: lCode_diagonalTraversalForMatrix.cpp.o
 .PHONY : lCode_diagonalTraversalForMatrix.o
 
@@ -512,6 +562,30 @@ lCode_longestPalindrome.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestPalindrome.dir/build.make CMakeFiles/lCode_longestPalindrome.dir/lCode_longestPalindrome.cpp.s
 .PHONY : lCode_longestPalindrome.cpp.s
 
+lCode_reverseString.o: lCode_reverseString.cpp.o
+.PHONY : lCode_reverseString.o
+
+# target to build an object file
+lCode_reverseString.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseString.dir/build.make CMakeFiles/lCode_reverseString.dir/lCode_reverseString.cpp.o
+.PHONY : lCode_reverseString.cpp.o
+
+lCode_reverseString.i: lCode_reverseString.cpp.i
+.PHONY : lCode_reverseString.i
+
+# target to preprocess a source file
+lCode_reverseString.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseString.dir/build.make CMakeFiles/lCode_reverseString.dir/lCode_reverseString.cpp.i
+.PHONY : lCode_reverseString.cpp.i
+
+lCode_reverseString.s: lCode_reverseString.cpp.s
+.PHONY : lCode_reverseString.s
+
+# target to generate assembly for a file
+lCode_reverseString.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseString.dir/build.make CMakeFiles/lCode_reverseString.dir/lCode_reverseString.cpp.s
+.PHONY : lCode_reverseString.cpp.s
+
 lCode_reverseWords.o: lCode_reverseWords.cpp.o
 .PHONY : lCode_reverseWords.o
 
@@ -575,9 +649,11 @@ help:
 	@echo "... lCode_2Varr"
 	@echo "... lCode_3"
 	@echo "... lCode_48"
+	@echo "... lCode_arrayPairSum"
 	@echo "... lCode_diagonalTraversalForMatrix"
 	@echo "... lCode_longestCommonPrefix"
 	@echo "... lCode_longestPalindrome"
+	@echo "... lCode_reverseString"
 	@echo "... lCode_reverseWords"
 	@echo "... lCode_set0matrix"
 	@echo "... lCode_1.o"
@@ -601,6 +677,9 @@ help:
 	@echo "... lCode_48.o"
 	@echo "... lCode_48.i"
 	@echo "... lCode_48.s"
+	@echo "... lCode_arrayPairSum.o"
+	@echo "... lCode_arrayPairSum.i"
+	@echo "... lCode_arrayPairSum.s"
 	@echo "... lCode_diagonalTraversalForMatrix.o"
 	@echo "... lCode_diagonalTraversalForMatrix.i"
 	@echo "... lCode_diagonalTraversalForMatrix.s"
@@ -610,6 +689,9 @@ help:
 	@echo "... lCode_longestPalindrome.o"
 	@echo "... lCode_longestPalindrome.i"
 	@echo "... lCode_longestPalindrome.s"
+	@echo "... lCode_reverseString.o"
+	@echo "... lCode_reverseString.i"
+	@echo "... lCode_reverseString.s"
 	@echo "... lCode_reverseWords.o"
 	@echo "... lCode_reverseWords.i"
 	@echo "... lCode_reverseWords.s"

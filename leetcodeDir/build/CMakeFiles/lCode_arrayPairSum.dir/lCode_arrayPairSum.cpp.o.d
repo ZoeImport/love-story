@@ -1,5 +1,5 @@
-CMakeFiles/lCode_reverseWords.dir/lCode_reverseWords.cpp.o: \
- /home/zoe/Learning/Notes/leetcodeDir/lCode_reverseWords.cpp \
+CMakeFiles/lCode_arrayPairSum.dir/lCode_arrayPairSum.cpp.o: \
+ /home/zoe/Learning/Notes/leetcodeDir/lCode_arrayPairSum.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/13.2.1/algorithm \
  /usr/include/c++/13.2.1/bits/stl_algobase.h \
  /usr/include/c++/13.2.1/x86_64-pc-linux-gnu/bits/c++config.h \
@@ -58,11 +58,33 @@ CMakeFiles/lCode_reverseWords.dir/lCode_reverseWords.cpp.o: \
  /usr/include/bits/stdlib-float.h /usr/include/c++/13.2.1/bits/std_abs.h \
  /usr/include/c++/13.2.1/pstl/glue_algorithm_defs.h \
  /usr/include/c++/13.2.1/pstl/execution_defs.h \
- /usr/include/c++/13.2.1/iostream \
+ /usr/include/c++/13.2.1/utility \
+ /usr/include/c++/13.2.1/bits/stl_relops.h /usr/include/c++/13.2.1/vector \
  /usr/include/c++/13.2.1/bits/requires_hosted.h \
+ /usr/include/c++/13.2.1/bits/allocator.h \
+ /usr/include/c++/13.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
+ /usr/include/c++/13.2.1/bits/new_allocator.h \
+ /usr/include/c++/13.2.1/bits/memoryfwd.h \
+ /usr/include/c++/13.2.1/bits/stl_uninitialized.h \
+ /usr/include/c++/13.2.1/ext/alloc_traits.h \
+ /usr/include/c++/13.2.1/bits/alloc_traits.h \
+ /usr/include/c++/13.2.1/bits/stl_vector.h \
+ /usr/include/c++/13.2.1/bits/stl_bvector.h \
+ /usr/include/c++/13.2.1/bits/functional_hash.h \
+ /usr/include/c++/13.2.1/bits/hash_bytes.h \
+ /usr/include/c++/13.2.1/bits/refwrap.h \
+ /usr/include/c++/13.2.1/bits/invoke.h \
+ /usr/include/c++/13.2.1/bits/stl_function.h \
+ /usr/include/c++/13.2.1/backward/binders.h \
+ /usr/include/c++/13.2.1/bits/range_access.h \
+ /usr/include/c++/13.2.1/bits/vector.tcc \
+ /usr/include/c++/13.2.1/bits/memory_resource.h \
+ /usr/include/c++/13.2.1/cstddef \
+ /usr/include/c++/13.2.1/bits/uses_allocator.h \
+ /usr/include/c++/13.2.1/bits/uses_allocator_args.h \
+ /usr/include/c++/13.2.1/tuple /usr/include/c++/13.2.1/iostream \
  /usr/include/c++/13.2.1/ostream /usr/include/c++/13.2.1/ios \
  /usr/include/c++/13.2.1/iosfwd /usr/include/c++/13.2.1/bits/stringfwd.h \
- /usr/include/c++/13.2.1/bits/memoryfwd.h \
  /usr/include/c++/13.2.1/bits/postypes.h /usr/include/c++/13.2.1/cwchar \
  /usr/include/wchar.h \
  /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stdarg.h \
@@ -73,7 +95,6 @@ CMakeFiles/lCode_reverseWords.dir/lCode_reverseWords.cpp.o: \
  /usr/include/c++/13.2.1/bits/exception_ptr.h \
  /usr/include/c++/13.2.1/bits/cxxabi_init_exception.h \
  /usr/include/c++/13.2.1/typeinfo \
- /usr/include/c++/13.2.1/bits/hash_bytes.h \
  /usr/include/c++/13.2.1/bits/nested_exception.h \
  /usr/include/c++/13.2.1/bits/char_traits.h \
  /usr/include/c++/13.2.1/bits/localefwd.h \
@@ -94,21 +115,11 @@ CMakeFiles/lCode_reverseWords.dir/lCode_reverseWords.cpp.o: \
  /usr/include/c++/13.2.1/x86_64-pc-linux-gnu/bits/atomic_word.h \
  /usr/include/sys/single_threaded.h \
  /usr/include/c++/13.2.1/bits/locale_classes.h \
- /usr/include/c++/13.2.1/string /usr/include/c++/13.2.1/bits/allocator.h \
- /usr/include/c++/13.2.1/x86_64-pc-linux-gnu/bits/c++allocator.h \
- /usr/include/c++/13.2.1/bits/new_allocator.h \
+ /usr/include/c++/13.2.1/string \
  /usr/include/c++/13.2.1/bits/ostream_insert.h \
  /usr/include/c++/13.2.1/bits/cxxabi_forced.h \
- /usr/include/c++/13.2.1/bits/stl_function.h \
- /usr/include/c++/13.2.1/backward/binders.h \
- /usr/include/c++/13.2.1/bits/refwrap.h \
- /usr/include/c++/13.2.1/bits/invoke.h \
- /usr/include/c++/13.2.1/bits/range_access.h \
  /usr/include/c++/13.2.1/bits/basic_string.h \
- /usr/include/c++/13.2.1/ext/alloc_traits.h \
- /usr/include/c++/13.2.1/bits/alloc_traits.h \
  /usr/include/c++/13.2.1/string_view \
- /usr/include/c++/13.2.1/bits/functional_hash.h \
  /usr/include/c++/13.2.1/bits/string_view.tcc \
  /usr/include/c++/13.2.1/ext/string_conversions.h \
  /usr/include/c++/13.2.1/cstdio /usr/include/stdio.h \
@@ -122,11 +133,6 @@ CMakeFiles/lCode_reverseWords.dir/lCode_reverseWords.cpp.o: \
  /usr/include/bits/types/error_t.h \
  /usr/include/c++/13.2.1/bits/charconv.h \
  /usr/include/c++/13.2.1/bits/basic_string.tcc \
- /usr/include/c++/13.2.1/bits/memory_resource.h \
- /usr/include/c++/13.2.1/cstddef \
- /usr/include/c++/13.2.1/bits/uses_allocator.h \
- /usr/include/c++/13.2.1/bits/uses_allocator_args.h \
- /usr/include/c++/13.2.1/tuple \
  /usr/include/c++/13.2.1/bits/locale_classes.tcc \
  /usr/include/c++/13.2.1/system_error \
  /usr/include/c++/13.2.1/x86_64-pc-linux-gnu/bits/error_constants.h \
@@ -142,35 +148,4 @@ CMakeFiles/lCode_reverseWords.dir/lCode_reverseWords.cpp.o: \
  /usr/include/c++/13.2.1/bits/locale_facets.tcc \
  /usr/include/c++/13.2.1/bits/basic_ios.tcc \
  /usr/include/c++/13.2.1/bits/ostream.tcc /usr/include/c++/13.2.1/istream \
- /usr/include/c++/13.2.1/bits/istream.tcc \
- /usr/include/c++/13.2.1/iterator \
- /usr/include/c++/13.2.1/bits/stream_iterator.h \
- /usr/include/c++/13.2.1/map /usr/include/c++/13.2.1/bits/stl_tree.h \
- /usr/include/c++/13.2.1/ext/aligned_buffer.h \
- /usr/include/c++/13.2.1/bits/node_handle.h \
- /usr/include/c++/13.2.1/bits/stl_map.h \
- /usr/include/c++/13.2.1/bits/stl_multimap.h \
- /usr/include/c++/13.2.1/bits/erase_if.h /usr/include/c++/13.2.1/memory \
- /usr/include/c++/13.2.1/bits/stl_uninitialized.h \
- /usr/include/c++/13.2.1/bits/stl_raw_storage_iter.h \
- /usr/include/c++/13.2.1/bits/align.h \
- /usr/lib/gcc/x86_64-pc-linux-gnu/13.2.1/include/stdint.h \
- /usr/include/stdint.h /usr/include/bits/stdint-uintn.h \
- /usr/include/c++/13.2.1/bits/unique_ptr.h \
- /usr/include/c++/13.2.1/bits/shared_ptr.h \
- /usr/include/c++/13.2.1/bits/shared_ptr_base.h \
- /usr/include/c++/13.2.1/bits/allocated_ptr.h \
- /usr/include/c++/13.2.1/ext/concurrence.h \
- /usr/include/c++/13.2.1/bits/shared_ptr_atomic.h \
- /usr/include/c++/13.2.1/bits/atomic_base.h \
- /usr/include/c++/13.2.1/bits/atomic_lockfree_defines.h \
- /usr/include/c++/13.2.1/backward/auto_ptr.h \
- /usr/include/c++/13.2.1/pstl/glue_memory_defs.h \
- /usr/include/c++/13.2.1/stack /usr/include/c++/13.2.1/deque \
- /usr/include/c++/13.2.1/bits/stl_deque.h \
- /usr/include/c++/13.2.1/bits/deque.tcc \
- /usr/include/c++/13.2.1/bits/stl_stack.h /usr/include/c++/13.2.1/utility \
- /usr/include/c++/13.2.1/bits/stl_relops.h /usr/include/c++/13.2.1/vector \
- /usr/include/c++/13.2.1/bits/stl_vector.h \
- /usr/include/c++/13.2.1/bits/stl_bvector.h \
- /usr/include/c++/13.2.1/bits/vector.tcc
+ /usr/include/c++/13.2.1/bits/istream.tcc
