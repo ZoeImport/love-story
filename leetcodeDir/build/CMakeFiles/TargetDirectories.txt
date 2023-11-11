@@ -9,8 +9,10 @@
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_diagonalTraversalForMatrix.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_longestCommonPrefix.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_longestPalindrome.dir
+/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_removeElement.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_reverseString.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_reverseWords.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_set0matrix.dir
+/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/lCode_twoSum.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/edit_cache.dir
 /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles/rebuild_cache.dir

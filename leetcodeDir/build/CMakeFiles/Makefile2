@@ -74,9 +74,11 @@ all: CMakeFiles/lCode_arrayPairSum.dir/all
 all: CMakeFiles/lCode_diagonalTraversalForMatrix.dir/all
 all: CMakeFiles/lCode_longestCommonPrefix.dir/all
 all: CMakeFiles/lCode_longestPalindrome.dir/all
+all: CMakeFiles/lCode_removeElement.dir/all
 all: CMakeFiles/lCode_reverseString.dir/all
 all: CMakeFiles/lCode_reverseWords.dir/all
 all: CMakeFiles/lCode_set0matrix.dir/all
+all: CMakeFiles/lCode_twoSum.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -95,9 +97,11 @@ clean: CMakeFiles/lCode_arrayPairSum.dir/clean
 clean: CMakeFiles/lCode_diagonalTraversalForMatrix.dir/clean
 clean: CMakeFiles/lCode_longestCommonPrefix.dir/clean
 clean: CMakeFiles/lCode_longestPalindrome.dir/clean
+clean: CMakeFiles/lCode_removeElement.dir/clean
 clean: CMakeFiles/lCode_reverseString.dir/clean
 clean: CMakeFiles/lCode_reverseWords.dir/clean
 clean: CMakeFiles/lCode_set0matrix.dir/clean
+clean: CMakeFiles/lCode_twoSum.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -387,13 +391,39 @@ CMakeFiles/lCode_longestPalindrome.dir/clean:
 .PHONY : CMakeFiles/lCode_longestPalindrome.dir/clean
 
 #=============================================================================
+# Target rules for target CMakeFiles/lCode_removeElement.dir
+
+# All Build rule for target.
+CMakeFiles/lCode_removeElement.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_removeElement.dir/build.make CMakeFiles/lCode_removeElement.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_removeElement.dir/build.make CMakeFiles/lCode_removeElement.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles --progress-num=23,24 "Built target lCode_removeElement"
+.PHONY : CMakeFiles/lCode_removeElement.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/lCode_removeElement.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/lCode_removeElement.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles 0
+.PHONY : CMakeFiles/lCode_removeElement.dir/rule
+
+# Convenience name for target.
+lCode_removeElement: CMakeFiles/lCode_removeElement.dir/rule
+.PHONY : lCode_removeElement
+
+# clean rule for target.
+CMakeFiles/lCode_removeElement.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_removeElement.dir/build.make CMakeFiles/lCode_removeElement.dir/clean
+.PHONY : CMakeFiles/lCode_removeElement.dir/clean
+
+#=============================================================================
 # Target rules for target CMakeFiles/lCode_reverseString.dir
 
 # All Build rule for target.
 CMakeFiles/lCode_reverseString.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseString.dir/build.make CMakeFiles/lCode_reverseString.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseString.dir/build.make CMakeFiles/lCode_reverseString.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles --progress-num=23,24 "Built target lCode_reverseString"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles --progress-num=25,26 "Built target lCode_reverseString"
 .PHONY : CMakeFiles/lCode_reverseString.dir/all
 
 # Build rule for subdir invocation for target.
@@ -419,7 +449,7 @@ CMakeFiles/lCode_reverseString.dir/clean:
 CMakeFiles/lCode_reverseWords.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseWords.dir/build.make CMakeFiles/lCode_reverseWords.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_reverseWords.dir/build.make CMakeFiles/lCode_reverseWords.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles --progress-num=25,26 "Built target lCode_reverseWords"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles --progress-num=27,28 "Built target lCode_reverseWords"
 .PHONY : CMakeFiles/lCode_reverseWords.dir/all
 
 # Build rule for subdir invocation for target.
@@ -445,7 +475,7 @@ CMakeFiles/lCode_reverseWords.dir/clean:
 CMakeFiles/lCode_set0matrix.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_set0matrix.dir/build.make CMakeFiles/lCode_set0matrix.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_set0matrix.dir/build.make CMakeFiles/lCode_set0matrix.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles --progress-num=27,28 "Built target lCode_set0matrix"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles --progress-num=29,30 "Built target lCode_set0matrix"
 .PHONY : CMakeFiles/lCode_set0matrix.dir/all
 
 # Build rule for subdir invocation for target.
@@ -463,6 +493,32 @@ lCode_set0matrix: CMakeFiles/lCode_set0matrix.dir/rule
 CMakeFiles/lCode_set0matrix.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_set0matrix.dir/build.make CMakeFiles/lCode_set0matrix.dir/clean
 .PHONY : CMakeFiles/lCode_set0matrix.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/lCode_twoSum.dir
+
+# All Build rule for target.
+CMakeFiles/lCode_twoSum.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_twoSum.dir/build.make CMakeFiles/lCode_twoSum.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_twoSum.dir/build.make CMakeFiles/lCode_twoSum.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles --progress-num=31,32 "Built target lCode_twoSum"
+.PHONY : CMakeFiles/lCode_twoSum.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/lCode_twoSum.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles 2
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/lCode_twoSum.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/zoe/Learning/Notes/leetcodeDir/build/CMakeFiles 0
+.PHONY : CMakeFiles/lCode_twoSum.dir/rule
+
+# Convenience name for target.
+lCode_twoSum: CMakeFiles/lCode_twoSum.dir/rule
+.PHONY : lCode_twoSum
+
+# clean rule for target.
+CMakeFiles/lCode_twoSum.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_twoSum.dir/build.make CMakeFiles/lCode_twoSum.dir/clean
+.PHONY : CMakeFiles/lCode_twoSum.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

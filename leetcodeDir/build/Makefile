@@ -260,6 +260,19 @@ lCode_longestPalindrome/fast:
 .PHONY : lCode_longestPalindrome/fast
 
 #=============================================================================
+# Target rules for targets named lCode_removeElement
+
+# Build rule for target.
+lCode_removeElement: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_removeElement
+.PHONY : lCode_removeElement
+
+# fast build rule for target.
+lCode_removeElement/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_removeElement.dir/build.make CMakeFiles/lCode_removeElement.dir/build
+.PHONY : lCode_removeElement/fast
+
+#=============================================================================
 # Target rules for targets named lCode_reverseString
 
 # Build rule for target.
@@ -297,6 +310,19 @@ lCode_set0matrix: cmake_check_build_system
 lCode_set0matrix/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_set0matrix.dir/build.make CMakeFiles/lCode_set0matrix.dir/build
 .PHONY : lCode_set0matrix/fast
+
+#=============================================================================
+# Target rules for targets named lCode_twoSum
+
+# Build rule for target.
+lCode_twoSum: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_twoSum
+.PHONY : lCode_twoSum
+
+# fast build rule for target.
+lCode_twoSum/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_twoSum.dir/build.make CMakeFiles/lCode_twoSum.dir/build
+.PHONY : lCode_twoSum/fast
 
 lCode_1.o: lCode_1.cpp.o
 .PHONY : lCode_1.o
@@ -562,6 +588,30 @@ lCode_longestPalindrome.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestPalindrome.dir/build.make CMakeFiles/lCode_longestPalindrome.dir/lCode_longestPalindrome.cpp.s
 .PHONY : lCode_longestPalindrome.cpp.s
 
+lCode_removeElement.o: lCode_removeElement.cpp.o
+.PHONY : lCode_removeElement.o
+
+# target to build an object file
+lCode_removeElement.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_removeElement.dir/build.make CMakeFiles/lCode_removeElement.dir/lCode_removeElement.cpp.o
+.PHONY : lCode_removeElement.cpp.o
+
+lCode_removeElement.i: lCode_removeElement.cpp.i
+.PHONY : lCode_removeElement.i
+
+# target to preprocess a source file
+lCode_removeElement.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_removeElement.dir/build.make CMakeFiles/lCode_removeElement.dir/lCode_removeElement.cpp.i
+.PHONY : lCode_removeElement.cpp.i
+
+lCode_removeElement.s: lCode_removeElement.cpp.s
+.PHONY : lCode_removeElement.s
+
+# target to generate assembly for a file
+lCode_removeElement.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_removeElement.dir/build.make CMakeFiles/lCode_removeElement.dir/lCode_removeElement.cpp.s
+.PHONY : lCode_removeElement.cpp.s
+
 lCode_reverseString.o: lCode_reverseString.cpp.o
 .PHONY : lCode_reverseString.o
 
@@ -634,6 +684,30 @@ lCode_set0matrix.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_set0matrix.dir/build.make CMakeFiles/lCode_set0matrix.dir/lCode_set0matrix.cpp.s
 .PHONY : lCode_set0matrix.cpp.s
 
+lCode_twoSum.o: lCode_twoSum.cpp.o
+.PHONY : lCode_twoSum.o
+
+# target to build an object file
+lCode_twoSum.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_twoSum.dir/build.make CMakeFiles/lCode_twoSum.dir/lCode_twoSum.cpp.o
+.PHONY : lCode_twoSum.cpp.o
+
+lCode_twoSum.i: lCode_twoSum.cpp.i
+.PHONY : lCode_twoSum.i
+
+# target to preprocess a source file
+lCode_twoSum.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_twoSum.dir/build.make CMakeFiles/lCode_twoSum.dir/lCode_twoSum.cpp.i
+.PHONY : lCode_twoSum.cpp.i
+
+lCode_twoSum.s: lCode_twoSum.cpp.s
+.PHONY : lCode_twoSum.s
+
+# target to generate assembly for a file
+lCode_twoSum.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_twoSum.dir/build.make CMakeFiles/lCode_twoSum.dir/lCode_twoSum.cpp.s
+.PHONY : lCode_twoSum.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -653,9 +727,11 @@ help:
 	@echo "... lCode_diagonalTraversalForMatrix"
 	@echo "... lCode_longestCommonPrefix"
 	@echo "... lCode_longestPalindrome"
+	@echo "... lCode_removeElement"
 	@echo "... lCode_reverseString"
 	@echo "... lCode_reverseWords"
 	@echo "... lCode_set0matrix"
+	@echo "... lCode_twoSum"
 	@echo "... lCode_1.o"
 	@echo "... lCode_1.i"
 	@echo "... lCode_1.s"
@@ -689,6 +765,9 @@ help:
 	@echo "... lCode_longestPalindrome.o"
 	@echo "... lCode_longestPalindrome.i"
 	@echo "... lCode_longestPalindrome.s"
+	@echo "... lCode_removeElement.o"
+	@echo "... lCode_removeElement.i"
+	@echo "... lCode_removeElement.s"
 	@echo "... lCode_reverseString.o"
 	@echo "... lCode_reverseString.i"
 	@echo "... lCode_reverseString.s"
@@ -698,6 +777,9 @@ help:
 	@echo "... lCode_set0matrix.o"
 	@echo "... lCode_set0matrix.i"
 	@echo "... lCode_set0matrix.s"
+	@echo "... lCode_twoSum.o"
+	@echo "... lCode_twoSum.i"
+	@echo "... lCode_twoSum.s"
 .PHONY : help
 
 
