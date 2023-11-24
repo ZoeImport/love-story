@@ -234,6 +234,19 @@ lCode_diagonalTraversalForMatrix/fast:
 .PHONY : lCode_diagonalTraversalForMatrix/fast
 
 #=============================================================================
+# Target rules for targets named lCode_findMaxConsecutiveOnes
+
+# Build rule for target.
+lCode_findMaxConsecutiveOnes: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_findMaxConsecutiveOnes
+.PHONY : lCode_findMaxConsecutiveOnes
+
+# fast build rule for target.
+lCode_findMaxConsecutiveOnes/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_findMaxConsecutiveOnes.dir/build.make CMakeFiles/lCode_findMaxConsecutiveOnes.dir/build
+.PHONY : lCode_findMaxConsecutiveOnes/fast
+
+#=============================================================================
 # Target rules for targets named lCode_longestCommonPrefix
 
 # Build rule for target.
@@ -540,6 +553,30 @@ lCode_diagonalTraversalForMatrix.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_diagonalTraversalForMatrix.dir/build.make CMakeFiles/lCode_diagonalTraversalForMatrix.dir/lCode_diagonalTraversalForMatrix.cpp.s
 .PHONY : lCode_diagonalTraversalForMatrix.cpp.s
 
+lCode_findMaxConsecutiveOnes.o: lCode_findMaxConsecutiveOnes.cpp.o
+.PHONY : lCode_findMaxConsecutiveOnes.o
+
+# target to build an object file
+lCode_findMaxConsecutiveOnes.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_findMaxConsecutiveOnes.dir/build.make CMakeFiles/lCode_findMaxConsecutiveOnes.dir/lCode_findMaxConsecutiveOnes.cpp.o
+.PHONY : lCode_findMaxConsecutiveOnes.cpp.o
+
+lCode_findMaxConsecutiveOnes.i: lCode_findMaxConsecutiveOnes.cpp.i
+.PHONY : lCode_findMaxConsecutiveOnes.i
+
+# target to preprocess a source file
+lCode_findMaxConsecutiveOnes.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_findMaxConsecutiveOnes.dir/build.make CMakeFiles/lCode_findMaxConsecutiveOnes.dir/lCode_findMaxConsecutiveOnes.cpp.i
+.PHONY : lCode_findMaxConsecutiveOnes.cpp.i
+
+lCode_findMaxConsecutiveOnes.s: lCode_findMaxConsecutiveOnes.cpp.s
+.PHONY : lCode_findMaxConsecutiveOnes.s
+
+# target to generate assembly for a file
+lCode_findMaxConsecutiveOnes.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_findMaxConsecutiveOnes.dir/build.make CMakeFiles/lCode_findMaxConsecutiveOnes.dir/lCode_findMaxConsecutiveOnes.cpp.s
+.PHONY : lCode_findMaxConsecutiveOnes.cpp.s
+
 lCode_longestCommonPrefix.o: lCode_longestCommonPrefix.cpp.o
 .PHONY : lCode_longestCommonPrefix.o
 
@@ -725,6 +762,7 @@ help:
 	@echo "... lCode_48"
 	@echo "... lCode_arrayPairSum"
 	@echo "... lCode_diagonalTraversalForMatrix"
+	@echo "... lCode_findMaxConsecutiveOnes"
 	@echo "... lCode_longestCommonPrefix"
 	@echo "... lCode_longestPalindrome"
 	@echo "... lCode_removeElement"
@@ -759,6 +797,9 @@ help:
 	@echo "... lCode_diagonalTraversalForMatrix.o"
 	@echo "... lCode_diagonalTraversalForMatrix.i"
 	@echo "... lCode_diagonalTraversalForMatrix.s"
+	@echo "... lCode_findMaxConsecutiveOnes.o"
+	@echo "... lCode_findMaxConsecutiveOnes.i"
+	@echo "... lCode_findMaxConsecutiveOnes.s"
 	@echo "... lCode_longestCommonPrefix.o"
 	@echo "... lCode_longestCommonPrefix.i"
 	@echo "... lCode_longestCommonPrefix.s"

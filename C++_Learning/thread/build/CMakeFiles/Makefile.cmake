@@ -7,7 +7,7 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/home/zoe/Learning/Notes/leetcodeDir/CMakeLists.txt"
+  "/home/zoe/Learning/Notes/C++_Learning/thread/CMakeLists.txt"
   "CMakeFiles/3.27.8/CMakeCCompiler.cmake"
   "CMakeFiles/3.27.8/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.27.8/CMakeSystem.cmake"
@@ -44,21 +44,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/lCode_1.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_1991.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_2.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_2520.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_2Varr.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_3.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_48.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_arrayPairSum.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_diagonalTraversalForMatrix.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_findMaxConsecutiveOnes.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_longestCommonPrefix.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_longestPalindrome.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_removeElement.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_reverseString.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_reverseWords.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_set0matrix.dir/DependInfo.cmake"
-  "CMakeFiles/lCode_twoSum.dir/DependInfo.cmake"
+  "CMakeFiles/thread.dir/DependInfo.cmake"
   )
