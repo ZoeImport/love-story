@@ -1,0 +1,508 @@
+//算法分析题
+//1-1
+
+//1-3
+
+//2-8
+//设a[0:n-1]是有n个元素的数组，k(0<=k<=n-1)k是一个非负整数,试着设计一个算法将子数组a[0:k-1],a[k:n-1]换位，要求算法在最坏的情况下耗时O(n),且只使用O(1)的辅助空间，C++实现
+#include <iostream>
+#include <vector>
+
+void reverseArray(std::vector<int>& arr, int start, int end) {
+    while (start < end) {
+        std::swap(arr[start], arr[end]);
+        start++;
+        end--;
+    }
+}
+
+void rotateArray(std::vector<int>& arr, int k) {
+    int n = arr.size();
+    k = k % n; // 处理k大于n的情况
+
+    reverseArray(arr, 0, n - 1);       // 翻转整个数组
+    reverseArray(arr, 0, k - 1);       // 翻转前半部分子数组
+    reverseArray(arr, k, n - 1);       // 翻转后半部分子数组
+}
+
+int main() {
+    std::vector<int> arr = {1, 2, 3, 4, 5, 6, 7};
+    int k = 3;
+
+    rotateArray(arr, k);
+
+    // 输出结果
+    for (int i : arr) {
+        std::cout << i << " ";
+    }
+
+    return 0;
+}
+
+//2-13
+//如何修改QuickSort算法才能使其将输入元素按非增序排序
+
+#include <iostream>
+#include <vector>
+
+template <typename T>
+int partition(std::vector<T>& arr, int low, int high) {
+    T pivot = arr[high];
+    int i = low - 1;
+
+    for (int j = low; j < high; j++) {
+        if (arr[j] >= pivot) {
+            i++;
+            std::swap(arr[i], arr[j]);
+        }
+    }
+
+    std::swap(arr[i + 1], arr[high]);
+    return i + 1;
+}
+
+template <typename T>
+void quickSort(std::vector<T>& arr, int low, int high) {
+    if (low < high) {
+        int pi = partition(arr, low, high);
+
+        quickSort(arr, low, pi - 1);
+        quickSort(arr, pi + 1, high);
+    }
+}
+
+int main() {
+    std::vector<int> arr = {12, 4, 5, 6, 7, 3, 1, 15};
+
+    int n = arr.size();
+
+    quickSort(arr, 0, n - 1);
+
+    // 输出结果
+    for (int i : arr) {
+        std::cout << i << " ";
+    }
+
+    return 0;
+}
+
+
+//3-3
+
+
+//3-4
+//给定n种物品和一背包，物品i的重量是Wi,体积是Bi,其价值为Vi,背包的容量为C,容积为D,问应该如何选择装入背包中的物品，使得装入背包中物品的总价值最大？
+//在选择装入背包物品时，对每种物品i只有两种选择，即装入背包或者不装入背包，不能将物品i装入背包多次，也不能只装入部分的物品i.
+//设计一个解此问题的动态规划算法，并分析算法的计算复杂性
+
+//定义一个三维数组dp[i][j][k]，表示前i种物品在容量为j和体积为k的背包中的最大价值
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int knapsack(int n, int C, int D, vector<int>& W, vector<int>& B, vector<int>& V) {
+    vector<vector<vector<int>>> dp(n + 1, vector<vector<int>>(C + 1, vector<int>(D + 1, 0)));
+
+    for (int i = 1; i <= n; i++) {
+        for (int j = 0; j <= C; j++) {
+            for (int k = 0; k <= D; k++) {
+                dp[i][j][k] = dp[i - 1][j][k];
+
+                if (j >= W[i - 1] && k >= B[i - 1]) {
+                    dp[i][j][k] = max(dp[i][j][k], dp[i - 1][j - W[i - 1]][k - B[i - 1]] + V[i - 1]);
+                }
+            }
+        }
+    }
+
+    return dp[n][C][D];
+}
+
+int main() {
+    int n = 3; // 物品种类数
+    int C = 5; // 背包容量
+    int D = 4; // 背包体积
+    vector<int> W = {2, 1, 3}; // 物品重量
+    vector<int> B = {1, 2, 2}; // 物品体积
+    vector<int> V = {3, 2, 4}; // 物品价值
+
+    int result = knapsack(n, C, D, W, B, V);
+
+    cout << "背包中物品的总价值最大为: " << result << endl;
+
+    return 0;
+}
+
+//算法的时间复杂度为O(n * C * D)，空间复杂度为O(n * C * D)，其中n是物品种类数，C是背包容量，D是背包体积
+
+
+//4-2
+//将最优装载问题的贪心算法推广到两艘船的情形，贪心算法仍能产生最优解吗？
+
+答:因为需要同时考虑两艘船的装载情况。贪心算法可能在某些情况下找到次优解，但并不能保证总是找到全局最优解
+
+//4-3
+//字符a~h出现的频率恰好是前8个斐波那契数，他们的哈夫曼编码是什么？将结果推广到n个字符的频率恰好是前n个斐波那契数的情形
+
+答：前8个字符的哈夫曼编码是：
+    a:1111111
+    b:1111110
+    c:111110
+    d:11110
+    e:1110
+    f:110
+    g:10
+    h:0
+
+    推广到n个字符：
+    Ci={
+        1^(n-1)     i=1;
+        1^(n-i)0    2<=i<=n; 
+    }
+
+//5-3
+//重写0-1背包问题的回溯法，使算法能输出最优解
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+void backtrack(int currentWeight, int currentValue, int index, int capacity, vector<int>& weights, vector<int>& values, vector<int>& selected, int& maxTotalValue, vector<int>& bestSelected) {
+    // 如果超过背包容量或者已经考虑完所有物品
+    if (currentWeight > capacity || index == weights.size()) {
+        if (currentValue > maxTotalValue) {
+            maxTotalValue = currentValue;
+            bestSelected = selected;
+        }
+        return;
+    }
+
+    // 不选取当前物品
+    backtrack(currentWeight, currentValue, index + 1, capacity, weights, values, selected, maxTotalValue, bestSelected);
+
+    // 选取当前物品
+    if (currentWeight + weights[index] <= capacity) {
+        currentWeight += weights[index];
+        currentValue += values[index];
+        selected[index] = 1;
+
+        backtrack(currentWeight, currentValue, index + 1, capacity, weights, values, selected, maxTotalValue, bestSelected);
+
+        currentWeight -= weights[index];
+        currentValue -= values[index];
+        selected[index] = 0;
+    }
+}
+
+void printSolution(const vector<int>& bestSelected, const vector<int>& values) {
+    cout << "Selected items: ";
+    for (int i = 0; i < bestSelected.size(); ++i) {
+        if (bestSelected[i] == 1) {
+            cout << i << " ";
+        }
+    }
+    cout << endl;
+
+    cout << "Total value: " << accumulate(bestSelected.begin(), bestSelected.end(), 0, [&](int sum, int selected) {
+        return sum + (selected == 1);
+    }) << endl;
+}
+
+int main() {
+    vector<int> weights = {2, 3, 4, 5};
+    vector<int> values = {3, 4, 5, 6};
+    int capacity = 5;
+
+    vector<int> selected(weights.size(), 0);
+    vector<int> bestSelected(weights.size(), 0);
+    int maxTotalValue = 0;
+
+    backtrack(0, 0, 0, capacity, weights, values, selected, maxTotalValue, bestSelected);
+
+    cout << "Optimal solution:" << endl;
+    printSolution(bestSelected, values);
+
+    return 0;
+}
+
+
+//5-4
+//试设计一个解最大团问题的迭代回溯算法
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+// 判断节点v是否可以加入当前团中
+bool isSafe(int v, const vector<vector<int>>& graph, const vector<int>& clique, int size) {
+    for (int i = 0; i < size; ++i) {
+        if (graph[v][clique[i]] == 0) {
+            return false; // 如果v与clique中任意一个节点不相邻，则不安全
+        }
+    }
+    return true;
+}
+
+// 输出找到的最大团
+void printClique(const vector<int>& clique) {
+    cout << "Max Clique: { ";
+    for (int v : clique) {
+        cout << v << " ";
+    }
+    cout << "}" << endl;
+}
+
+// 迭代回溯算法
+void findMaxCliqueUtil(int v, const vector<vector<int>>& graph, vector<int>& clique, int& maxSize) {
+    int n = graph.size();
+    if (v == n) {
+        if (clique.size() > maxSize) {
+            maxSize = clique.size();
+            printClique(clique);
+        }
+        return;
+    }
+
+    // 尝试将节点v加入当前团
+    if (isSafe(v, graph, clique, clique.size())) {
+        clique.push_back(v);
+        findMaxCliqueUtil(v + 1, graph, clique, maxSize);
+        clique.pop_back();
+    }
+
+    // 不加入v，继续尝试下一个节点
+    findMaxCliqueUtil(v + 1, graph, clique, maxSize);
+}
+
+// 主函数
+void findMaxClique(const vector<vector<int>>& graph) {
+    int n = graph.size();
+    vector<int> clique;
+    int maxSize = 0;
+
+    findMaxCliqueUtil(0, graph, clique, maxSize);
+}
+
+int main() {
+    // 例子：无向图的邻接矩阵表示
+    vector<vector<int>> graph = {
+        {0, 1, 1, 0, 0},
+        {1, 0, 1, 1, 0},
+        {1, 1, 0, 1, 1},
+        {0, 1, 1, 0, 1},
+        {0, 0, 1, 1, 0}
+    };
+
+    findMaxClique(graph);
+
+    return 0;
+}
+
+
+//6-4
+//试修改解装载问题和解0-1背包问题的优先队列式分支限界法，使其仅使用一个最大堆来储存活结点，而不必存储产生的解空间树
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+
+using namespace std;
+
+struct Node {
+    int level;   // 当前结点在决策树中的层级
+    int weight;  // 当前已装载的重量
+    int value;   // 当前已装载的价值
+    int bound;   // 当前结点的下界值
+
+    Node(int l, int w, int v, int b) : level(l), weight(w), value(v), bound(b) {}
+
+    // 用于优先队列比较的函数
+    bool operator<(const Node& other) const {
+        return bound < other.bound;
+    }
+};
+
+// 计算结点的下界值（贪心法）
+int calculateBound(int level, int weight, int value, int capacity, vector<int>& weights, vector<int>& values) {
+    int bound = value;
+    int remainingWeight = capacity - weight;
+    int i = level;
+
+    while (i < weights.size() && weights[i] <= remainingWeight) {
+        bound += values[i];
+        remainingWeight -= weights[i];
+        i++;
+    }
+
+    if (i < weights.size()) {
+        // 考虑部分装载
+        bound += (remainingWeight * values[i]) / weights[i];
+    }
+
+    return bound;
+}
+
+int knapsack(int capacity, vector<int>& weights, vector<int>& values) {
+    priority_queue<Node> pq;
+    Node root(-1, 0, 0, calculateBound(-1, 0, 0, capacity, weights, values));
+    int maxValue = 0;
+
+    pq.push(root);
+
+    while (!pq.empty()) {
+        Node current = pq.top();
+        pq.pop();
+
+        if (current.bound > maxValue) {
+            int level = current.level + 1;
+            int weight = current.weight + weights[level];
+            int value = current.value + values[level];
+
+            if (weight <= capacity && value > maxValue) {
+                maxValue = value;
+            }
+
+            int bound = calculateBound(level, weight, value, capacity, weights, values);
+
+            if (bound > maxValue) {
+                pq.push(Node(level, weight, value, bound));
+            }
+
+            pq.push(Node(level, current.weight, current.value, current.bound));
+        }
+    }
+
+    return maxValue;
+}
+
+int main() {
+    vector<int> weights = {2, 3, 4, 5};
+    vector<int> values = {3, 4, 5, 6};
+    int capacity = 5;
+
+    int result = knapsack(capacity, weights, values);
+
+    cout << "Optimal value: " << result << endl;
+
+    return 0;
+}
+
+
+//6-7
+//考虑最大团问题的子集空间树中第i层的第一个结点x,设MinDegree(x)是以结点x为根的子树中所有结点度数的最小值
+//(1)设x,u=min{x.cn+n-i+1,MinDegree(x)+1},证明以结点x为根的子树中任意叶结点相应的团的大小不超过x.u.
+//(2)依此x.u的定义重写算法BBMaxClique
+//(3)比较新旧算法所需的计算时间和产生的排列树结点树
+
+答：
+(1)证明：
+当 x.cn + n - i + 1 <= MinDegree(x) + 1 时，团的大小不超过 x.cn + n - i + 1。
+当 x.cn + n - i + 1 > MinDegree(x) + 1 时，团的大小不超过 MinDegree(x) + 1。
+对于第一种情况，由于 x.cn + n - i + 1 <= MinDegree(x) + 1，团的大小不会超过 x.cn + n - i + 1。
+对于第二种情况，由于 MinDegree(x) 是以结点 x 为根的子树中所有结点度数的最小值，因此团的大小不会超过 MinDegree(x) + 1。
+综上：以结点 x 为根的子树中任意叶结点相应的团的大小不超过 x.u
+(2)
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct Node {
+    int level;
+    int degree;
+    int bound;
+
+    Node(int l, int d, int b) : level(l), degree(d), bound(b) {}
+
+    bool operator<(const Node& other) const {
+        return bound < other.bound;
+    }
+};
+
+// 计算结点的下界值
+int calculateBound(int level, int degree, int n, vector<vector<int>>& graph) {
+    return min(degree + n - level + 1, graph.size() - level + 1);
+}
+
+// 更新结点的度数
+int updateDegree(int node, int degree, vector<vector<int>>& graph) {
+    for (int i = 0; i < graph.size(); ++i) {
+        if (graph[node][i] == 1) {
+            degree--;
+        }
+    }
+    return degree;
+}
+
+int BBMaxClique(vector<vector<int>>& graph) {
+    int n = graph.size();
+    priority_queue<Node> pq;
+    Node root(-1, n - 1, n);
+
+    pq.push(root);
+
+    int maxCliqueSize = 0;
+
+    while (!pq.empty()) {
+        Node current = pq.top();
+        pq.pop();
+
+        if (current.bound > maxCliqueSize) {
+            int level = current.level + 1;
+
+            // Try adding the current node to the clique
+            int bound = calculateBound(level, current.degree, n, graph);
+            if (bound > maxCliqueSize) {
+                maxCliqueSize = bound;
+            }
+
+            // Check if the current node can be part of a larger clique
+            if (level < n - 1 && current.degree > 0) {
+                pq.push(Node(level, updateDegree(level, current.degree, graph), calculateBound(level, current.degree, n, graph)));
+                pq.push(Node(level, current.degree, calculateBound(level, current.degree, n, graph)));
+            }
+        }
+    }
+
+    return maxCliqueSize;
+}
+
+int main() {
+    vector<vector<int>> graph = {
+        {0, 1, 1, 0, 1},
+        {1, 0, 1, 1, 0},
+        {1, 1, 0, 1, 1},
+        {0, 1, 1, 0, 1},
+        {1, 0, 1, 1, 0}
+    };
+
+    int result = BBMaxClique(graph);
+
+    cout << "Max Clique Size: " << result << endl;
+
+    return 0;
+}
+(3)
+
+//7-2
+//设有一个文件含有n个记录
+//(1)试设计一个算法随机抽选该文件的m个记录
+//(2)如果事先不知道文件中记录的个数，应如何随机抽取其中的m个记录
+
+答：
+(1)
+1.初始化一个空的结果集 selectedRecords 用于存储抽选的记录。
+2.从第一个记录开始，将其放入 selectedRecords 中。
+3.对于每个后续的记录，以概率 m/i（其中 i 是当前已处理的记录数）将其替换掉 selectedRecords 中的某个记录，保持结果集大小为 m。
+4.重复步骤 3 直到处理完所有记录。
+(2)
+1.初始化一个空的结果集 selectedRecords 用于存储抽选的记录。
+2.逐个处理文件中的记录，以概率 m/i 将其放入 selectedRecords 中，其中 i 是当前已处理的记录数。
+3.重复步骤 2 直到处理完所有记录。
+//7-4
+//设X是含有n个元素的集合，从X中均匀的选取元素，设第K次选取时首次出现重复

@@ -273,6 +273,19 @@ lCode_longestPalindrome/fast:
 .PHONY : lCode_longestPalindrome/fast
 
 #=============================================================================
+# Target rules for targets named lCode_minCostClimbingStairs
+
+# Build rule for target.
+lCode_minCostClimbingStairs: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 lCode_minCostClimbingStairs
+.PHONY : lCode_minCostClimbingStairs
+
+# fast build rule for target.
+lCode_minCostClimbingStairs/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_minCostClimbingStairs.dir/build.make CMakeFiles/lCode_minCostClimbingStairs.dir/build
+.PHONY : lCode_minCostClimbingStairs/fast
+
+#=============================================================================
 # Target rules for targets named lCode_removeElement
 
 # Build rule for target.
@@ -625,6 +638,30 @@ lCode_longestPalindrome.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_longestPalindrome.dir/build.make CMakeFiles/lCode_longestPalindrome.dir/lCode_longestPalindrome.cpp.s
 .PHONY : lCode_longestPalindrome.cpp.s
 
+lCode_minCostClimbingStairs.o: lCode_minCostClimbingStairs.cpp.o
+.PHONY : lCode_minCostClimbingStairs.o
+
+# target to build an object file
+lCode_minCostClimbingStairs.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_minCostClimbingStairs.dir/build.make CMakeFiles/lCode_minCostClimbingStairs.dir/lCode_minCostClimbingStairs.cpp.o
+.PHONY : lCode_minCostClimbingStairs.cpp.o
+
+lCode_minCostClimbingStairs.i: lCode_minCostClimbingStairs.cpp.i
+.PHONY : lCode_minCostClimbingStairs.i
+
+# target to preprocess a source file
+lCode_minCostClimbingStairs.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_minCostClimbingStairs.dir/build.make CMakeFiles/lCode_minCostClimbingStairs.dir/lCode_minCostClimbingStairs.cpp.i
+.PHONY : lCode_minCostClimbingStairs.cpp.i
+
+lCode_minCostClimbingStairs.s: lCode_minCostClimbingStairs.cpp.s
+.PHONY : lCode_minCostClimbingStairs.s
+
+# target to generate assembly for a file
+lCode_minCostClimbingStairs.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/lCode_minCostClimbingStairs.dir/build.make CMakeFiles/lCode_minCostClimbingStairs.dir/lCode_minCostClimbingStairs.cpp.s
+.PHONY : lCode_minCostClimbingStairs.cpp.s
+
 lCode_removeElement.o: lCode_removeElement.cpp.o
 .PHONY : lCode_removeElement.o
 
@@ -765,6 +802,7 @@ help:
 	@echo "... lCode_lengthOfLongestSubstring"
 	@echo "... lCode_longestCommonPrefix"
 	@echo "... lCode_longestPalindrome"
+	@echo "... lCode_minCostClimbingStairs"
 	@echo "... lCode_removeElement"
 	@echo "... lCode_reverseString"
 	@echo "... lCode_reverseWords"
@@ -806,6 +844,9 @@ help:
 	@echo "... lCode_longestPalindrome.o"
 	@echo "... lCode_longestPalindrome.i"
 	@echo "... lCode_longestPalindrome.s"
+	@echo "... lCode_minCostClimbingStairs.o"
+	@echo "... lCode_minCostClimbingStairs.i"
+	@echo "... lCode_minCostClimbingStairs.s"
 	@echo "... lCode_removeElement.o"
 	@echo "... lCode_removeElement.i"
 	@echo "... lCode_removeElement.s"
