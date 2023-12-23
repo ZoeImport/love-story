@@ -5,7 +5,7 @@ using namespace std;
 
 namespace lCode {
     auto findMedianSortedArrays(){
-
+        
     }
 
 }

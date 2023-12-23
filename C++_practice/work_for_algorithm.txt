@@ -1,8 +1,121 @@
 //算法分析题
 //1-1
+3n^2+10n:       O(n^2)  
+(n^2)/10+2^n:   O(2^n)  
+21+(1/n):       O(1)    
+logn^3:         O(logn)     
+10log3^n:       O(n)
+//1-3
+4n^2:   O(n^2)
+logn:   O(logn)
+3^n:    O(3^n)
+20n:    O(n)
+2:      O(1)
+n^(2/3):O(n^(2/3))
+n!:     O(n^n)
+
+3<logn<n^(2/3)<20n<4n^2<3^n<n!
+
+//算法实现题
+//1-1
+//统计数字问题
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+vector<int> countDigitOccurrences(int n) {
+    vector<int> digitCounts(10, 0); // 初始化每个数字的计数器
+
+    for (int i = 1; i <= n; ++i) {
+        int currentNumber = i;
+
+        while (currentNumber > 0) {
+            int lastDigit = currentNumber % 10;
+            digitCounts[lastDigit]++;
+            currentNumber /= 10;
+        }
+    }
+
+    return digitCounts;
+}
+
+int main() {
+    // 从文件读取输入
+    ifstream inputFile("input.txt");
+    int n;
+    inputFile >> n;
+    inputFile.close();
+
+    // 计算数字出现次数
+    vector<int> digitCounts = countDigitOccurrences(n);
+
+    // 输出结果到文件
+    ofstream outputFile("output.txt");
+    for (int i = 0; i < 10; ++i) {
+        outputFile << digitCounts[i] << endl;
+    }
+    outputFile.close();
+
+    return 0;
+}
 
 //1-3
+//最多约数问题
+#include <iostream>
+#include <vector>
 
+using namespace std;
+
+vector<int> countDivisors(int n) {
+    vector<int> divisors(n + 1, 0);
+
+    for (int i = 1; i <= n; ++i) {
+        for (int j = i; j <= n; j += i) {
+            divisors[j]++;
+        }
+    }
+
+    return divisors;
+}
+
+pair<int, int> findNumbersWithMaxDivisors(int a, int b) {
+    vector<int> divisors = countDivisors(b);
+
+    int maxDivisors = 0;
+    pair<int, int> result;
+
+    for (int i = a; i <= b; ++i) {
+        if (divisors[i] > maxDivisors) {
+            maxDivisors = divisors[i];
+            result = make_pair(i, i);
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    int a, b;
+
+    // 从用户输入获取范围
+    cout << "Enter the range [a, b]: ";
+    cin >> a >> b;
+
+    // 找到在给定范围内拥有最多约数的数
+    pair<int, int> result = findNumbersWithMaxDivisors(a, b);
+
+    // 输出结果
+    cout << "Between " << a << " and " << b << ", the number with the most divisors is: " << result.first << endl;
+    cout << "It has " << countDivisors(result.first) << " divisors." << endl;
+
+    return 0;
+}
+
+
+
+//算法分析题
 //2-8
 //设a[0:n-1]是有n个元素的数组，k(0<=k<=n-1)k是一个非负整数,试着设计一个算法将子数组a[0:k-1],a[k:n-1]换位，要求算法在最坏的情况下耗时O(n),且只使用O(1)的辅助空间，C++实现
 #include <iostream>
@@ -86,7 +199,146 @@ int main() {
     return 0;
 }
 
+//算法实现题
+//2-1
+//众数问题
+#include <iostream>
+#include <fstream>
+#include <unordered_map>
+#include <vector>
 
+using namespace std;
+
+pair<int, int> findModeAndCount(const vector<int>& S) {
+    unordered_map<int, int> countMap;
+
+    // 遍历多重集合，计数元素出现的次数
+    for (int element : S) {
+        countMap[element]++;
+    }
+
+    int mode = 0;  // 众数
+    int maxCount = 0;  // 众数的重数
+
+    // 第一轮扫描：找到最大计数
+    for (const auto& entry : countMap) {
+        if (entry.second > maxCount) {
+            maxCount = entry.second;
+        }
+    }
+
+    // 第二轮扫描：找到众数
+    for (const auto& entry : countMap) {
+        if (entry.second == maxCount) {
+            mode = entry.first;
+            break;  // 一旦找到众数，就可以停止扫描
+        }
+    }
+
+    return make_pair(mode, maxCount);
+}
+
+int main() {
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    int n;
+    inputFile >> n;
+
+    vector<int> S(n);
+    for (int i = 0; i < n; ++i) {
+        inputFile >> S[i];
+    }
+
+    // 找到众数和其重数
+    pair<int, int> result = findModeAndCount(S);
+
+    // 输出结果
+    outputFile << "Mode of the multiset: " << result.first << endl;
+    outputFile << "Count of the mode: " << result.second << endl;
+
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+
+//2-2
+//马的Hamilton周游路线问题
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+const int N = 8;  // 棋盘大小
+
+const int moves[8][2] = {{2, 1}, {1, 2}, {-1, 2}, {-2, 1},
+                         {-2, -1}, {-1, -2}, {1, -2}, {2, -1}};
+
+bool isValidMove(int x, int y, vector<vector<int>>& board) {
+    return x >= 0 && x < N && y >= 0 && y < N && board[x][y] == -1;
+}
+
+bool hamiltonianTour(vector<vector<int>>& board, int x, int y, int moveCount) {
+    if (moveCount == N * N) {
+        return true;
+    }
+
+    for (int k = 0; k < 8; ++k) {
+        int nextX = x + moves[k][0];
+        int nextY = y + moves[k][1];
+
+        if (isValidMove(nextX, nextY, board)) {
+            board[nextX][nextY] = moveCount;
+
+            if (hamiltonianTour(board, nextX, nextY, moveCount + 1)) {
+                return true;
+            }
+
+            board[nextX][nextY] = -1;
+        }
+    }
+
+    return false;
+}
+
+void printSolution(const vector<vector<int>>& board, ofstream& outputFile) {
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            outputFile << board[i][j] << "\t";
+        }
+        outputFile << endl;
+    }
+}
+
+int main() {
+    vector<vector<int>> board(N, vector<int>(N, -1));
+
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    int startX, startY;
+    inputFile >> startX >> startY;
+
+    board[startX][startY] = 0;
+
+    if (hamiltonianTour(board, startX, startY, 1)) {
+        outputFile << "Hamiltonian tour found:" << endl;
+        printSolution(board, outputFile);
+    } else {
+        outputFile << "No Hamiltonian tour found." << endl;
+    }
+
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+
+//算法分析题
 //3-3
 
 
@@ -138,7 +390,7 @@ int main() {
 
 //算法的时间复杂度为O(n * C * D)，空间复杂度为O(n * C * D)，其中n是物品种类数，C是背包容量，D是背包体积
 
-
+//算法分析题
 //4-2
 //将最优装载问题的贪心算法推广到两艘船的情形，贪心算法仍能产生最优解吗？
 
@@ -229,7 +481,7 @@ int main() {
     return 0;
 }
 
-
+//算法分析题
 //5-4
 //试设计一个解最大团问题的迭代回溯算法
 #include <iostream>
@@ -303,7 +555,7 @@ int main() {
     return 0;
 }
 
-
+//算法分析题
 //6-4
 //试修改解装载问题和解0-1背包问题的优先队列式分支限界法，使其仅使用一个最大堆来储存活结点，而不必存储产生的解空间树
 #include <iostream>
@@ -489,6 +741,8 @@ int main() {
 }
 (3)
 
+
+//算法分析题
 //7-2
 //设有一个文件含有n个记录
 //(1)试设计一个算法随机抽选该文件的m个记录
@@ -506,4 +760,4 @@ int main() {
 3.重复步骤 2 直到处理完所有记录。
 //7-4
 //设X是含有n个元素的集合，从X中均匀的选取元素，设第K次选取时首次出现重复
-//(1)证明当n充分大时k的期望值为贝塔倍的geng a h
+//(1)证明当n充分大时k的期望值为贝塔倍的
