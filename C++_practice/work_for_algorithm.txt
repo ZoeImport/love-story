@@ -390,6 +390,126 @@ int main() {
 
 //算法的时间复杂度为O(n * C * D)，空间复杂度为O(n * C * D)，其中n是物品种类数，C是背包容量，D是背包体积
 
+//算法实现题
+//3-3
+//石子合并问题
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main() {
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Failed to open files." << endl;
+        return 1;
+    }
+
+    int n;
+    inputFile >> n;
+
+    vector<int> piles(n);
+    for (int i = 0; i < n; ++i) {
+        inputFile >> piles[i];
+    }
+
+    // 动态规划数组
+    vector<vector<int>> dpMin(n, vector<int>(n, INT_MAX));
+    vector<vector<int>> dpMax(n, vector<int>(n, 0));
+
+    // 初始化动态规划数组
+    for (int i = 0; i < n; ++i) {
+        dpMin[i][i] = 0;
+        dpMax[i][i] = 0;
+    }
+
+    // 动态规划
+    for (int len = 2; len <= n; ++len) {
+        for (int i = 0; i <= n - len; ++i) {
+            int j = i + len - 1;
+            for (int k = i; k < j; ++k) {
+                int cost = dpMax[i][k] + dpMax[k + 1][j] + piles[i] * piles[k + 1] * piles[j + 1];
+                dpMin[i][j] = min(dpMin[i][j], dpMin[i][k] + dpMin[k + 1][j] + piles[i] * piles[k + 1] * piles[j + 1]);
+                dpMax[i][j] = max(dpMax[i][j], cost);
+            }
+        }
+    }
+
+    int minScore = dpMin[0][n - 1];
+    int maxScore = dpMax[0][n - 1];
+
+    // 输出结果到文件
+    outputFile << "Minimum Score: " << minScore << endl;
+    outputFile << "Maximum Score: " << maxScore << endl;
+
+    // 关闭文件
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+//3-4
+//数字三角形问题
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+int maxPathSum(const vector<vector<int>>& triangle) {
+    int n = triangle.size();
+
+    // 从倒数第二行开始，自底向上计算最大路径和
+    for (int i = n - 2; i >= 0; --i) {
+        for (int j = 0; j <= i; ++j) {
+            triangle[i][j] += max(triangle[i + 1][j], triangle[i + 1][j + 1]);
+        }
+    }
+
+    // 最终结果存储在三角形的顶部
+    return triangle[0][0];
+}
+
+int main() {
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Failed to open files." << endl;
+        return 1;
+    }
+
+    int n;
+    inputFile >> n;
+
+    vector<vector<int>> triangle(n, vector<int>(n, 0));
+
+    // 读取数字三角形
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j <= i; ++j) {
+            inputFile >> triangle[i][j];
+        }
+    }
+
+    // 计算最大路径和
+    int result = maxPathSum(triangle);
+
+    // 输出结果到文件
+    outputFile << "Maximum path sum: " << result << endl;
+
+    // 关闭文件
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+
 //算法分析题
 //4-2
 //将最优装载问题的贪心算法推广到两艘船的情形，贪心算法仍能产生最优解吗？
@@ -414,6 +534,155 @@ int main() {
         1^(n-1)     i=1;
         1^(n-i)0    2<=i<=n; 
     }
+
+//算法实现题
+//4-5
+//程序存储问题
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Program {
+    int length;
+    int index;
+};
+
+bool comparePrograms(const Program& p1, const Program& p2) {
+    return p1.length < p2.length;
+}
+
+void maxStorage(const vector<Program>& programs, int L, vector<int>& result) {
+    int n = programs.size();
+    vector<vector<int>> dp(n + 1, vector<int>(L + 1, 0));
+
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= L; ++j) {
+            if (programs[i - 1].length <= j) {
+                dp[i][j] = max(dp[i - 1][j], dp[i - 1][j - programs[i - 1].length] + 1);
+            } else {
+                dp[i][j] = dp[i - 1][j];
+            }
+        }
+    }
+
+    int i = n, j = L;
+    while (i > 0 && j > 0) {
+        if (dp[i][j] != dp[i - 1][j]) {
+            result.push_back(programs[i - 1].index);
+            j -= programs[i - 1].length;
+        }
+        --i;
+    }
+
+    reverse(result.begin(), result.end());
+}
+
+int main() {
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Failed to open files." << endl;
+        return 1;
+    }
+
+    int n, L;
+    inputFile >> n >> L;
+
+    vector<Program> programs(n);
+    for (int i = 0; i < n; ++i) {
+        programs[i].index = i + 1;
+        inputFile >> programs[i].length;
+    }
+
+    sort(programs.begin(), programs.end(), comparePrograms);
+
+    vector<int> result;
+    maxStorage(programs, L, result);
+
+    // 输出结果到文件
+    outputFile << "Number of programs stored: " << result.size() << endl;
+    outputFile << "Stored program indices: ";
+    for (int i = 0; i < result.size(); ++i) {
+        outputFile << result[i] << " ";
+    }
+    outputFile << endl;
+
+    // 关闭文件
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+
+//4-6
+//最优次序问题
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Customer {
+    int index;
+    int serviceTime;
+};
+
+bool compareCustomers(const Customer& c1, const Customer& c2) {
+    return c1.serviceTime < c2.serviceTime;
+}
+
+int main() {
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Failed to open files." << endl;
+        return 1;
+    }
+
+    int n;
+    inputFile >> n;
+
+    vector<Customer> customers(n);
+    for (int i = 0; i < n; ++i) {
+        customers[i].index = i + 1;
+        inputFile >> customers[i].serviceTime;
+    }
+
+    sort(customers.begin(), customers.end(), compareCustomers);
+
+    // 计算平均等待时间
+    double averageWaitTime = 0.0;
+    double totalWaitTime = 0.0;
+
+    for (int i = 0; i < n; ++i) {
+        totalWaitTime += customers[i].serviceTime * i;
+    }
+
+    averageWaitTime = totalWaitTime / n;
+
+    // 输出服务次序到文件
+    outputFile << "Optimal service order:" << endl;
+    for (int i = 0; i < n; ++i) {
+        outputFile << "Customer " << customers[i].index << " (Service Time: " << customers[i].serviceTime << ")" << endl;
+    }
+
+    outputFile << "Average Wait Time: " << averageWaitTime << endl;
+
+    // 关闭文件
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+
 
 //5-3
 //重写0-1背包问题的回溯法，使算法能输出最优解
@@ -554,6 +823,135 @@ int main() {
 
     return 0;
 }
+
+//算法实现题
+//5-3
+//最小重量及其设计问题
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Component {
+    int weight;
+    int price;
+};
+
+bool compareComponents(const Component& c1, const Component& c2) {
+    return c1.price < c2.price;
+}
+
+int main() {
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Failed to open files." << endl;
+        return 1;
+    }
+
+    int n, m, c;
+    inputFile >> n >> m >> c;
+
+    vector<vector<Component>> components(n, vector<Component>(m));
+
+    // 读取部件信息
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            inputFile >> components[i][j].weight >> components[i][j].price;
+        }
+    }
+
+    // 动态规划数组
+    vector<vector<int>> dp(m + 1, vector<int>(c + 1, INT_MAX));
+
+    // 初始化动态规划数组
+    for (int j = 0; j <= m; ++j) {
+        dp[j][0] = 0;
+    }
+
+    // 动态规划
+    for (int i = 1; i <= n; ++i) {
+        for (int j = 1; j <= m; ++j) {
+            for (int k = components[i - 1][0].price; k <= c; ++k) {
+                dp[j][k] = min(dp[j][k], dp[j - 1][k - components[i - 1][j - 1].price] + components[i - 1][j - 1].weight);
+            }
+        }
+    }
+
+    // 寻找最小重量
+    int minWeight = INT_MAX;
+    for (int k = 0; k <= c; ++k) {
+        minWeight = min(minWeight, dp[m][k]);
+    }
+
+    // 输出结果到文件
+    outputFile << "Minimum Weight: " << minWeight << endl;
+
+    // 关闭文件
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+//5-9
+//拉丁矩阵问题
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+void generateLatinSquare(int n, vector<vector<int>>& square) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            square[i][j] = (i + j) % n + 1;
+        }
+    }
+}
+
+void printLatinSquare(const vector<vector<int>>& square, ofstream& outputFile) {
+    for (const auto& row : square) {
+        for (int num : row) {
+            outputFile << num << " ";
+        }
+        outputFile << endl;
+    }
+}
+
+int main() {
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Failed to open files." << endl;
+        return 1;
+    }
+
+    int n;
+    inputFile >> n;
+
+    // 初始化拉丁矩阵
+    vector<vector<int>> latinSquare(n, vector<int>(n, 0));
+
+    // 生成拉丁矩阵
+    generateLatinSquare(n, latinSquare);
+
+    // 输出结果到文件
+    outputFile << "Latin Square of Order " << n << ":" << endl;
+    printLatinSquare(latinSquare, outputFile);
+
+    // 关闭文件
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+
 
 //算法分析题
 //6-4
@@ -742,6 +1140,177 @@ int main() {
 (3)
 
 
+
+//算法实现题
+//6-6
+//N后问题
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+bool isSafe(int row, int col, const vector<int>& placement) {
+    // 检查是否和之前的皇后在同一列或同一对角线上
+    for (int i = 0; i < row; ++i) {
+        if (placement[i] == col || abs(placement[i] - col) == abs(i - row)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void solveNQueens(int row, int N, vector<int>& placement, vector<vector<string>>& result) {
+    if (row == N) {
+        // 当前解法合法，将结果加入到result中
+        vector<string> solution;
+        for (int i = 0; i < N; ++i) {
+            string rowStr(N, '.');
+            rowStr[placement[i]] = 'Q';
+            solution.push_back(rowStr);
+        }
+        result.push_back(solution);
+        return;
+    }
+
+    for (int col = 0; col < N; ++col) {
+        if (isSafe(row, col, placement)) {
+            placement[row] = col;
+            solveNQueens(row + 1, N, placement, result);
+        }
+    }
+}
+
+void printSolutions(const vector<vector<string>>& result, ofstream& outputFile) {
+    for (const auto& solution : result) {
+        for (const string& row : solution) {
+            outputFile << row << endl;
+        }
+        outputFile << endl;
+    }
+}
+
+int main() {
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Failed to open files." << endl;
+        return 1;
+    }
+
+    int N;
+    inputFile >> N;
+
+    // 存储皇后的摆放方式
+    vector<int> placement(N, 0);
+
+    // 存储所有解法
+    vector<vector<string>> result;
+
+    // 解决N皇后问题
+    solveNQueens(0, N, placement, result);
+
+    // 输出结果到文件
+    printSolutions(result, outputFile);
+
+    // 关闭文件
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+//6-2
+//最小权顶点覆盖问题
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <set>
+
+using namespace std;
+
+struct Vertex {
+    int index;
+    int weight;
+};
+
+bool operator<(const Vertex& v1, const Vertex& v2) {
+    return v1.weight < v2.weight;
+}
+
+void minWeightVertexCover(int V, const vector<pair<int, int>>& edges, const vector<Vertex>& vertices, set<int>& cover) {
+    set<pair<int, int>> edgeSet(edges.begin(), edges.end());
+    set<Vertex> vertexSet(vertices.begin(), vertices.end());
+
+    while (!edgeSet.empty()) {
+        pair<int, int> edge = *edgeSet.begin();
+
+        int u = edge.first;
+        int v = edge.second;
+
+        if (vertexSet.lower_bound(Vertex{u, 0}) != vertexSet.end() &&
+            vertexSet.lower_bound(Vertex{v, 0}) != vertexSet.end()) {
+            Vertex uVertex = *vertexSet.lower_bound(Vertex{u, 0});
+            Vertex vVertex = *vertexSet.lower_bound(Vertex{v, 0});
+
+            if (uVertex.weight <= vVertex.weight) {
+                cover.insert(u);
+                vertexSet.erase(uVertex);
+            } else {
+                cover.insert(v);
+                vertexSet.erase(vVertex);
+            }
+        }
+
+        edgeSet.erase(edge);
+    }
+}
+
+int main() {
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Failed to open files." << endl;
+        return 1;
+    }
+
+    int V, E;
+    inputFile >> V >> E;
+
+    vector<pair<int, int>> edges(E);
+    vector<Vertex> vertices(V);
+
+    for (int i = 0; i < E; ++i) {
+        inputFile >> edges[i].first >> edges[i].second;
+    }
+
+    for (int i = 0; i < V; ++i) {
+        vertices[i].index = i + 1;
+        inputFile >> vertices[i].weight;
+    }
+
+    set<int> cover;
+    minWeightVertexCover(V, edges, vertices, cover);
+
+    // 输出结果到文件
+    outputFile << "Minimum Weight Vertex Cover:" << endl;
+    for (int vertex : cover) {
+        outputFile << vertex << " ";
+    }
+    outputFile << endl;
+
+    // 关闭文件
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+
+
+
 //算法分析题
 //7-2
 //设有一个文件含有n个记录
@@ -761,3 +1330,141 @@ int main() {
 //7-4
 //设X是含有n个元素的集合，从X中均匀的选取元素，设第K次选取时首次出现重复
 //(1)证明当n充分大时k的期望值为贝塔倍的
+
+
+
+
+
+//算法实现题
+//7-4
+//逆矩阵问题
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+// 函数用于将矩阵转换为单位矩阵
+void makeIdentity(int n, vector<vector<double>>& mat, vector<vector<double>>& identity) {
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            identity[i][j] = (i == j) ? 1.0 : 0.0;
+        }
+    }
+}
+
+// 函数用于进行Gauss-Jordan消元法
+void gaussJordanElimination(int n, vector<vector<double>>& mat, vector<vector<double>>& identity) {
+    for (int i = 0; i < n; ++i) {
+        // 将对角线元素归一
+        double pivot = mat[i][i];
+        for (int j = 0; j < n; ++j) {
+            mat[i][j] /= pivot;
+            identity[i][j] /= pivot;
+        }
+
+        // 将其他行的元素变为零
+        for (int k = 0; k < n; ++k) {
+            if (k != i) {
+                double factor = mat[k][i];
+                for (int j = 0; j < n; ++j) {
+                    mat[k][j] -= factor * mat[i][j];
+                    identity[k][j] -= factor * identity[i][j];
+                }
+            }
+        }
+    }
+}
+
+int main() {
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Failed to open files." << endl;
+        return 1;
+    }
+
+    int n;
+    inputFile >> n;
+
+    // 读取矩阵
+    vector<vector<double>> matrix(n, vector<double>(n, 0));
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            inputFile >> matrix[i][j];
+        }
+    }
+
+    // 创建单位矩阵
+    vector<vector<double>> identity(n, vector<double>(n, 0));
+    makeIdentity(n, matrix, identity);
+
+    // 进行Gauss-Jordan消元法
+    gaussJordanElimination(n, matrix, identity);
+
+    // 输出结果到文件
+    outputFile << "Inverse Matrix:" << endl;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            outputFile << identity[i][j] << " ";
+        }
+        outputFile << endl;
+    }
+
+    // 关闭文件
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
+
+//7-2
+//素数测试问题
+#include <iostream>
+#include <fstream>
+#include <cmath>
+
+using namespace std;
+
+bool isPrime(int n) {
+    // 小于等于1的数不是素数
+    if (n <= 1) {
+        return false;
+    }
+
+    // 从2到sqrt(n)检查是否有因子
+    for (int i = 2; i <= sqrt(n); ++i) {
+        if (n % i == 0) {
+            return false; // 有因子，不是素数
+        }
+    }
+
+    return true; // 没有因子，是素数
+}
+
+int main() {
+    ifstream inputFile("input.txt");
+    ofstream outputFile("output.txt");
+
+    if (!inputFile.is_open() || !outputFile.is_open()) {
+        cerr << "Failed to open files." << endl;
+        return 1;
+    }
+
+    int number;
+    inputFile >> number;
+
+    // 进行素数测试
+    bool result = isPrime(number);
+
+    // 输出结果到文件
+    outputFile << "Is " << number << " a prime number? ";
+    outputFile << (result ? "Yes" : "No") << endl;
+
+    // 关闭文件
+    inputFile.close();
+    outputFile.close();
+
+    return 0;
+}
