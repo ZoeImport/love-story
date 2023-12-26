@@ -1,6 +1,7 @@
 #include "App.h"
 #include "HashTable.h"
 #include "UserInfo.h"
+#include <fstream>
 #include <iostream>
 #include <string>
 
@@ -16,30 +17,33 @@ int menuMsgOut() {
   return 0;
 }
 
-
-UserInfo searchByPhoneNumber(HashTable &hashTable, std::string &phoneNumber){
-    auto index=stringToInt(phoneNumber);
-    return hashTable[index];
+UserInfo searchByPhoneNumber(HashTable &hashTable, std::string &phoneNumber) {
+  auto index = strToInt(phoneNumber);
+  return hashTable[index];
 }
 
-UserInfo searchByUserName(HashTable &hashTable, std::string &userName){
-    auto index =stringToInt(userName);
-    return hashTable[index];
+UserInfo searchByUserName(HashTable &hashTable, std::string &userName) {
+  auto index = strToInt(userName);
+  return hashTable[index];
 }
 
-int AppFunction(std::ifstream &ifs, HashTable &hashTableByPhoneNumber,HashTable& hashTableByUserName,
-                std::vector<UserInfo> &user_info_list) {
-  std::string inputInfo="";
-  int menuChoose=0;
-  initHashTableByPhoneNumber(ifs, hashTableByPhoneNumber, user_info_list);
-  initHashTableByPhoneNumber(ifs, hashTableByUserName, user_info_list);
+int AppFunction(std::string filePath, HashTable &hashTableByPhoneNumber,
+                HashTable &hashTableByUserName,
+                std::vector<UserInfo> &user_info_list_phoneNumber,std::vector<UserInfo> &user_info_list_userName) {
+  std::ifstream ifs_phoneNumber(filePath);
+  std::ifstream ifs_userName(filePath);
+  std::string inputInfo = "";
+  int menuChoose = 0;
+  initHashTableByUserName(ifs_phoneNumber, hashTableByUserName, user_info_list_userName);
+  initHashTableByPhoneNumber(ifs_userName, hashTableByPhoneNumber, user_info_list_phoneNumber);
+  ifs_phoneNumber.close();
+  ifs_userName.close();
   menuMsgOut();
   while (true) {
     std::cin >> menuChoose;
     switch (menuChoose) {
     case 0:
       std::cout << "正在退出电话号码查询系统..." << std::endl;
-      ifs.close();
       break;
     case 1:
       std::cin >> inputInfo;
@@ -52,8 +56,18 @@ int AppFunction(std::ifstream &ifs, HashTable &hashTableByPhoneNumber,HashTable&
                 << searchByUserName(hashTableByUserName, inputInfo);
       break;
     }
-    if(!menuChoose)break;
-    std::cout<<"============================"<<std::endl;
+    if (!menuChoose)
+      break;
+    std::cout << "============================" << std::endl;
   }
+  return 0;
+}
+
+int RunSystem(std::string filePath){
+   HashTable hashTableByPhoneNumber;
+  HashTable hashTableByUserName;
+  std::vector<UserInfo> user_info_list_phoneNumber;
+  std::vector<UserInfo> user_info_list_userName;
+  AppFunction(filePath, hashTableByPhoneNumber,hashTableByUserName,user_info_list_phoneNumber,user_info_list_userName);
   return 0;
 }

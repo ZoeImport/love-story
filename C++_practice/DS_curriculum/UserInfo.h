@@ -30,6 +30,6 @@ std::string readUserInfo( std::ifstream &ifs,std::vector<UserInfo>& user_infos);
 std::string writeUserInfo( std::ofstream &ofs,const UserInfo& userInfo);
 std::string writeUserInfos( std::ofstream &ofs,const std::vector<UserInfo>& userInfos);
 
-int stringToInt(std::string str);
+int strToInt(std::string str);
 
 #endif

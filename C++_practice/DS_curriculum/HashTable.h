@@ -15,9 +15,12 @@ class HashTable{
         int insert(int key,const UserInfo& value);
         UserInfo get(int key);
         UserInfo& operator[](int key);
+        std::vector<UserInfo> getAllUserInfo();
         // UserInfo& operator[](std::string key);
+
+        
     private:
-        static const int TableSize=100;
+        static const int TableSize=90;
         std::vector<std::list<std::pair<int,UserInfo>>> table;
 
 }; 

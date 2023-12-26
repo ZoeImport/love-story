@@ -15,7 +15,10 @@
 int menuMsgOut();
 UserInfo searchByUserName(HashTable &hashTable, std::string &userName);
 UserInfo searchByPhoneNumber(HashTable &hashTable, std::string &phoneNumber);
-int AppFunction(std::ifstream &ifs, HashTable &hashTableByPhoneNumber,HashTable& hashTableByUserName,
-                std::vector<UserInfo> &user_info_list);
+int AppFunction(std::ifstream &ifs, HashTable &hashTableByPhoneNumber,
+                HashTable &hashTableByUserName,
+                std::vector<UserInfo> &user_info_list_phoneNumber,
+                std::vector<UserInfo> &user_info_list_userName);
+int RunSystem(std::string filePath);
 
 #endif

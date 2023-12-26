@@ -33,6 +33,7 @@ std::string readUserInfo(std::ifstream &ifs,
                  line.substr(index_NM + 3, index_AD - index_NM - 4),
                  line.substr(index_AD + 3, 100)));
   }
+  ifs.close();
   return user_infos.empty() ? "there is no user info in the txt file"
                             : " read info successfully !!!";
 }
@@ -43,7 +44,7 @@ std::ostream &operator<<(std::ostream &cout, const UserInfo &user_info) {
        << "|Address: " << user_info.getAddress() << std::endl;
   return cout;
 }
-int stringToInt(std::string str) {
+int strToInt(std::string str) {
   int uniqueInteger = 0;
     std::unordered_set<char> uniqueChars;
     for (char ch : str) {

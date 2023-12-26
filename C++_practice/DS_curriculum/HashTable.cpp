@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+
+
 int HashTable::hashFUnction(int key){
     return key%TableSize;
 }
@@ -36,6 +38,18 @@ UserInfo& HashTable::operator[](int key){
     return table[index].back().second;
 }
 
+std::vector<UserInfo> HashTable::getAllUserInfo(){
+    std::vector<UserInfo> allUsers;
+
+    for (const auto& bucket : table) {
+        for (const auto& pair : bucket) {
+            allUsers.push_back(pair.second);
+        }
+    }
+
+    return allUsers;
+}
+
 // UserInfo& HashTable::operator[](std::string key){
 //     int index=hashFUnction(stringToInt(key));
 //     for (auto& atom :table[index]) {
@@ -48,24 +62,19 @@ UserInfo& HashTable::operator[](int key){
 //     return table[index].back().second;
 // }
 
-HashTable& initHashTableByPhoneNumber(std::ifstream& ifs, HashTable &hashTable,std::vector<UserInfo>& user_info_list){
-    for (auto index=0;index<user_info_list.size();++index) {
-        user_info_list.pop_back();
-    }
-    readUserInfo(ifs,user_info_list);
-    for (auto atom :user_info_list) {
-        hashTable[stringToInt(atom.getPhoneNumber())]=atom;
+HashTable& initHashTableByPhoneNumber(std::ifstream& ifs, HashTable &hashTable,std::vector<UserInfo>& user_info_list_phoneNumber){
+    readUserInfo(ifs,user_info_list_phoneNumber);
+    for (auto atom :user_info_list_phoneNumber) {
+        hashTable[strToInt(atom.getPhoneNumber())]=atom;
     }
     return hashTable;
 }
 
-HashTable& initHashTableByUserName(std::ifstream& ifs, HashTable &hashTable,std::vector<UserInfo>& user_info_list){
-    for (auto index=0;index<user_info_list.size();++index) {
-        user_info_list.pop_back();
+HashTable& initHashTableByUserName(std::ifstream& ifs, HashTable &hashTable,std::vector<UserInfo>& user_info_list_userName){
+    readUserInfo(ifs,user_info_list_userName);
+    for (auto atom :user_info_list_userName) {
+        hashTable[strToInt(atom.getUserName())]=atom;
     }
-    readUserInfo(ifs,user_info_list);
-    for (auto atom :user_info_list) {
-        hashTable[stringToInt(atom.getUserName())]=atom;
-    }
+
     return hashTable;
 }
