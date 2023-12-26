@@ -16,6 +16,7 @@ class UserInfo{
         void setPhoneNumber(const std::string& PhoneNumber);
         void setUserName(const std::string& UserName);
         void setAddress(const std::string& address);
+        bool isEmpty();
         // friend std::ostream& operator<<(std::ostream &cout,const UserInfo& user_info);
     private:
         std::string PhoneNumber;

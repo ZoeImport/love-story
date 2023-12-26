@@ -44,6 +44,11 @@ std::ostream &operator<<(std::ostream &cout, const UserInfo &user_info) {
        << "|Address: " << user_info.getAddress() << std::endl;
   return cout;
 }
+
+bool UserInfo::isEmpty(){
+  return this->getPhoneNumber()==""&&this->getUserName()==""&&this->getAddress()=="";
+}
+
 int strToInt(std::string str) {
   int uniqueInteger = 0;
     std::unordered_set<char> uniqueChars;
