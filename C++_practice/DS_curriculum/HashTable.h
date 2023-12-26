@@ -25,7 +25,7 @@ class HashTable{
 
 }; 
 
-HashTable& initHashTableByPhoneNumber(std::ifstream& ifs, HashTable &hashTable,std::vector<UserInfo>& user_info_list);
-HashTable& initHashTableByUserName(std::ifstream& ifs, HashTable &hashTable,std::vector<UserInfo>& user_info_list);
+// HashTable& initHashTableByPhoneNumber(std::ifstream& ifs, HashTable &hashTable,std::vector<UserInfo>& user_info_list);
+// HashTable& initHashTableByUserName(std::ifstream& ifs, HashTable &hashTable,std::vector<UserInfo>& user_info_list);
 
 #endif

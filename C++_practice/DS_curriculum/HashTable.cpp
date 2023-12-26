@@ -62,19 +62,20 @@ std::vector<UserInfo> HashTable::getAllUserInfo(){
 //     return table[index].back().second;
 // }
 
-HashTable& initHashTableByPhoneNumber(std::ifstream& ifs, HashTable &hashTable,std::vector<UserInfo>& user_info_list_phoneNumber){
-    readUserInfo(ifs,user_info_list_phoneNumber);
-    for (auto atom :user_info_list_phoneNumber) {
-        hashTable[strToInt(atom.getPhoneNumber())]=atom;
-    }
-    return hashTable;
-}
+// HashTable& initHashTableByPhoneNumber(std::ifstream& ifs, HashTable
+// &hashTable,std::vector<UserInfo>& user_info_list_phoneNumber){
+//     readUserInfo(ifs,user_info_list_phoneNumber);
+//     for (auto atom :user_info_list_phoneNumber) {
+//         hashTable[strToInt(atom.getPhoneNumber())]=atom;
+//     }
+//     return hashTable;
+// }
 
-HashTable& initHashTableByUserName(std::ifstream& ifs, HashTable &hashTable,std::vector<UserInfo>& user_info_list_userName){
-    readUserInfo(ifs,user_info_list_userName);
-    for (auto atom :user_info_list_userName) {
-        hashTable[strToInt(atom.getUserName())]=atom;
-    }
-
-    return hashTable;
-}
+// HashTable& initHashTableByUserName(std::ifstream& ifs, HashTable
+// &hashTable,std::vector<UserInfo>& user_info_list_userName){
+//     readUserInfo(ifs,user_info_list_userName);
+//     for (auto atom :user_info_list_userName) {
+//         hashTable[strToInt(atom.getUserName())]=atom;
+//     }
+//     return hashTable;
+// }

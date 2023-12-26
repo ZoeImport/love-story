@@ -1,5 +1,5 @@
 
-#include "OpenAddressingHashTable.h"
+#include "OpenAddressHashTable.h"
 #include "UserInfo.h"
 #include <cstddef>
 #include <iostream>
@@ -45,22 +45,20 @@ UserInfo &OpenAddressHashTable::operator[](int Key) {
 }
 
 
-OpenAddressHashTable& initOpenAddressHashTableByPhoneNumber(std::ifstream& ifs, OpenAddressHashTable &hashTable,std::vector<UserInfo>& user_info_list_phoneNumber){
-    readUserInfo(ifs,user_info_list_phoneNumber);
-    for (auto atom :user_info_list_phoneNumber) {
-        hashTable[strToInt(atom.getPhoneNumber())]=atom;
-    }
-    hashTable.getAllUserInfos();
-    return hashTable;
-}
-OpenAddressHashTable& initOpenAddressHashTableByUserName(std::ifstream& ifs, OpenAddressHashTable &hashTable,std::vector<UserInfo>& user_info_list_userName){
-    readUserInfo(ifs,user_info_list_userName);
-    for (auto atom :user_info_list_userName) {
-        hashTable[strToInt(atom.getUserName())]=atom;
-    }
-    hashTable.getAllUserInfos();
-    return hashTable;
-}
+// OpenAddressHashTable& initOpenAddressHashTableByPhoneNumber(std::ifstream& ifs, OpenAddressHashTable &hashTable,std::vector<UserInfo>& user_info_list_phoneNumber){
+//     readUserInfo(ifs,user_info_list_phoneNumber);
+//     for (auto atom :user_info_list_phoneNumber) {
+//         hashTable[strToInt(atom.getPhoneNumber())]=atom;
+//     }
+//     return hashTable;
+// }
+// OpenAddressHashTable& initOpenAddressHashTableByUserName(std::ifstream& ifs, OpenAddressHashTable &hashTable,std::vector<UserInfo>& user_info_list_userName){
+//     readUserInfo(ifs,user_info_list_userName);
+//     for (auto atom :user_info_list_userName) {
+//         hashTable[strToInt(atom.getUserName())]=atom;
+//     }
+//     return hashTable;
+// }
 
 
 void OpenAddressHashTable::getAllUserInfos(){

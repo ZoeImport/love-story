@@ -21,13 +21,13 @@ private:
   const int static TABLE_SIZE = 90;
 };
 
-OpenAddressHashTable &
-initOpenAddressHashTableByPhoneNumber(std::ifstream &ifs,
-                                      OpenAddressHashTable &hashTable,
-                                      std::vector<UserInfo> &user_info_list);
-OpenAddressHashTable &
-initOpenAddressHashTableByUserName(std::ifstream &ifs,
-                                   OpenAddressHashTable &hashTable,
-                                   std::vector<UserInfo> &user_info_list);
+// OpenAddressHashTable &
+// initOpenAddressHashTableByPhoneNumber(std::ifstream &ifs,
+//                                       OpenAddressHashTable &hashTable,
+//                                       std::vector<UserInfo> &user_info_list);
+// OpenAddressHashTable &
+// initOpenAddressHashTableByUserName(std::ifstream &ifs,
+//                                    OpenAddressHashTable &hashTable,
+//                                    std::vector<UserInfo> &user_info_list);
 
 #endif
