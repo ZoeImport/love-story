@@ -10,9 +10,8 @@
 
 using namespace std;
 
-int main(){
-    LinkedList<ClothesOrder>*list=new LinkedList<ClothesOrder>;
-     appFunction(list);
-    
-    
+int main()
+{
+  LinkedList<ClothesOrder> *list = new LinkedList<ClothesOrder>;
+  appFunction(list);
 }
