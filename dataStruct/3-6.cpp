@@ -1,23 +1,23 @@
-//ÎÄ¼şÃû:exp3-6.cpp
+//æ–‡ä»¶å:exp3-6.cpp
 #include <stdio.h>
 #include <malloc.h>
 typedef struct qnode
 {
-    int data;					//²¡ÀúºÅ
-    struct qnode *next;			//ÏÂÒ»¸ö½ÚµãÖ¸Õë
-} QNode;						//Á´¶Ó½ÚµãÀàĞÍ
+    int data;					//ç—…å†å·
+    struct qnode *next;			//ä¸‹ä¸€ä¸ªèŠ‚ç‚¹æŒ‡é’ˆ
+} QNode;						//é“¾é˜ŸèŠ‚ç‚¹ç±»å‹
 typedef struct  	
 {
     QNode *front,*rear;
-} QuType;						//ÉùÃ÷Á´¶ÓÀàĞÍ
-void Destroyqueue(QuType *&qu)	//ÊÍ·ÅÁ´¶Ó
+} QuType;						//å£°æ˜é“¾é˜Ÿç±»å‹
+void Destroyqueue(QuType *&qu)	//é‡Šæ”¾é“¾é˜Ÿ
 {
 	QNode *pre,*p;
 	pre=qu->front; 
-	if (pre!=NULL)				//ÈôÁ´¶Ó²»¿Õ
+	if (pre!=NULL)				//è‹¥é“¾é˜Ÿä¸ç©º
 	{
 		p=pre->next;
-		while (p!=NULL)			//ÊÍ·Å¶ÓÖĞËùÓĞÊı¾İ½Úµã
+		while (p!=NULL)			//é‡Šæ”¾é˜Ÿä¸­æ‰€æœ‰æ•°æ®èŠ‚ç‚¹
 		{
 			free(pre);
 			pre=p;
@@ -25,9 +25,9 @@ void Destroyqueue(QuType *&qu)	//ÊÍ·ÅÁ´¶Ó
 		}
 		free(pre);
 	}
-	free(qu);					//ÊÍ·ÅÁ´¶Ó½Úµã
+	free(qu);					//é‡Šæ”¾é“¾é˜ŸèŠ‚ç‚¹
 }
-bool exist(QuType *qu,int no)	//¶ÓÁĞÖĞÊÇ·ñÓĞno²¡ÀúºÅµÄ²¡ÈË
+bool exist(QuType *qu,int no)	//é˜Ÿåˆ—ä¸­æ˜¯å¦æœ‰noç—…å†å·çš„ç—…äºº
 {
 	bool find=false;
 	QNode *p=qu->front;
@@ -40,57 +40,57 @@ bool exist(QuType *qu,int no)	//¶ÓÁĞÖĞÊÇ·ñÓĞno²¡ÀúºÅµÄ²¡ÈË
 	}
 	return find;
 }
-void SeeDoctor()				//Ä£Äâ²¡ÈË¿´²¡µÄ¹ı³Ì
+void SeeDoctor()				//æ¨¡æ‹Ÿç—…äººçœ‹ç—…çš„è¿‡ç¨‹
 {
     int sel,no;
 	bool flag=true;
     QuType *qu;
     QNode *p;
-    qu=(QuType *)malloc(sizeof(QuType));	//´´½¨¿Õ¶Ó
+    qu=(QuType *)malloc(sizeof(QuType));	//åˆ›å»ºç©ºé˜Ÿ
     qu->front=qu->rear=NULL;
-    while (flag) 							//Ñ­»·Ö´ĞĞ
+    while (flag) 							//å¾ªç¯æ‰§è¡Œ
 	{
-       	printf(">1:ÅÅ¶Ó 2:¾ÍÕï 3:²é¿´ÅÅ¶Ó 4.²»ÔÙÅÅ¶Ó,ÓàÏÂÒÀ´Î¾ÍÕï 5:ÏÂ°à  ÇëÑ¡Ôñ:");
+       	printf(">1:æ’é˜Ÿ 2:å°±è¯Š 3:æŸ¥çœ‹æ’é˜Ÿ 4.ä¸å†æ’é˜Ÿ,ä½™ä¸‹ä¾æ¬¡å°±è¯Š 5:ä¸‹ç­  è¯·é€‰æ‹©:");
 		scanf("%d",&sel); 
 		switch(sel) 
 		{
-		case 1:	printf("  ÊäÈë²¡ÀúºÅ:");
+		case 1:	printf("  è¾“å…¥ç—…å†å·:");
 			while (true)
 			{	
 				scanf("%d",&no);
 				if (exist(qu,no))
-					printf("  ÊäÈëµÄ²¡ÀúºÅÖØ¸´,ÖØĞÂÊäÈë:");
+					printf("  è¾“å…¥çš„ç—…å†å·é‡å¤,é‡æ–°è¾“å…¥:");
 				else
 					break;
 			};
-			p=(QNode *)malloc(sizeof(QNode));	//´´½¨½Úµã
+			p=(QNode *)malloc(sizeof(QNode));	//åˆ›å»ºèŠ‚ç‚¹
 			p->data=no;p->next=NULL;
-			if (qu->rear==NULL)					//µÚÒ»¸ö²¡ÈËÅÅ¶Ó
+			if (qu->rear==NULL)					//ç¬¬ä¸€ä¸ªç—…äººæ’é˜Ÿ
 				qu->front=qu->rear=p;
 			else
 			{
-				qu->rear->next=p; qu->rear=p;	//½«p½Úµã½ø¶Ó
+				qu->rear->next=p; qu->rear=p;	//å°†pèŠ‚ç‚¹è¿›é˜Ÿ
 			}
 			break;
-		case 2:	if (qu->front==NULL)				//¶Ó¿Õ
-					printf("  Ã»ÓĞÅÅ¶ÓµÄ²¡ÈË!\n");
-			    else								//¶Ó²»¿Õ
+		case 2:	if (qu->front==NULL)				//é˜Ÿç©º
+					printf("  æ²¡æœ‰æ’é˜Ÿçš„ç—…äºº!\n");
+			    else								//é˜Ÿä¸ç©º
 				{
 					p=qu->front;
-                   	printf("  >>²¡ÈË%d¾ÍÕï\n",p->data);
-                   	if (qu->rear==p)			//Ö»ÓĞÒ»¸ö²¡ÈËÅÅ¶ÓµÄÇé¿ö
+                   	printf("  >>ç—…äºº%då°±è¯Š\n",p->data);
+                   	if (qu->rear==p)			//åªæœ‰ä¸€ä¸ªç—…äººæ’é˜Ÿçš„æƒ…å†µ
 						qu->front=qu->rear=NULL;
 				   	else
 					   	qu->front=p->next;
 				   	free(p);
 			   	}
                	break;
-          case 3:if (qu->front==NULL)  			//¶Ó¿Õ
-                   	printf("  Ã»ÓĞÅÅÁĞµÄ²¡ÈË!\n");
-			     else 							//¶Ó²»¿Õ
+          case 3:if (qu->front==NULL)  			//é˜Ÿç©º
+                   	printf("  æ²¡æœ‰æ’åˆ—çš„ç—…äºº!\n");
+			     else 							//é˜Ÿä¸ç©º
 				 {
 					 p=qu->front;
-					 printf("  >>ÅÅ¶Ó²¡ÈË:");
+					 printf("  >>æ’é˜Ÿç—…äºº:");
 					 while (p!=NULL) 
 					 {
 						 printf("%d ",p->data);
@@ -99,12 +99,12 @@ void SeeDoctor()				//Ä£Äâ²¡ÈË¿´²¡µÄ¹ı³Ì
 					 printf("\n");
 				 }
 				 break;
-          case 4:if (qu->front==NULL)			//¶Ó¿Õ
-                    printf("  >>Ã»ÓĞÅÅÁĞµÄ²¡ÈË!\n");
-			     else							//¶Ó²»¿Õ
+          case 4:if (qu->front==NULL)			//é˜Ÿç©º
+                    printf("  >>æ²¡æœ‰æ’åˆ—çš„ç—…äºº!\n");
+			     else							//é˜Ÿä¸ç©º
 				 {
 					 p=qu->front;
-					 printf("  >>²¡ÈË°´ÒÔÏÂË³Ğò¾ÍÕï:");
+					 printf("  >>ç—…äººæŒ‰ä»¥ä¸‹é¡ºåºå°±è¯Š:");
 					 while (p!=NULL) 
 					 {
 						 printf("%d ",p->data);
@@ -112,14 +112,14 @@ void SeeDoctor()				//Ä£Äâ²¡ÈË¿´²¡µÄ¹ı³Ì
 					 }
 					 printf("\n");
 				 }
-				 Destroyqueue(qu);				//ÊÍ·ÅÁ´¶Ó
-				 flag=false;					//ÍË³ö
+				 Destroyqueue(qu);				//é‡Šæ”¾é“¾é˜Ÿ
+				 flag=false;					//é€€å‡º
 				 break;
-		  case 5:if (qu->front!=NULL)			//¶Ó²»¿Õ
-					printf("  ÇëÅÅ¶ÓµÄ²¡ÈËÃ÷Ìì¾ÍÒ½!\n");
+		  case 5:if (qu->front!=NULL)			//é˜Ÿä¸ç©º
+					printf("  è¯·æ’é˜Ÿçš„ç—…äººæ˜å¤©å°±åŒ»!\n");
 
-			     flag=false;					//ÍË³ö
-				 Destroyqueue(qu);				//ÊÍ·ÅÁ´¶Ó
+			     flag=false;					//é€€å‡º
+				 Destroyqueue(qu);				//é‡Šæ”¾é“¾é˜Ÿ
                	 break;
 		}
     }

@@ -1,34 +1,34 @@
-//ÎÄ¼þÃû:exp3-7.cpp
-#include "sqstack.cpp"			//°üº¬Ë³ÐòÕ»µÄ»ù±¾ÔËËãËã·¨
-void StackSort(SqStack *&st)	//¶ÔÕ»stÖÐÔªËØÅÅÐò
+//æ–‡ä»¶å:exp3-7.cpp
+#include "sqstack.cpp"			//åŒ…å«é¡ºåºæ ˆçš„åŸºæœ¬è¿ç®—ç®—æ³•
+void StackSort(SqStack *&st)	//å¯¹æ ˆstä¸­å…ƒç´ æŽ’åº
 {
 	SqStack *tmpst;
 	InitStack(tmpst);
 	ElemType e,e1;
-	while (!StackEmpty(st))		//stÕ»²»¿ÕÑ­»·
+	while (!StackEmpty(st))		//stæ ˆä¸ç©ºå¾ªçŽ¯
 	{
-		Pop(st,e);				//³öÕ»ÔªËØe
-		printf("    st:³öÕ»%c=> ",e);
+		Pop(st,e);				//å‡ºæ ˆå…ƒç´ e
+		printf("    st:å‡ºæ ˆ%c=> ",e);
 		while(!StackEmpty(tmpst))
 		{
 			GetTop(tmpst,e1);
-			printf("tmpst:È¡Õ»¶¥ÔªËØ%c ",e1);
+			printf("tmpst:å–æ ˆé¡¶å…ƒç´ %c ",e1);
 			if (e1>e)
 			{
-				printf("Òò%c>%c ",e1,e);
-				printf("tmpst:ÍËÕ»%c ",e1);
+				printf("å› %c>%c ",e1,e);
+				printf("tmpst:é€€æ ˆ%c ",e1);
 				Pop(tmpst,e1);
-				printf("s:½øÕ»%c ",e1);
+				printf("s:è¿›æ ˆ%c ",e1);
 				Push(st,e1);
 			}
 			else
 			{
-				printf("Òò%c<%c,ÍË³öÑ­»· ",e1,e);
+				printf("å› %c<%c,é€€å‡ºå¾ªçŽ¯ ",e1,e);
 				break;
 			}
 		}
 		Push(tmpst,e);
-		printf("tmpst:½øÕ»%c\n",e);
+		printf("tmpst:è¿›æ ˆ%c\n",e);
 	}
 	while (!StackEmpty(tmpst))
 	{
@@ -44,15 +44,15 @@ int main()
 	ElemType e;
 	SqStack *s;
 	InitStack(s);
-	printf("(1)ÒÀ´Î½øÕ»ÔªËØ1,3,4,2\n");
+	printf("(1)ä¾æ¬¡è¿›æ ˆå…ƒç´ 1,3,4,2\n");
 	Push(s,'1');
 	Push(s,'3');
 	Push(s,'4');
 	Push(s,'2');
-	printf("(2)Õ»sÅÅÐò¹ý³Ì:\n");
+	printf("(2)æ ˆsæŽ’åºè¿‡ç¨‹:\n");
 	StackSort(s);
-	printf("(3)Õ»sÅÅÐòÍê±Ï\n");
-	printf("(4)sµÄ³öÕ»ÐòÁÐ:");
+	printf("(3)æ ˆsæŽ’åºå®Œæ¯•\n");
+	printf("(4)sçš„å‡ºæ ˆåºåˆ—:");
 	while (!StackEmpty(s))
 	{
 		Pop(s,e);
