@@ -305,6 +305,116 @@ $$w_{t+1} = w_t - \eta v_{t+1}$$
 
 ---
 
+## 4.5 代码精读：从梯度计算到优化器实现
+
+把§1—§4 的数学直接写成代码，是理解"梯度下降到底在做什么"最好的方式。
+
+```python
+import numpy as np
+
+# ── 1. 手算梯度 vs 数值梯度验证（§2.6 的代码还原）──────────────
+def mse_loss(w, X, y):
+    """均方误差损失 L(w) = (1/n) ||Xw - y||²"""
+    pred = X @ w
+    return np.mean((pred - y) ** 2)
+
+def analytic_grad(w, X, y):
+    """解析梯度 ∇L(w) = (2/n) Xᵀ(Xw - y)"""
+    n = len(y)
+    return (2 / n) * X.T @ (X @ w - y)
+
+def numerical_grad(w, X, y, eps=1e-5):
+    """数值梯度（有限差分）：∂L/∂wᵢ ≈ [L(w+ε*eᵢ) - L(w-ε*eᵢ)] / 2ε"""
+    grad = np.zeros_like(w)
+    for i in range(len(w)):
+        w_plus  = w.copy(); w_plus[i]  += eps
+        w_minus = w.copy(); w_minus[i] -= eps
+        grad[i] = (mse_loss(w_plus, X, y) - mse_loss(w_minus, X, y)) / (2 * eps)
+    return grad
+
+# 生成简单数据：y = 2*x1 + 3*x2 + 噪声
+rng = np.random.default_rng(0)
+X = rng.standard_normal((50, 2))
+y = X @ np.array([2.0, 3.0]) + rng.standard_normal(50) * 0.1
+
+w = rng.standard_normal(2)
+ag = analytic_grad(w, X, y)
+ng = numerical_grad(w, X, y)
+rel_err = np.abs(ag - ng).max() / (np.abs(ag).max() + 1e-8)
+print(f"解析梯度: {ag}")
+print(f"数值梯度: {ng}")
+print(f"相对误差: {rel_err:.2e}")   # 应 < 1e-5，说明推导正确
+```
+
+**梯度下降的三种形式（§3.5）**：
+
+```python
+def sgd_variants(X, y, n_epochs=200, lr=0.1, batch_size=None):
+    """batch_size=None→全批量GD；=1→随机GD；其他→mini-batch SGD"""
+    n, d = X.shape
+    w = np.zeros(d)
+    losses = []
+
+    for epoch in range(n_epochs):
+        if batch_size is None:                  # 全批量 GD：用全部数据算梯度
+            idx = np.arange(n)
+        elif batch_size == 1:                    # 随机 GD：每次随机 1 个样本
+            idx = rng.integers(0, n, size=1)
+        else:                                    # mini-batch SGD：随机 batch
+            idx = rng.choice(n, size=batch_size, replace=False)
+
+        X_b, y_b = X[idx], y[idx]
+        grad = analytic_grad(w, X_b, y_b)
+        w -= lr * grad                           # §3.1 的更新公式 w ← w - η∇L
+        losses.append(mse_loss(w, X, y))        # 记录全集 loss 用于观察收敛
+
+    return w, losses
+
+w_gd,  loss_gd  = sgd_variants(X, y, batch_size=None)
+w_sgd, loss_sgd = sgd_variants(X, y, batch_size=1)
+w_mb,  loss_mb  = sgd_variants(X, y, batch_size=16)
+print(f"GD 最终权重: {w_gd}")    # 应接近 [2.0, 3.0]
+```
+
+**从零实现 Adam（§4.3）**：
+
+```python
+def adam(X, y, n_epochs=200, lr=1e-2, beta1=0.9, beta2=0.999, eps=1e-8):
+    """
+    Adam 优化器：
+    m ← β₁ m + (1-β₁) g         # 一阶矩：梯度的指数加权平均（Momentum）
+    v ← β₂ v + (1-β₂) g²        # 二阶矩：梯度平方的指数加权平均（自适应方差）
+    m̂ = m / (1-β₁ᵗ)              # 偏差修正：t=1 时 m̂=g（不被 0 初始化拉低）
+    v̂ = v / (1-β₂ᵗ)
+    w ← w - lr * m̂ / (√v̂ + ε)   # 每个参数有自己的有效学习率
+    """
+    n, d = X.shape
+    w = np.zeros(d)
+    m = np.zeros(d)   # 一阶矩估计（初始为 0，需要偏差修正）
+    v = np.zeros(d)   # 二阶矩估计（初始为 0）
+
+    for t in range(1, n_epochs + 1):
+        idx = rng.choice(n, size=16, replace=False)
+        g = analytic_grad(w, X[idx], y[idx])   # mini-batch 梯度
+
+        m = beta1 * m + (1 - beta1) * g         # 一阶矩更新
+        v = beta2 * v + (1 - beta2) * g ** 2    # 二阶矩更新
+
+        m_hat = m / (1 - beta1 ** t)            # 偏差修正
+        v_hat = v / (1 - beta2 ** t)
+
+        w -= lr * m_hat / (np.sqrt(v_hat) + eps)   # 参数更新
+
+    return w
+
+w_adam = adam(X, y)
+print(f"Adam 最终权重: {w_adam}")   # 应接近 [2.0, 3.0]
+```
+
+`v_hat`（二阶矩）的直觉：如果某个参数的梯度长期很大，$v$ 就大，有效学习率 $\text{lr}/\sqrt{v}$ 就小——**自动降低"梯度大"参数的学习率**，防止震荡。这就是 §4.3 "自适应学习率"的代码体现。
+
+---
+
 ## 5. 本章小结
 
 | 概念 | 要点 |

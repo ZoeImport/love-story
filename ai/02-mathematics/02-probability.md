@@ -315,6 +315,88 @@ $$\mathbb{E}\big[ \mathbb{E}[X \mid Y] \big] = \sum_y \mathbb{E}[X \mid Y=y] \, 
 
 ---
 
+## 5.6 代码精读：NumPy/SciPy 概率计算与 MLE 数值验证
+
+把上面的公式用代码做一遍，既是验证，也是"把数学式子翻译成业务代码"的训练。
+
+```python
+import numpy as np
+from scipy import stats
+
+# ── 1. 伯努利分布 ───────────────────────────────────────────
+# 硬币正面概率 p=0.3，模拟 10 次
+rng = np.random.default_rng(42)
+flips = rng.binomial(n=1, p=0.3, size=10)
+print("硬币序列:", flips)                 # e.g. [0 0 1 0 1 0 0 0 1 0]
+
+# MLE 估计 p：正面次数 / 总次数
+p_mle = flips.mean()
+print(f"MLE 估计 p = {p_mle:.2f}")       # 应接近 0.3（样本少时偏差大）
+
+# ── 2. 正态分布 MLE ──────────────────────────────────────────
+mu_true, sigma_true = 5.0, 2.0
+data = rng.normal(mu_true, sigma_true, size=1000)
+
+# MLE：μ̂ = 样本均值，σ̂² = 样本方差（分母 n）
+mu_hat    = data.mean()
+sigma_hat = data.std(ddof=0)   # ddof=0 → 分母 n（MLE），ddof=1 → n-1（无偏）
+print(f"MLE 估计: μ={mu_hat:.3f}, σ={sigma_hat:.3f}")
+# 会非常接近 (5.0, 2.0)，因为 n=1000 足够大
+
+# ── 3. 用 scipy 计算分布的 PDF/PMF/CDF ─────────────────────
+x = np.linspace(0, 10, 200)
+pdf_values = stats.norm.pdf(x, loc=mu_true, scale=sigma_true)
+# stats.norm.pdf(x, loc=μ, scale=σ) = §1.5 公式里的 f(x) = (1/√(2πσ²)) * exp(...)
+# 验证：对 PDF 做数值积分，结果应接近 1.0
+from scipy.integrate import trapezoid
+print(f"PDF 积分验证: {trapezoid(pdf_values, x):.6f}")   # → 1.000000
+```
+
+**贝叶斯定理计算（§2 医学检测案例）**：
+
+```python
+# 疾病患病率（先验）
+P_disease   = 0.01    # P(D=1)
+P_healthy   = 0.99    # P(D=0) = 1 - P(D=1)
+
+# 检测灵敏度 / 特异性
+P_pos_given_disease  = 0.95   # P(+|D=1)  — 患病且阳性的概率
+P_pos_given_healthy  = 0.05   # P(+|D=0)  — 健康但阳性（假阳性）的概率
+
+# 全概率公式：P(+) = P(+|D=1)*P(D=1) + P(+|D=0)*P(D=0)
+P_positive = P_pos_given_disease * P_disease + P_pos_given_healthy * P_healthy
+
+# 贝叶斯定理：P(D=1|+) = P(+|D=1) * P(D=1) / P(+)
+P_disease_given_pos = P_pos_given_disease * P_disease / P_positive
+print(f"检测阳性后的患病概率: {P_disease_given_pos:.4f}")  # ≈ 0.161 （仅16%！）
+# 这就是§2.4 案例的代码还原——结果令人意外，正说明先验概率 P(D)=1% 的重要性
+```
+
+**MAP vs MLE 的数值对比（先验如何产生正则化效果）**：
+
+```python
+# 小样本下 MLE vs MAP（高斯先验，等价于 L2 正则化）
+n_samples = 10  # 故意用小样本
+small_data = rng.normal(mu_true, sigma_true, size=n_samples)
+
+mu_mle = small_data.mean()                          # 纯 MLE：直接用样本均值
+
+# MAP：高斯先验 μ ~ N(μ_0, τ²)，后验均值解析解为加权平均
+mu_0 = 0.0     # 先验均值（假设我们倾向于相信均值在 0 附近）
+tau  = 1.0     # 先验标准差
+# 后验精度 = 似然精度 + 先验精度
+precision_likelihood = n_samples / sigma_true**2
+precision_prior      = 1 / tau**2
+mu_map = (precision_likelihood * mu_mle + precision_prior * mu_0) / \
+         (precision_likelihood + precision_prior)
+
+print(f"真实 μ={mu_true}, MLE={mu_mle:.3f}, MAP={mu_map:.3f}")
+# 小样本下 MAP 更接近 mu_true，MLE 波动更大
+# 这正是 §4.3 说的"高斯先验 → L2 正则化"的效果
+```
+
+---
+
 ## 6. 本章小结
 
 | 概念 | 要点 | ML 中的典型用途 |

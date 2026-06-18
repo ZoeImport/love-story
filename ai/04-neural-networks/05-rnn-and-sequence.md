@@ -567,6 +567,101 @@ $$ h_t = (1 - z_t) \odot h_{t-1} + z_t \odot \tilde{h}_t $$
 
 ---
 
+## 3.4 代码精读：PyTorch `nn.LSTM` 与 `nn.GRU` 内部结构
+
+调用 `nn.LSTM` 时，PyTorch 把 §2 的四组门权重打包成一个大矩阵，理解这个打包方式是读懂源码和调试的关键。
+
+```python
+import torch
+import torch.nn as nn
+
+# hidden_size=4 对应 d_h=4，input_size=3 对应 d=3
+lstm = nn.LSTM(input_size=3, hidden_size=4, num_layers=1, batch_first=True)
+
+# PyTorch 把四个门的权重合并到 weight_ih_l0 和 weight_hh_l0
+# weight_ih_l0.shape = (4*hidden_size, input_size) = (16, 3)
+# 排列顺序：[W_i; W_f; W_g; W_o]，对应 [输入门; 遗忘门; 候选细胞; 输出门]
+print(lstm.weight_ih_l0.shape)   # torch.Size([16, 3])
+print(lstm.weight_hh_l0.shape)   # torch.Size([16, 4])  — h_{t-1} 的权重
+print(lstm.bias_ih_l0.shape)     # torch.Size([16])
+```
+
+注意 PyTorch 的门顺序是 **i, f, g, o**（输入、遗忘、候选、输出），而教材常用 f, i, g, o。调试时要对齐这个顺序。
+
+**前向传播的输入输出**：
+
+```python
+batch_size, seq_len = 2, 5   # 2 个句子，每句 5 个时间步
+x = torch.randn(batch_size, seq_len, 3)   # (B, T, input_size)
+
+# h_0, c_0 不传则默认全零
+output, (h_n, c_n) = lstm(x)
+
+# output.shape  = (B, T, hidden_size) = (2, 5, 4)
+#   output[:, t, :] 是每个时间步 t 的 h_t — 用于序列标注
+# h_n.shape     = (num_layers, B, hidden_size) = (1, 2, 4)
+#   h_n[0]      = 最后一步的 h_T — 用于文本分类
+# c_n.shape     = (1, 2, 4)
+#   c_n[0]      = 最后一步的细胞状态 C_T — 通常不直接用
+print(output.shape, h_n.shape, c_n.shape)
+```
+
+三个输出对应的使用场景：
+
+| 输出 | 形状 | 典型用途 |
+|:---|:---|:---|
+| `output` | `(B, T, H)` | 序列标注 (NER、词性标注)——每个时间步都需要预测 |
+| `h_n[-1]` | `(B, H)` | 文本分类——取最后时间步的隐藏状态作为句子表示 |
+| `c_n[-1]` | `(B, H)` | 少用；有时在 Encoder-Decoder 中传给 Decoder 初始化 |
+
+**完整的文本分类模型**（带逐行注释）：
+
+```python
+class SentimentLSTM(nn.Module):
+    def __init__(self, vocab_size, embed_dim, hidden_size, n_classes):
+        super().__init__()
+        # Embedding 层：把词索引 → 密集向量，训练过程中自动学习
+        self.embedding = nn.Embedding(vocab_size, embed_dim, padding_idx=0)
+        # LSTM：处理变长序列，batch_first=True 让输入形状为 (B, T, E)
+        self.lstm = nn.LSTM(embed_dim, hidden_size, batch_first=True)
+        # 只取最后时间步的 h_T 做分类，所以 in_features=hidden_size
+        self.classifier = nn.Linear(hidden_size, n_classes)
+
+    def forward(self, token_ids):
+        # token_ids: (B, T)  — 一批句子的词索引
+        x = self.embedding(token_ids)       # (B, T, E)  — 词嵌入
+        output, (h_n, _) = self.lstm(x)     # h_n: (1, B, H)
+        # h_n[-1] 取最后一层、最后时间步的隐藏状态 → (B, H)
+        last_h = h_n[-1]                    # (B, H)
+        logits = self.classifier(last_h)    # (B, n_classes)
+        return logits
+```
+
+**GRU 版本只需换一行**（GRU 没有细胞状态，输出 `(output, h_n)` 而非三元组）：
+
+```python
+# 把上面的 nn.LSTM → nn.GRU，forward 里对应改为：
+output, h_n = self.gru(x)   # h_n: (1, B, H)，无 c_n
+last_h = h_n[-1]
+```
+
+这正是 §3.3 表格中"GRU 只有隐藏状态 $h_t$"的代码体现——细胞状态 $C_t$ 合并掉了，API 的返回值从三元组变成了二元组。
+
+**处理变长序列（`pack_padded_sequence`）**：
+
+```python
+from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
+
+# lengths: 每条样本的真实长度（未 pad 的部分）
+packed = pack_padded_sequence(x, lengths, batch_first=True, enforce_sorted=False)
+packed_output, (h_n, c_n) = self.lstm(packed)
+output, _ = pad_packed_sequence(packed_output, batch_first=True)
+```
+
+`pack_padded_sequence` 的作用：告诉 LSTM"哪些位置是真实输入，哪些是 padding"，这样 LSTM 不会把 padding 的 0 当成真实时间步计算——否则短句子的 $h_T$ 会被若干步 0 输入"污染"，语义信息退化。
+
+---
+
 ## 4. 编码器-解码器架构 (Encoder-Decoder Architecture)
 
 ### 4.1 固定维度的上下文向量

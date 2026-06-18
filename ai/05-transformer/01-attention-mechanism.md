@@ -223,6 +223,83 @@ DETAILED TRACE: Query 0 ('I')
     = [0.4519 0.2741 0.2741 0.    ]
 ```
 
+### 2.8 代码精读：用 NumPy 从零实现 Scaled Dot-Product Attention
+
+把 §2.1—§2.6 的推导翻译成代码，验证上面的手算结果：
+
+```python
+import numpy as np
+
+def softmax(x, axis=-1):
+    """数值稳定的 softmax：减去行最大值防止 exp 溢出"""
+    e = np.exp(x - x.max(axis=axis, keepdims=True))
+    return e / e.sum(axis=axis, keepdims=True)
+
+def scaled_dot_product_attention(Q, K, V, mask=None):
+    """
+    Q: (T_q, d_k)  — Query 矩阵
+    K: (T_k, d_k)  — Key 矩阵
+    V: (T_k, d_v)  — Value 矩阵
+    mask: (T_q, T_k)  — True 的位置会被屏蔽为 -inf（用于因果掩码）
+    """
+    d_k = Q.shape[-1]
+
+    # §2.2：相似度矩阵 S = Q K^T，形状 (T_q, T_k)
+    scores = Q @ K.T          # (T_q, d_k) × (d_k, T_k) → (T_q, T_k)
+
+    # §2.3：缩放，控制方差为 1（d_k 大时点积方差大，会导致 softmax 饱和）
+    scores = scores / np.sqrt(d_k)
+
+    # 可选：因果掩码（Decoder 用），对应 §6 的 -inf 屏蔽
+    if mask is not None:
+        scores[mask] = -1e9   # 用很大的负数代替 -inf，exp(-1e9) ≈ 0
+
+    # §2.4：softmax 归一化，每行和为 1
+    attn_weights = softmax(scores, axis=-1)  # (T_q, T_k)
+
+    # §2.5：加权求和
+    output = attn_weights @ V               # (T_q, T_k) × (T_k, d_v) → (T_q, d_v)
+    return output, attn_weights
+
+# 复现 §2.7 的 3-token 例子
+X = np.array([[1., 0., 0., 0.],   # "I"
+              [0., 1., 0., 0.],   # "love"
+              [0., 0., 1., 0.]])  # "NN"
+Q = K = V = X   # 单位矩阵投影，§2.7 的假设
+
+out, attn = scaled_dot_product_attention(Q, K, V)
+
+print("注意力权重（每行和应为 1.0）:")
+print(np.round(attn, 4))
+# [[0.3918 0.3041 0.3041]
+#  [0.3041 0.3918 0.3041]
+#  [0.3041 0.3041 0.3918]]
+print("行和验证:", attn.sum(axis=-1))  # [1. 1. 1.]
+
+print("\n输出 Z（和 §2.7 手算一致）:")
+print(np.round(out, 4))
+```
+
+**因果掩码（Decoder 中的 Masked Self-Attention）**：
+
+```python
+T = 3
+# 上三角掩码（不含对角线）：位置 i 不能看到位置 j>i 的信息
+causal_mask = np.triu(np.ones((T, T), dtype=bool), k=1)
+# [[False  True  True]
+#  [False False  True]
+#  [False False False]]
+
+out_masked, attn_masked = scaled_dot_product_attention(Q, K, V, mask=causal_mask)
+print("因果注意力权重（上三角为 0）:")
+print(np.round(attn_masked, 4))
+# [[1.0000 0.0000 0.0000]   ← 位置 0 只能看自己
+#  [0.5000 0.5000 0.0000]   ← 位置 1 能看 0 和 1
+#  [0.3333 0.3333 0.3333]]  ← 位置 2 能看所有
+```
+
+这段代码的 `mask` 参数对应的正是 Transformer 论文的"subsequent mask"——在训练时用 teacher forcing 并行计算所有时间步，同时通过掩码保证因果性，这是 Decoder 效率高的关键。
+
 ---
 
 ## 3. 注意力权重可视化

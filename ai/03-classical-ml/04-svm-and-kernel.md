@@ -464,6 +464,89 @@ $$ K(x_1, x_2) = \exp(-1.0 \times 25) = \exp(-25) \approx 1.389 \times 10^{-11} 
 
 ---
 
+## 3.7 代码精读：sklearn SVM API 内部结构
+
+调用 `SVC.fit()` 之后，sklearn 把什么存到模型里？预测时到底算的是哪个公式？下面逐行拆开：
+
+```python
+from sklearn.svm import SVC
+from sklearn.datasets import make_moons
+import numpy as np
+
+X, y = make_moons(n_samples=200, noise=0.15, random_state=42)
+
+# kernel='rbf'  → 高斯核 K(xi, xj) = exp(-γ||xi - xj||²)
+# C=1.0         → 软间隔惩罚（越大越严格分类，边界越复杂）
+# gamma='scale' → γ = 1 / (n_features * X.var())，自动缩放
+svm = SVC(kernel='rbf', C=1.0, gamma='scale')
+svm.fit(X, y)
+```
+
+`fit()` 内部运行的是 **SMO 算法**（Sequential Minimal Optimization，Platt 1998）——它把大二次规划问题分解成每次只求解两个 $\alpha_i$ 的子问题，循环迭代直到 KKT 条件满足。求解完成后，`fit()` 把结果存进以下几个关键属性：
+
+```python
+print("支持向量数量:", svm.n_support_)      # 例如 [32, 28]，各类各多少个
+print("支持向量坐标:", svm.support_vectors_.shape)  # (60, 2) — 这60个点在间隔边界上
+print("支持向量下标:", svm.support_.shape)          # 在原始 X 中的索引，用于追溯
+print("对偶系数 α*y:", svm.dual_coef_.shape)        # (1, 60) — 即 α_i * y_i
+print("决策边界偏置:", svm.intercept_)              # [b]，一个标量
+```
+
+逐个解释这些属性对应的数学含义：
+
+| 属性 | 数学符号 | 来源 |
+|:---|:---|:---|
+| `support_vectors_` | $\{\mathbf{x}_i \mid \alpha_i > 0\}$ | KKT 条件：只有间隔边界上的样本 $\alpha_i \neq 0$ |
+| `dual_coef_` | $\alpha_i^* \cdot y_i$ | 对偶问题的解，已乘上标签；符号对应 §2.3 公式 |
+| `intercept_` | $b$ | 由支持向量的 KKT 互补条件 $y_i(w^T x_i+b)=1$ 推导 |
+| `n_support_` | 各类的支持向量个数 | `C` 越大 → 间隔越小 → 支持向量越少（更紧贴边界） |
+
+**预测时的计算流程**：
+
+```python
+# predict() 内部等价于：
+def _predict_manual(svm, X_test):
+    # 1. 计算测试点与所有支持向量的核函数值
+    #    K[i, j] = exp(-γ * ||X_test[i] - support_vectors[j]||²)
+    from sklearn.metrics.pairwise import rbf_kernel
+    gamma = svm._gamma   # 实际 γ 值
+    K = rbf_kernel(X_test, svm.support_vectors_, gamma=gamma)
+    # K.shape = (n_test, n_sv)
+
+    # 2. 决策函数 f(x) = Σ_j (α_j * y_j) * K(x, x_j) + b
+    #    dual_coef_[0] 就是 α_j * y_j
+    decision = K @ svm.dual_coef_.T + svm.intercept_
+    # decision.shape = (n_test, 1)
+
+    # 3. 取符号得到类别预测
+    return np.sign(decision).ravel().astype(int)
+```
+
+关键点：**预测只用到支持向量**，不是全部训练数据。这就是 SVM 的稀疏性——60 个支持向量 vs 200 个训练点，推理时只算 60 次核函数。
+
+**参数调优的直觉与代码**：
+
+```python
+from sklearn.model_selection import GridSearchCV
+
+param_grid = {
+    'C':     [0.1, 1, 10, 100],   # 软间隔惩罚：越大 → 边界越复杂
+    'gamma': [0.01, 0.1, 1, 10],  # RBF 宽度：越大 → 影响范围越小
+}
+
+grid = GridSearchCV(SVC(kernel='rbf'), param_grid, cv=5, scoring='accuracy')
+grid.fit(X, y)
+print("最优参数:", grid.best_params_)   # e.g. {'C': 10, 'gamma': 0.1}
+print("最优精度:", grid.best_score_)
+```
+
+调参的"感知器"：
+- **`C` 小 + `gamma` 小** → 决策边界很平滑（欠拟合）
+- **`C` 大 + `gamma` 大** → 决策边界紧贴每个点（过拟合）
+- **最优区间** 通常在两者中间，交叉验证找到的"峡谷"处
+
+---
+
 ## 4. SVM vs 神经网络（Neural Networks）
 
 ### 4.1 哲学对比

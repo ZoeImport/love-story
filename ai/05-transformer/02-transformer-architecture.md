@@ -391,6 +391,121 @@ Decoder Output
 
 ---
 
+## 7.5 代码精读：PyTorch `nn.MultiheadAttention` 与 Encoder Block
+
+把 §2 的 Multi-Head Attention 数学翻译成 PyTorch API，逐个参数对应到正文公式：
+
+```python
+import torch
+import torch.nn as nn
+
+# embed_dim = d_model，num_heads = h
+# 每个头的维度 d_k = embed_dim / num_heads = 512 / 8 = 64（自动计算）
+mha = nn.MultiheadAttention(
+    embed_dim=512,   # d_model：输入 token 的特征维度
+    num_heads=8,     # h：并行注意力头数
+    batch_first=True # True → 输入形状 (B, T, d_model)；False → (T, B, d_model)
+)
+
+# 模拟一个 batch：2 条序列，各 10 个 token，每个 token 512 维
+B, T, d = 2, 10, 512
+x = torch.randn(B, T, d)
+
+# Self-Attention：Q=K=V=x（Encoder 的情况）
+attn_output, attn_weights = mha(query=x, key=x, value=x)
+# attn_output.shape  = (B, T, d_model) = (2, 10, 512)
+# attn_weights.shape = (B, num_heads, T, T) 仅在 need_weights=True 时返回
+print(attn_output.shape)   # torch.Size([2, 10, 512])
+```
+
+**因果掩码（Decoder 用）**：把未来位置屏蔽掉，对应 §6 的 $-\infty$ 上三角：
+
+```python
+# 生成因果掩码：上三角（不含对角线）为 True → 被屏蔽为 -inf
+causal_mask = nn.Transformer.generate_square_subsequent_mask(T)
+# causal_mask.shape = (T, T)，类型 float，值为 0.0 或 -inf
+
+# Decoder 的 Masked Self-Attention
+attn_out, _ = mha(x, x, x, attn_mask=causal_mask)
+```
+
+`attn_mask` 是一个加法掩码：在 softmax 之前加到注意力分数上。`-inf` 的位置 $e^{-\infty}=0$，softmax 后权重为 0，相当于"这个位置不存在"。
+
+**完整的单个 Encoder Block**（对应 §1 架构图的一个方块）：
+
+```python
+class EncoderBlock(nn.Module):
+    """对应 §1 架构图里一个 Encoder Block = MHA + Add&Norm + FFN + Add&Norm"""
+    def __init__(self, d_model=512, num_heads=8, d_ff=2048, dropout=0.1):
+        super().__init__()
+        # 子层 1: Multi-Head Self-Attention（§2）
+        self.self_attn = nn.MultiheadAttention(d_model, num_heads, batch_first=True)
+        # 子层 2: Feed-Forward Network（§4），两层线性：d_model → d_ff → d_model
+        self.ffn = nn.Sequential(
+            nn.Linear(d_model, d_ff),
+            nn.GELU(),              # 现代 Transformer 用 GELU 替代 ReLU
+            nn.Linear(d_ff, d_model),
+        )
+        # Layer Norm（§3.2）：每个 block 两个，分别在 MHA 和 FFN 之后
+        self.norm1 = nn.LayerNorm(d_model)
+        self.norm2 = nn.LayerNorm(d_model)
+        self.drop  = nn.Dropout(dropout)
+
+    def forward(self, x, attn_mask=None):
+        # Pre-Norm 风格（§3.2 说的现代标准）：先 norm 再做子层
+        # 残差连接：x + Sublayer(norm(x))
+        residual = x
+        x_normed = self.norm1(x)
+        attn_out, _ = self.self_attn(x_normed, x_normed, x_normed, attn_mask=attn_mask)
+        x = residual + self.drop(attn_out)     # Add & Norm（残差在 norm 之后加）
+
+        residual = x
+        x = residual + self.drop(self.ffn(self.norm2(x)))   # FFN + 残差
+        return x
+```
+
+对照 §1 架构图看这段代码：
+- `self.self_attn` → "Multi-Head Attention" 方块
+- `self.norm1/2` → "Add & Norm" 方块里的 LayerNorm
+- `+ self.drop(...)` → "Add" 操作（残差连接）
+- `self.ffn` → "Feed Forward" 方块，$d_{ff}=2048$ 是正文 §4 提到的 4 倍扩展
+
+**堆叠 $N$ 个 Block 得到 Encoder**：
+
+```python
+class TransformerEncoder(nn.Module):
+    def __init__(self, d_model=512, num_heads=8, d_ff=2048, num_layers=6):
+        super().__init__()
+        # 6 个 Block 串联：每个 block 的输出是下一个 block 的输入
+        self.blocks = nn.ModuleList(
+            [EncoderBlock(d_model, num_heads, d_ff) for _ in range(num_layers)]
+        )
+        self.final_norm = nn.LayerNorm(d_model)   # BERT/GPT 最后一层额外 norm
+
+    def forward(self, x, attn_mask=None):
+        for block in self.blocks:
+            x = block(x, attn_mask)
+        return self.final_norm(x)
+
+encoder = TransformerEncoder()
+out = encoder(torch.randn(2, 10, 512))
+print(out.shape)   # (2, 10, 512) — 维度不变，每个 token 被上下文"增强"过
+```
+
+**Cross-Attention（Decoder 用）**只需把 `key` 和 `value` 换成 Encoder 的输出：
+
+```python
+def cross_attention_forward(self, x_dec, enc_out):
+    # Q 来自 Decoder 当前层，K/V 来自 Encoder 最终输出
+    # 没有因果掩码：Decoder 可以看整个输入序列
+    attn_out, _ = self.cross_attn(query=x_dec, key=enc_out, value=enc_out)
+    return x_dec + self.drop(attn_out)
+```
+
+这对应 §7 中"Q 来自 Decoder，K/V 来自 Encoder"的那张表格——代码里就是三个 tensor 位置不同。
+
+---
+
 ## 8. 小结 (Summary)
 
 1. **Transformer = Encoder (理解) + Decoder (生成)**。Encoder 用双向自注意力读取输入，Decoder 用因果掩码+交叉注意力逐步生成。

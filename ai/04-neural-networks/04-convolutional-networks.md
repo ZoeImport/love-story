@@ -598,6 +598,89 @@ ConvNeXt 证明：经过现代化改造的纯 CNN 架构，性能可以媲美 Vi
 
 ---
 
+## 4.5.5 代码精读：PyTorch CNN 构建流程
+
+把 §4 的架构思路翻译成 PyTorch，逐行说明每个 API 的数学含义：
+
+```python
+import torch
+import torch.nn as nn
+
+# ── 1. nn.Conv2d 参数与输出尺寸 ─────────────────────────────────
+conv = nn.Conv2d(
+    in_channels=3,      # 输入通道数（RGB 图像 = 3）
+    out_channels=64,    # 输出通道数 = 有多少个不同的卷积核（特征探测器）
+    kernel_size=3,      # 核尺寸 k=3，即 3×3 滑窗
+    stride=1,           # 步长：每次滑动 1 个像素
+    padding=1,          # 边缘补零宽度：padding=1 + k=3 + stride=1 → 输出与输入同尺寸
+    bias=True           # 偏置项，通常在 BN 后用 bias=False（BN 已含平移参数）
+)
+# 输出尺寸公式（§1.3）：H_out = (H_in + 2*padding - k) // stride + 1
+# 对 32×32 输入：(32 + 2*1 - 3) // 1 + 1 = 32 → 尺寸不变
+x = torch.randn(2, 3, 32, 32)   # (batch=2, C=3, H=32, W=32)
+print(conv(x).shape)             # → (2, 64, 32, 32)
+
+# ── 2. 完整 ResNet 基本块（§4.4）─────────────────────────────────
+class ResBlock(nn.Module):
+    """最基本的 ResNet 残差块：两个 3×3 卷积 + 短路连接"""
+    def __init__(self, channels, stride=1):
+        super().__init__()
+        self.conv1 = nn.Conv2d(channels, channels, 3, stride=stride, padding=1, bias=False)
+        self.bn1   = nn.BatchNorm2d(channels)   # BN 在 Conv 和激活之间
+        self.conv2 = nn.Conv2d(channels, channels, 3, stride=1, padding=1, bias=False)
+        self.bn2   = nn.BatchNorm2d(channels)
+        self.relu  = nn.ReLU(inplace=True)
+
+        # 当 stride>1 时，x 和 F(x) 尺寸不匹配，需要 1×1 卷积对齐
+        self.downsample = None
+        if stride != 1:
+            self.downsample = nn.Sequential(
+                nn.Conv2d(channels, channels, 1, stride=stride, bias=False),
+                nn.BatchNorm2d(channels)
+            )
+
+    def forward(self, x):
+        identity = x                       # 保存输入，用于残差连接 §4.4.2
+
+        out = self.relu(self.bn1(self.conv1(x)))   # Conv → BN → ReLU
+        out = self.bn2(self.conv2(out))             # Conv → BN（不接 ReLU）
+
+        if self.downsample:
+            identity = self.downsample(x)  # 尺寸对齐：1×1 卷积降采样
+
+        out = self.relu(out + identity)    # F(x) + x，再过 ReLU
+        return out
+```
+
+注意 `out + identity` 这一行——这正是 §4.4.2 公式 $H(x) = F(x) + x$ 的代码实现。加法发生在 BN 之后、最后一个 ReLU 之前（Pre-Activation 变体会移动 BN/ReLU 位置，但基础版如此）。
+
+```python
+# ── 3. 理解 Conv2d 参数量 ────────────────────────────────────────
+# 一个 Conv2d(3→64, k=3): 参数 = out_channels × in_channels × k × k + bias
+#                        = 64 × 3 × 3 × 3 + 64 = 1,792 + 64 = 1,856
+print(sum(p.numel() for p in conv.parameters()))  # 1792 + 64 = 1856
+
+# VGG 的"两个 3×3 替代一个 5×5"（§4.3）的参数节省：
+params_two_3x3 = 2 * (64 * 64 * 3 * 3)   # 两个 3×3，通道 64→64→64
+params_one_5x5 = 64 * 64 * 5 * 5          # 一个 5×5，通道 64→64
+print(f"两个3×3: {params_two_3x3:,}  vs  一个5×5: {params_one_5x5:,}")
+# 两个3×3: 73,728  vs  一个5×5: 102,400  → 少 28%，且有两次非线性
+
+# ── 4. nn.MaxPool2d 与 nn.AdaptiveAvgPool2d ─────────────────────
+pool = nn.MaxPool2d(kernel_size=2, stride=2)   # 2×2 窗口，步长 2 → 尺寸减半
+x_feat = torch.randn(2, 64, 32, 32)
+print(pool(x_feat).shape)   # (2, 64, 16, 16)
+
+# AdaptiveAvgPool2d：无论输入尺寸多少，输出固定为 (1,1) → 全局平均池化
+gap = nn.AdaptiveAvgPool2d((1, 1))             # GlobalAveragePooling，用于分类头
+print(gap(x_feat).shape)    # (2, 64, 1, 1)
+# flatten 后接 Linear：(B, 64, 1, 1) → (B, 64) → (B, n_classes)
+```
+
+`AdaptiveAvgPool2d((1, 1))` 的作用：把任意 $H \times W$ 的特征图压缩成 $1 \times 1$——相当于对整张特征图取均值。ResNet、EfficientNet 等都用它替代早期的全连接层，使模型可以接受任意尺寸的输入图像。
+
+---
+
 ## 本章演算盒索引
 
 | 位置 | 演算盒 | 跳转 |

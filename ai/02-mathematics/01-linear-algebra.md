@@ -288,6 +288,44 @@ PCA 可以完全通过 SVD 实现，**不需要计算协方差矩阵**：
 
 **为什么 SVD 更稳定?** 计算协方差矩阵 $\mathbf{X}^\top \mathbf{X}$ 会平方条件数（condition number），导致数值不稳定。直接对 $\mathbf{X}$ 做 SVD 避免了这个问题。
 
+::: details 推导：SVD 的右奇异向量 = 协方差矩阵的特征向量
+很多教材直接说"$V$ 的列就是主成分方向"，下面证明为什么。
+
+设 $\mathbf{X}$（已中心化）的 SVD 为 $\mathbf{X} = \mathbf{U}\boldsymbol{\Sigma}\mathbf{V}^\top$，计算协方差矩阵：
+
+$$\mathbf{C} = \frac{1}{n-1}\mathbf{X}^\top \mathbf{X} = \frac{1}{n-1}(\mathbf{U}\boldsymbol{\Sigma}\mathbf{V}^\top)^\top(\mathbf{U}\boldsymbol{\Sigma}\mathbf{V}^\top)$$
+
+$$= \frac{1}{n-1}\mathbf{V}\boldsymbol{\Sigma}^\top\underbrace{\mathbf{U}^\top\mathbf{U}}_{=\mathbf{I}}\boldsymbol{\Sigma}\mathbf{V}^\top = \frac{1}{n-1}\mathbf{V}\boldsymbol{\Sigma}^2\mathbf{V}^\top$$
+
+其中 $\boldsymbol{\Sigma}^2$ 是对角矩阵，对角线上为 $\sigma_i^2$。对比特征分解 $\mathbf{C} = \mathbf{Q}\boldsymbol{\Lambda}\mathbf{Q}^\top$，可以看出：
+
+- **$\mathbf{V}$ 的列 = $\mathbf{C}$ 的特征向量**（即主成分方向）
+- **$\sigma_i^2 / (n-1)$ = 对应方向上的特征值**（即沿该主成分的方差）
+- 奇异值从大到小排列 → 特征值从大到小 → 第一列 $v_1$ 是方差最大的方向（第一主成分）
+
+这就是为什么 `np.linalg.svd(X)` 可以完全替代 `np.linalg.eig(X.T @ X)` 做 PCA，且数值更稳定。
+:::
+
+::: details 推导：Eckart-Young 定理（低秩近似最优性）
+SVD 的低秩近似 $\mathbf{A}_k = \sum_{i=1}^k \sigma_i \mathbf{u}_i \mathbf{v}_i^\top$ 是秩为 $k$ 的矩阵中**Frobenius 范数意义下的最佳近似**，即：
+
+$$\mathbf{A}_k = \arg\min_{\text{rank}(B) \leq k} \|\mathbf{A} - B\|_F$$
+
+**证明思路**（Frobenius 范数版本）：
+
+利用 SVD 的酉不变性，$\|\mathbf{A} - B\|_F^2 = \|\mathbf{U}^\top(\mathbf{A}-B)\mathbf{V}\|_F^2 = \|\boldsymbol{\Sigma} - \mathbf{U}^\top B\mathbf{V}\|_F^2$。
+
+设 $\hat{B} = \mathbf{U}^\top B \mathbf{V}$，则 $\text{rank}(\hat B) = \text{rank}(B) \leq k$。问题变为：找到秩 $\leq k$ 的矩阵 $\hat B$ 使 $\|\boldsymbol{\Sigma} - \hat B\|_F^2$ 最小。
+
+对角矩阵 $\boldsymbol{\Sigma}$ 与任意矩阵之差的 Frobenius 范数，分解为各元素的贡献：
+
+$$\|\boldsymbol{\Sigma} - \hat B\|_F^2 = \sum_{i,j}(\Sigma_{ij} - \hat B_{ij})^2$$
+
+最小化此式时，对角线上的前 $k$ 项取 $\hat B_{ii} = \sigma_i$，对角线上 $i>k$ 的项取 $\hat B_{ii}=0$，其余非对角项取 $\hat B_{ij}=0$（因为 $\Sigma_{ij}=0$）。秩约束 $\leq k$ 恰好由保留前 $k$ 个奇异值满足。
+
+因此最优解对应 $\hat B_{ii} = \sigma_i$（$i \leq k$），零其余，回代得 $B^* = \mathbf{U}\hat B\mathbf{V}^\top = \sum_{i=1}^k \sigma_i \mathbf{u}_i \mathbf{v}_i^\top = \mathbf{A}_k$，最小误差 $\|\mathbf{A}-\mathbf{A}_k\|_F^2 = \sum_{i=k+1}^r \sigma_i^2$。
+:::​
+
 ### 4.5 低秩近似 (Low-rank Approximation)
 
 SVD 最重要的应用之一：用前 $k$ 个最大的奇异值来近似原矩阵：
