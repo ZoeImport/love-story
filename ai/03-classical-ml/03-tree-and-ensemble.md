@@ -110,6 +110,43 @@ $$Gini(D) = 1 - \sum_{k} p_k^2$$
 
 > 详见配套代码 `tree_ensemble.py` 中的 `compare_trees()`，该函数对比了不同深度下决策树在 Iris 数据集上的表现。
 
+### 1.4 代码精读：决策树到底"长"成什么样？
+
+调用 `DecisionTreeClassifier().fit()` 之后，sklearn 把整棵树压平存进 `tree.tree_` 的几个**平行数组**里，节点用整数下标编号（0 是根）。理解这几个数组，你就能脱离"黑盒"，亲手读出每个分裂判断——这正是 `tree_ensemble.py` 里 `_tree_to_text()` 做的事：
+
+```python
+def _tree_to_text(tree, feature_names, class_names, lines, node=0, depth=0):
+    indent = "  " * depth
+    n_samples = tree.tree_.n_node_samples[node]   # 该节点覆盖多少训练样本
+    value = tree.tree_.value[node][0]             # 各类别的样本计数 [n0, n1, n2]
+    class_idx = np.argmax(value)                  # 多数类 = 该节点的预测类别
+    class_name = class_names[class_idx]
+
+    # 判断是不是叶子：sklearn 用"左右孩子相同"(都为 -1)来标记叶节点
+    if tree.tree_.children_left[node] == tree.tree_.children_right[node]:
+        lines.append(f"{indent}├── Leaf: class={class_name}, samples={n_samples}, ...")
+    else:
+        feature = feature_names[tree.tree_.feature[node]]  # 该节点用哪个特征分裂
+        threshold = tree.tree_.threshold[node]             # 分裂阈值
+        impurity = tree.tree_.impurity[node]               # 该节点的 Gini/熵
+        lines.append(f"{indent}├── [{feature} <= {threshold:.2f}] gini={impurity:.3f} ...")
+        # 递归：先左子树(特征 <= 阈值)，再右子树(特征 > 阈值)
+        _tree_to_text(..., tree.tree_.children_left[node],  depth + 1)
+        _tree_to_text(..., tree.tree_.children_right[node], depth + 1)
+```
+
+逐行对应到**业务含义**：
+
+| 代码 | 数组含义 | 业务解读 |
+|:---|:---|:---|
+| `tree_.feature[node]` | 该内部节点选用的特征下标 | 模型认为"这一步最该问"的问题，例如"花瓣长度是多少？" |
+| `tree_.threshold[node]` | 分裂阈值 | 问题的判定线："花瓣长度 ≤ 2.45cm 吗？" |
+| `tree_.value[node]` | 落入该节点的各类别样本数 | 当前已经把样本筛到什么纯度；`argmax` 就是该叶子的预测 |
+| `tree_.impurity[node]` | 节点不纯度（默认 Gini） | 对应 §1.2 的 $Gini(D)$，越接近 0 说明这一支越"干净" |
+| `children_left/right == -1` | 没有孩子 | 叶节点，停止提问、直接给预测 |
+
+**关键点**：`children_left` 对应"特征 $\le$ 阈值"的样本，`children_right` 对应"$>$ 阈值"。所以正文那棵 Iris 决策树之所以能 100% 分出 setosa，就是因为根节点一刀 `花瓣长度 ≤ 2.45` 把 setosa 全部切到左边（叶子的 `value` 形如 `[50, 0, 0]`，Gini=0）。`fit()` 内部做的，正是 §1.2 那套"枚举每个特征 × 每个阈值，挑使加权不纯度最小的分裂"，只是用 C 实现得很快而已。
+
 ---
 
 ## 2. 随机森林（Random Forest）
@@ -122,6 +159,18 @@ $$Gini(D) = 1 - \sum_{k} p_k^2$$
 2. 在 $D_i$ 上训练一个基学习器（如决策树）
 3. 重复 $T$ 次，得到 $T$ 个模型
 4. **回归**：取 $T$ 个预测的平均值；**分类**：取 $T$ 个预测的投票结果
+
+::: details 推导：为什么 Bootstrap 样本只覆盖约 63.2% 的原始数据？
+数据集有 $N$ 个样本，每次有放回抽样时，某个固定样本 $x_i$ **没被抽中**的概率是 $1 - \frac{1}{N}$。抽 $N$ 次都没抽中的概率为
+
+$$P(x_i \text{ 从未被抽中}) = \left(1 - \frac{1}{N}\right)^N$$
+
+利用极限 $\lim_{N\to\infty}\left(1-\frac{1}{N}\right)^N = e^{-1}$，当 $N$ 较大时
+
+$$P(\text{未抽中}) \approx e^{-1} \approx 0.368 \quad\Rightarrow\quad P(\text{至少被抽中一次}) \approx 1 - 0.368 = 0.632$$
+
+所以每个 Bootstrap 样本平均覆盖 $63.2\%$ 的不同原始样本，剩下 $36.8\%$ 没被抽到——它们正是下面 §2.4 要用的 **OOB 样本**。
+:::
 
 ```python
 def bagging_predict(models, X):
@@ -137,6 +186,22 @@ def bagging_predict(models, X):
 假设 $T$ 个基学习器的方差均为 $\sigma^2$，两两之间的相关系数为 $\rho$，则集成的方差为：
 
 $$\text{Var}(\text{ensemble}) = \rho \sigma^2 + \frac{1 - \rho}{T} \sigma^2$$
+
+::: details 推导：集成方差公式从哪来？
+集成预测是 $T$ 棵树预测的平均：$\bar{f} = \frac{1}{T}\sum_{i=1}^T f_i$。用方差的基本公式展开（方差对常数 $\frac{1}{T}$ 平方提出，协方差展开所有两两组合）：
+
+$$\text{Var}(\bar f) = \frac{1}{T^2}\,\text{Var}\!\Big(\sum_{i=1}^T f_i\Big) = \frac{1}{T^2}\Big(\underbrace{\sum_{i} \text{Var}(f_i)}_{T \text{ 个对角项}} + \underbrace{\sum_{i\neq j}\text{Cov}(f_i,f_j)}_{T(T-1) \text{ 个非对角项}}\Big)$$
+
+代入假设：每棵树方差相同 $\text{Var}(f_i)=\sigma^2$，两两相关系数为 $\rho$，即 $\text{Cov}(f_i,f_j)=\rho\sigma^2$：
+
+$$\text{Var}(\bar f) = \frac{1}{T^2}\Big(T\sigma^2 + T(T-1)\rho\sigma^2\Big) = \frac{\sigma^2}{T} + \frac{T-1}{T}\rho\sigma^2$$
+
+把 $\frac{T-1}{T}=1-\frac{1}{T}$ 代入并整理，就得到正文的形式：
+
+$$\text{Var}(\bar f) = \rho\sigma^2 + \frac{1-\rho}{T}\sigma^2$$
+
+**读这个式子**：第一项 $\rho\sigma^2$ 与树的数量 $T$ 无关——这是无论加多少棵树都消不掉的"地板"，只能靠**降低树之间的相关性 $\rho$** 来压低（这正是随机森林做特征随机化的动机）；第二项 $\frac{1-\rho}{T}\sigma^2$ 随 $T\to\infty$ 趋于 0，这是"多加树"能拿到的收益。
+:::
 
 - 当 $\rho = 0$（模型完全独立）：方差降至 $\sigma^2 / T$（理想情况，但不可实现）
 - 当 $\rho = 1$（模型完全一样）：方差仍为 $\sigma^2$（Bagging 无效果）
@@ -216,6 +281,15 @@ def gradient_boosting(X, y, n_estimators=100, lr=0.1):
     return models
 ```
 
+**逐行精读这段"手写 GBDT"**（它把 §3.2 的数学翻译成了循环）：
+
+- `residual = y.copy()`：第 0 棵树之前，"还没解释的部分"就是真实值本身（等价于初始预测为 0）。`residual` 这个变量在整个循环里扮演**当前还没拟合掉的误差**。
+- `tree.fit(X, residual)`：注意第二个参数不是 `y` 而是 `residual`——**新树学的不是原始标签，而是上一轮剩下的残差**。这是 Boosting 与 Bagging 最本质的代码差异（Bagging 里每棵树都 `fit(X, y)`）。
+- `residual -= lr * tree.predict(X)`：把这棵新树的贡献（乘以学习率 `lr`）从残差里扣掉，剩下的就是交给下一棵树的新任务。`lr<1` 让每棵树只"迈一小步"，避免一步走过头——对应 XGBoost 的 Shrinkage。
+- 预测时（未在伪代码中）：把所有树的输出按 `lr` 加权累加，$\hat y = \sum_t \eta\, h_t(x)$。
+
+把它和 §3.2 的负梯度推导对照：因为 MSE 的负梯度恰好等于残差 $y-\hat y$，所以"`fit(残差)`"这一行在数学上就是"沿损失函数的负梯度方向，在函数空间里走一步梯度下降"。XGBoost 只是把这里的一阶残差换成上面推导的 $w_j^{*}=-G_j/(H_j+\lambda)$（用上了二阶信息 $H_j$ 和正则 $\lambda$），其余循环骨架完全一致。
+
 ### 3.3 XGBoost 的三大创新
 
 XGBoost（eXtreme Gradient Boosting）是 GBDT 的高效工程实现，在 Kaggle 竞赛中长期占据统治地位。
@@ -243,6 +317,38 @@ $$L(y, \hat{y}^{(t)}) \approx L(y, \hat{y}^{(t-1)}) + g_i f_t(x_i) + \frac{1}{2}
 其中 $g_i = \partial_{\hat{y}} L(y_i, \hat{y}^{(t-1)})$ 是一阶梯度，$h_i = \partial_{\hat{y}}^2 L(y_i, \hat{y}^{(t-1)})$ 是二阶梯度。
 
 使用二阶信息使优化更精准、收敛更快。
+
+::: details 完整推导：最优叶子权重 $w_j^{*}$ 与结构分数 / 分裂增益
+这是 XGBoost 论文最核心的一步，也是大多数教程"一带而过"的地方。我们一步步把它推完。
+
+**第 1 步：把目标函数写成只关于第 $t$ 棵树的形式。** 在第 $t$ 轮，前 $t-1$ 棵树已固定，常数项 $L(y_i,\hat y^{(t-1)})$ 对优化没有影响，丢掉它。再把正则项 $\Omega(f_t)=\gamma T+\frac{1}{2}\lambda\sum_j w_j^2$ 代入：
+
+$$\text{Obj}^{(t)} \approx \sum_{i=1}^n \Big[g_i f_t(x_i) + \tfrac{1}{2} h_i f_t^2(x_i)\Big] + \gamma T + \frac{1}{2}\lambda\sum_{j=1}^T w_j^2$$
+
+**第 2 步：从"按样本求和"换成"按叶子求和"。** 一棵树把每个样本映射到唯一的叶子，叶子 $j$ 的权重是 $w_j$，落在叶子 $j$ 里的样本集合记作 $I_j=\{i \mid q(x_i)=j\}$。对叶子 $j$ 里的所有样本，$f_t(x_i)$ 都等于同一个值 $w_j$。于是把求和按叶子分组：
+
+$$\text{Obj}^{(t)} = \sum_{j=1}^T \Big[\Big(\sum_{i\in I_j} g_i\Big)w_j + \frac{1}{2}\Big(\sum_{i\in I_j} h_i + \lambda\Big)w_j^2\Big] + \gamma T$$
+
+记 $G_j=\sum_{i\in I_j} g_i$（叶子内一阶梯度之和）、$H_j=\sum_{i\in I_j} h_i$（二阶梯度之和），写成：
+
+$$\text{Obj}^{(t)} = \sum_{j=1}^T \Big[G_j w_j + \frac{1}{2}(H_j+\lambda)w_j^2\Big] + \gamma T$$
+
+**第 3 步：对每个叶子权重求极值。** 树结构固定时，各叶子的 $w_j$ 互不影响，是 $T$ 个**独立的一元二次函数**。每个形如 $a w + \frac{1}{2}b w^2$（其中 $a=G_j$，$b=H_j+\lambda>0$），开口向上，对 $w_j$ 求导令其为零：
+
+$$\frac{\partial}{\partial w_j}\Big[G_j w_j + \tfrac{1}{2}(H_j+\lambda)w_j^2\Big] = G_j + (H_j+\lambda)w_j = 0 \;\Rightarrow\; \boxed{w_j^{*} = -\frac{G_j}{H_j+\lambda}}$$
+
+**第 4 步：回代得到"结构分数"。** 把 $w_j^{*}$ 代回，单个叶子的最小值是 $G_j w_j^{*} + \frac{1}{2}(H_j+\lambda)w_j^{*2} = -\frac{G_j^2}{H_j+\lambda}+\frac{1}{2}\frac{G_j^2}{H_j+\lambda} = -\frac{1}{2}\frac{G_j^2}{H_j+\lambda}$。求和得到这棵树结构的"分数"（越小越好）：
+
+$$\text{Obj}^{*} = -\frac{1}{2}\sum_{j=1}^T \frac{G_j^2}{H_j+\lambda} + \gamma T$$
+
+这就是 **结构分数（Structure Score）**——它只依赖每个叶子内的 $G_j,H_j$，给任意一棵候选树打一个"好坏分"。
+
+**第 5 步：分裂增益。** 建树时无法枚举所有结构，于是用贪心：考虑把一个叶子分成左右两个叶子（梯度和分别为 $G_L,H_L$ 和 $G_R,H_R$，且 $G_L+G_R=G$）。分裂前后结构分数之差（分裂带来的目标下降量）就是**分裂增益**：
+
+$$\text{Gain} = \underbrace{\frac{1}{2}\Big[\frac{G_L^2}{H_L+\lambda} + \frac{G_R^2}{H_R+\lambda} - \frac{(G_L+G_R)^2}{H_L+H_R+\lambda}\Big]}_{\text{纯度提升}} - \underbrace{\gamma}_{\text{新增一个叶子的代价}}$$
+
+XGBoost 在每个候选分裂点计算这个 Gain，选最大的；如果所有分裂的 Gain 都 $<0$（即纯度提升抵不过 $\gamma$ 的代价），就停止分裂——这正是 $\gamma$ 作为**预剪枝**阈值的作用。至此，§3.3 的三大创新里"正则化 + 二阶梯度"如何具体决定建树，全部闭环。
+:::
 
 #### 创新 3：近似贪心算法（Approximate Greedy Algorithm）
 

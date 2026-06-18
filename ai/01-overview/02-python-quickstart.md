@@ -287,5 +287,5 @@ print(f"Model: {name}, Accuracy: {acc:.2%}")
 ## 下一步 (Next Steps)
 
 - 从 `code/python_quickstart.py` 运行本章配套代码
-- 阅读下一章: [03-python-data-science.md](03-python-data-science.md) (NumPy / Pandas 速成)
+- 阅读下一章: [第3章 — NumPy 与张量思维](./03-numpy-and-linalg.md) (NumPy / 线性代数速成)
 - 或在 Python 交互环境中自己动手试每个例子

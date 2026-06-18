@@ -189,4 +189,4 @@ AI 领域变化极快。今天的新技术，明天可能就过时了。但这�
 
 ---
 
-*下一章：[02-python-basics](./02-python-basics/01-intro-to-python.md) —— Python 基础速览*
+*下一章：[第2章 — Python 快速入门](./02-python-quickstart.md) —— Python 基础速览*

@@ -273,4 +273,4 @@ class KNN:
 
 ---
 
-*下一章：[04 — Pandas 与数据处理基础](./04-pandas-and-data-processing.md)*
+*下一章：[第4章 — 数据可视化入门](./04-visualization.md)*

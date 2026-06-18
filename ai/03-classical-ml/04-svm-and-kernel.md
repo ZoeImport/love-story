@@ -126,6 +126,28 @@ $$
 \text{s.t.} \quad \alpha_i \geq 0, \; \sum_{i=1}^n \alpha_i y_i = 0
 $$
 
+::: details 把"消去 $w$ 和 $b$"这步算给你看
+很多教程到"代回即得"就停了，下面把代数补全。从拉格朗日函数出发，先把括号展开：
+
+$$\mathcal{L} = \frac{1}{2}\|w\|^2 - \sum_i \alpha_i y_i w^T\mathbf{x}_i - b\sum_i \alpha_i y_i + \sum_i \alpha_i$$
+
+**用第二步的两个条件做替换。** 条件 $\sum_i \alpha_i y_i = 0$ 直接让第三项 $-b\sum_i\alpha_i y_i$ 整项消失——$b$ 就是这样"消去"的。接着代入 $w = \sum_i \alpha_i y_i \mathbf{x}_i$，分别处理剩下两项：
+
+第一项（范数）：
+
+$$\frac{1}{2}\|w\|^2 = \frac{1}{2}w^Tw = \frac{1}{2}\Big(\sum_i \alpha_i y_i \mathbf{x}_i\Big)^T\Big(\sum_j \alpha_j y_j \mathbf{x}_j\Big) = \frac{1}{2}\sum_i\sum_j \alpha_i\alpha_j y_i y_j\,\mathbf{x}_i^T\mathbf{x}_j$$
+
+第二项（同样代入 $w$）：
+
+$$\sum_i \alpha_i y_i w^T\mathbf{x}_i = \sum_i \alpha_i y_i \Big(\sum_j \alpha_j y_j \mathbf{x}_j\Big)^T\mathbf{x}_i = \sum_i\sum_j \alpha_i\alpha_j y_i y_j\,\mathbf{x}_i^T\mathbf{x}_j$$
+
+**关键：这两项形式完全相同。** 第一项是 $+\frac{1}{2}(\cdot)$，第二项前面带负号是 $-(\cdot)$，相加得 $\frac{1}{2}-1=-\frac{1}{2}$ 倍：
+
+$$\mathcal{L} = \underbrace{\frac{1}{2}\sum_{i,j}(\cdot)}_{\text{第一项}} - \underbrace{\sum_{i,j}(\cdot)}_{\text{第二项}} + \sum_i \alpha_i = \sum_i \alpha_i - \frac{1}{2}\sum_{i}\sum_{j}\alpha_i\alpha_j y_i y_j\,\mathbf{x}_i^T\mathbf{x}_j$$
+
+这正是上面的对偶目标。约束 $\sum_i\alpha_i y_i=0$ 是替换时用掉的条件，必须作为对偶问题的约束保留下来；$\alpha_i\ge 0$ 来自原始不等式约束的拉格朗日乘子非负性。现在所有 $\mathbf{x}$ 都只以内积 $\mathbf{x}_i^T\mathbf{x}_j$ 出现——§3 的核技巧就是把这个内积换成核函数。
+:::
+
 ### 2.3 核心洞察
 
 注意对偶问题中，数据点 $\mathbf{x}_i$ 和 $\mathbf{x}_j$ 只以**内积** $\langle \mathbf{x}_i, \mathbf{x}_j \rangle = \mathbf{x}_i^T \mathbf{x}_j$ 的形式出现。这个观察至关重要—它直接引出了核技巧。
@@ -507,7 +529,7 @@ $$ K(x_1, x_2) = \exp(-1.0 \times 25) = \exp(-25) \approx 1.389 \times 10^{-11} 
 
 ---
 
-*下一章：[05 — 树模型与集成方法](./05-tree-and-ensemble.md)*
+*下一章：[第5章 — 无监督学习](./05-unsupervised-learning.md)*
 
 ---
 

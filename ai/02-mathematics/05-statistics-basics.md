@@ -262,4 +262,4 @@ Bootstrap 在 ML 中有直接的应用：
 
 ---
 
-*下一章：[06 — 概率论基础](./06-probability-basics.md)*
+*下一章：[卷3 第1章 — 线性模型](../03-classical-ml/01-linear-models.md)*

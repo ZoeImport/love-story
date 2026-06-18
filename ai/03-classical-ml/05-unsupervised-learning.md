@@ -642,7 +642,7 @@ $$\text{AIC} = -2 \ln \hat{L} + 2d, \quad \text{BIC} = -2 \ln \hat{L} + d \ln m$
 
 ---
 
-> **下一章预告:** [模型评估与选择](./06-model-evaluation.md) — 交叉验证、偏差-方差权衡、ROC 曲线，用严谨的方法论评估 ML 模型。
+> **下一章预告:** [ML 项目模板](./06-ml-project-template.md) — 把前面所有技术串成一个可复用的端到端工程流程。
 
 ## 参考文献 (References)
 

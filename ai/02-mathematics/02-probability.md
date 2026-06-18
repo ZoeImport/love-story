@@ -339,6 +339,6 @@ $$\mathbb{E}\big[ \mathbb{E}[X \mid Y] \big] = \sum_y \mathbb{E}[X \mid Y=y] \, 
 
 ---
 
-*下一章：[03 — 信息论基础（Information Theory for ML）](./03-information-theory.md)*
+*下一章：[第3章 — 微积分与优化](./03-calculus-and-optimization.md)*
 
 *配套代码：[`probability_demo.py`](./code/probability_demo.py) — 分布可视化、贝叶斯计算、MLE 数值验证*
