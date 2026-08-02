@@ -1,9 +1,129 @@
 [
-  { "id": "ebpf", "title": "eBPF", "category": "Linux 内核", "tags": ["内核", "追踪", "XDP", "kprobe"], "summary": "在内核虚拟机上安全运行的字节码程序，用于追踪、观测与高性能网络数据面。", "link": "" },
-  { "id": "iptables", "title": "iptables", "category": "网络", "tags": ["防火墙", "netfilter", "NAT"], "summary": "Linux netfilter 框架的用户态规则表（filter / nat / mangle / raw），链与表的匹配流转。", "link": "" },
-  { "id": "clash-schedule", "title": "Clash / mihomo 整体调度原理", "category": "代理", "tags": ["clash", "mihomo", "内核"], "summary": "规则 → 策略组 → 出站节点的调度链：DNS 解析、FakeIP 地址分配、路由决策与出站代理的完整路径。", "link": "" },
-  { "id": "clash-rule", "title": "Clash Rule 规则体系", "category": "代理", "tags": ["clash", "规则", "DOMAIN", "IP-CIDR"], "summary": "MATCH / DOMAIN / DOMAIN-SUFFIX / IP-CIDR / GEOIP / SCRIPT 等规则的匹配优先级与写法。", "link": "" },
-  { "id": "fakeip", "title": "FakeIP 与 DNS 泄露", "category": "代理", "tags": ["dns", "fake-ip", "隐私"], "summary": "FakeIP 用虚拟地址接管域名解析，避免真实 IP 泄露；配置不当会导致 DNS 泄露与分流错误。", "link": "" },
-  { "id": "proxy-deploy", "title": "服务器代理部署", "category": "代理", "tags": ["服务器", "安全", "fallback"], "summary": "把节点配置部署到远程服务器作为出口：地区选点、fallback 容灾、systemd 常驻与出口 IP 校验。", "link": "" },
-  { "id": "linux-netstack", "title": "Linux 内核网络栈", "category": "Linux 内核", "tags": ["内核", "协议栈", "sk_buff"], "summary": "数据包从网卡到 socket 的路径：NAPI、协议层、netfilter 钩子与路由子系统。", "link": "" }
+  {
+    "id": "ebpf",
+    "title": "eBPF",
+    "category": "Linux 内核",
+    "tags": ["内核", "追踪", "XDP", "kprobe"],
+    "summary": "在内核虚拟机上安全运行字节码，用于追踪、观测与高性能网络数据面。",
+    "introduced": "2014 年由 Alexei Starovoitov 随 Linux 3.18 引入，扩展自 1992 年的经典 BPF（Berkeley Packet Filter，最初用于 tcpdump 这类包过滤）。eBPF = extended BPF。",
+    "background": "BPF 最初只是内核里一个受限的包过滤虚拟机。eBPF 把它升级为内核内通用、安全、可编程的执行环境：程序经 verifier 静态验证（内存安全、能保证终止），由 JIT 编译为原生指令，挂在内核的各种事件点上运行，无需改内核源码或加载内核模块。",
+    "detail": "eBPF 程序通过 bpf() 系统调用加载，verifier 逐条检查（指针/边界/循环上界），通过后 JIT 到原生代码；由事件点触发：tracepoint / kprobe（内核函数）、uprobe（用户态）、XDP（网卡驱动入口）。三大用途：可观测性（bpftrace、bcc、libbpf 追踪工具）、性能与安全（seccomp、L7 负载均衡）、网络数据面（Cilium 的 XDP/eBPF 转发、DSR、策略）。典型工作流：bpftrace 一行追踪、libbpf 写正经工具、bpf_map 共享数据。",
+    "subTopics": [
+      { "name": "BPF verifier", "note": "静态验证：指针安全、栈深度、有界循环，拒绝恶意/不安全程序" },
+      { "name": "JIT 编译", "note": "BPF 指令转译为原生机器码，运行时开销接近内核代码" },
+      { "name": "XDP", "note": "eXpress Data Path，网卡驱动入口处最早执行点，用于高性能丢弃/转发/负载均衡" },
+      { "name": "kprobe / tracepoint", "note": "内核函数/事件挂钩点，用于动态追踪" },
+      { "name": "libbpf / bpftrace", "note": "用户态库与脚本语言，封装 BPF 程序的加载与数据读取" },
+      { "name": "bpf_map", "note": "内核与用户态共享的键值存储（hash/array/ring buffer），程序间通信通道" }
+    ],
+    "books": ["csapp"]
+  },
+  {
+    "id": "iptables",
+    "title": "iptables",
+    "category": "网络",
+    "tags": ["防火墙", "netfilter", "NAT"],
+    "summary": "Linux netfilter 框架的用户态规则表，链与表的匹配流转。",
+    "introduced": "随 Linux 2.4（2001）进入内核，取代更早的 ipchains / ipfwadm，是 netfilter 框架的标准配置界面。nftables 是其后继者（Linux 3.13+），但 iptables 仍在大量系统服役。",
+    "background": "内核 netfilter 框架在网络协议栈的关键位置埋了钩子（hook），数据包流经这些钩子时按规则表处理。iptables 是用户态命令行工具，把规则写入内核的规则链表，实现防火墙、NAT、包修改与日志。",
+    "detail": "五张表挂在不同阶段：raw（连接跟踪前）、mangle（包修改，TTL/TOS）、nat（地址转换，仅首包）、filter（过滤，最常用）、security（SELinux 标记）。四条内置链对应包路径：PREROUTING（入站路由前）、INPUT（本机入站）、FORWARD（转发）、OUTPUT（本机出站）、POSTROUTING（出站路由后）。规则按顺序逐条匹配，命中则执行 target（ACCEPT/DROP/REJECT/SNAT/DNAT/MASQUERADE/LOG）。conntrack 连接跟踪记录双向连接状态，支撑状态化过滤与 NAT 回程。",
+    "subTopics": [
+      { "name": "表与链", "note": "filter/nat/mangle/raw 与 PREROUTING/INPUT/FORWARD/OUTPUT/POSTROUTING 的对应" },
+      { "name": "规则语法", "note": "-A 追加、-p 协议、--dport 端口、-j 跳转 target，按序匹配先命中生效" },
+      { "name": "NAT（SNAT/DNAT/MASQUERADE）", "note": "源/目的地址转换；MASQUERADE 用于动态外网 IP 的 NAT" },
+      { "name": "conntrack", "note": "连接跟踪表，状态化过滤（ESTABLISHED/RELATED）与 NAT 回程的依据" },
+      { "name": "nftables", "note": "iptables 后继，统一框架、更清晰语法，新部署建议考虑" }
+    ],
+    "books": ["csapp"]
+  },
+  {
+    "id": "clash-schedule",
+    "title": "Clash / mihomo 整体调度原理",
+    "category": "代理",
+    "tags": ["clash", "mihomo", "内核"],
+    "summary": "规则 → 策略组 → 出站节点的调度链：DNS、FakeIP、路由决策与出站代理的完整路径。",
+    "introduced": "Clash 2018 年由 Dreamacro 发布；mihomo 是其开源内核分支（原 Clash.Meta），也是当前主流内核，本知识库代理相关均基于 mihomo。",
+    "background": "代理客户端要决定每个请求走哪条代理、是否直连、DNS 如何解析。核心是「分流」：把请求分类，映射到代理节点或直连。FakeIP 机制把域名解析成虚拟地址，让规则引擎始终能看到域名而不是 IP。",
+    "detail": "请求路径：① 应用发起连接，先查 DNS（经 DNS 过滤链）；② 命中 fake-ip-range 的返回虚拟 IP，同时保留域名供规则匹配；③ 规则引擎按 rules 顺序逐条匹配（域名/IP/GEOIP），命中某策略组或 DIRECT/REJECT；④ 策略组按策略选节点：url-test（定期测延迟选最快）、fallback（主备切换）、load-balance（负载均衡）；⑤ 出站经选定节点建立代理连接。配置四要素：proxies（节点）、proxy-groups（策略组）、rules（规则）、dns（解析策略）。",
+    "subTopics": [
+      { "name": "FakeIP", "note": "虚拟地址池接管域名解析，让规则按域名匹配、隐藏真实 IP" },
+      { "name": "策略组（url-test / fallback）", "note": "组内节点选择策略：测速选优或主备容灾" },
+      { "name": "规则匹配链", "note": "DOMAIN/IP/GEOIP 逐条匹配，先命中先生效，MATCH 兜底" },
+      { "name": "出站节点", "note": "proxy 连接方式：shadowsocks / vmess / trojan / hysteria 等" },
+      { "name": "DNS 解析链", "note": "nameserver / fallback 分层解析，防污染防泄露" }
+    ],
+    "books": []
+  },
+  {
+    "id": "clash-rule",
+    "title": "Clash Rule 规则体系",
+    "category": "代理",
+    "tags": ["clash", "规则", "DOMAIN", "IP-CIDR"],
+    "summary": "MATCH / DOMAIN / IP-CIDR / GEOIP 等规则的匹配优先级与写法。",
+    "introduced": "随 Clash 规则引擎定型，规则写在配置的 rules 段，自上而下顺序匹配。",
+    "background": "分流的核心是「规则匹配」：每一条规则是一个（类型, 匹配值, 目标）。目标可以是策略组名、DIRECT（直连）或 REJECT（拒绝）。规则顺序决定优先级，命中即停。",
+    "detail": "规则类型与写法：DOMAIN（精确域名，如 DOMAIN,google.com）、DOMAIN-SUFFIX（后缀，DOMAIN-SUFFIX,google.com 匹配 www.google.com）、DOMAIN-KEYWORD（含关键词）、IP-CIDR（IP 段，IP-CIDR,192.168.0.0/16,DIRECT,no-resolve 表示不做 DNS 解析直接比 IP）、GEOIP（地区库，GEOIP,CN,DIRECT）、SRC-IP-CIDR（源地址）、DST-PORT（目标端口）、PROCESS-NAME（进程名）、SCRIPT（脚本规则）、MATCH（兜底，放最后）。原则：特例靠前、CIDR 尽量加 no-resolve、MATCH 兜底保证不空转。",
+    "subTopics": [
+      { "name": "DOMAIN / SUFFIX / KEYWORD", "note": "按域名精确/后缀/关键词匹配" },
+      { "name": "IP-CIDR 与 no-resolve", "note": "按 IP 段匹配；no-resolve 避免触发 DNS 解析" },
+      { "name": "GEOIP", "note": "按 MaxMind 地区库匹配（如 GEOIP,CN,DIRECT）" },
+      { "name": "MATCH 兜底", "note": "最后一条未匹配的兜底目标，通常指向代理策略组" },
+      { "name": "规则顺序", "note": "自上而下先命中先生效；特例放前、宽泛规则靠后" }
+    ],
+    "books": []
+  },
+  {
+    "id": "fakeip",
+    "title": "FakeIP 与 DNS 泄露",
+    "category": "代理",
+    "tags": ["dns", "fake-ip", "隐私"],
+    "summary": "FakeIP 用虚拟地址接管域名解析，避免真实 IP 泄露；配置不当会导致 DNS 泄露与分流错误。",
+    "introduced": "FakeIP 是代理客户端（clash/mihomo 等）的 DNS 优化与隐私机制，通过 fake-ip-range 配置启用。",
+    "background": "DNS 泄露指 DNS 查询绕过代理直连本地/上游解析，暴露访问域名；同时传统 DNS 易被污染。FakeIP 方案：DNS 查询统一返回地址池里的虚拟 IP（如 198.18.0.0/16），域名信息保留给规则引擎，真实解析在代理端完成。",
+    "detail": "工作原理：配置 dns.fake-ip-range 后，任何域名查询返回池中虚拟地址；数据包目标为虚拟 IP 时，内核把连接映射到域名，规则按域名匹配出站；代理节点真正连接时再解析真实 IP。泄露场景：① DNS 查询走了绕过 fake-ip 的解析路径（如 UPD 直连到上游 8.8.8.8）；② fake-ip-filter 放行的域名被直连解析；③ 分流错误把请求发到 DIRECT。防护：所有 DNS 走代理的 nameserver 过滤链、fake-ip-filter 只放行必须例外（如本机/局域网）、避免直连出站兜底。",
+    "subTopics": [
+      { "name": "fake-ip-range", "note": "虚拟地址池范围（默认 198.18.0.0/16）" },
+      { "name": "DNS 解析链", "note": "nameserver/fallback 分层，防污染与泄露" },
+      { "name": "泄露场景", "note": "绕过 fake-ip 的查询、UDP 直连、分流错误导致域名直连解析" },
+      { "name": "fake-ip-filter", "note": "例外域名列表，放行如内网/特殊服务的真实解析" },
+      { "name": "分流与直连", "note": "规则把请求错误导向 DIRECT 时的泄露风险" }
+    ],
+    "books": []
+  },
+  {
+    "id": "proxy-deploy",
+    "title": "服务器代理部署",
+    "category": "代理",
+    "tags": ["服务器", "安全", "fallback"],
+    "summary": "把节点配置部署到远程服务器作为出口：地区选点、fallback 容灾、systemd 常驻与出口 IP 校验。",
+    "introduced": "当需要「服务器自身可科学上网」或「本地与服务器出口一致」时，把代理节点部署到远程服务器。",
+    "background": "本地订阅含大量节点；服务器部署需要从中选合适的地区节点作为出口，配 fallback 容灾（节点失效自动切换），并让服务常驻、可校验。",
+    "detail": "部署流程：① 从订阅按地区/延迟挑选节点（如日本/新加坡）；② 生成服务端配置：proxies（选中的节点）+ 一个 fallback 策略组（url-test 定期检测，主节点故障自动切备用）+ 出站规则全走该组；③ SSH 上传配置到服务器；④ 用 systemd 注册为常驻服务（mihomo/clash 内核监听）；⑤ 校验出口 IP（curl 出口地址确认生效）。要点：fallback 用 url-test 健康检查、服务异常自动重启、出口 IP 与预期地区一致。",
+    "subTopics": [
+      { "name": "节点选点", "note": "按地区/延迟/协议从订阅挑选出口节点" },
+      { "name": "fallback 容灾", "note": "策略组主备切换，url-test 定期探测" },
+      { "name": "systemd 常驻", "note": "服务注册、开机自启、异常重启" },
+      { "name": "出口 IP 校验", "note": "curl 出口地址，确认走预期地区节点" },
+      { "name": "订阅解析", "note": "把订阅配置解析、过滤、重写为服务端可用配置" }
+    ],
+    "books": []
+  },
+  {
+    "id": "linux-netstack",
+    "title": "Linux 内核网络栈",
+    "category": "Linux 内核",
+    "tags": ["内核", "协议栈", "sk_buff"],
+    "summary": "数据包从网卡到 socket 的路径：NAPI、协议层、netfilter 钩子与路由子系统。",
+    "introduced": "随 Linux 网络子系统长期演化（2.x 时代起，NAPI 2.4/2.6 定型），是 eBPF/iptables 运行的环境。",
+    "background": "要理解 eBPF 的 XDP 钩子、iptables 的 netfilter 挂点，得先知道数据包在内核里怎么走：从网卡中断到协议解析到 socket 队列。",
+    "detail": "收包路径：① 网卡中断触发 NAPI 轮询批量收包；② 分配 sk_buff（网络包的核心结构：数据区 + 协议头指针）；③ 链路层 → IP 层（校验、分片重组、查路由表 FIB 决定本地/转发）→ 传输层（TCP/UDP，端口匹配 socket）；④ 全程经过 netfilter 钩子（PREROUTING 在路由前、INPUT/FORWARD/OUTPUT 等），iptables 规则在此生效；⑤ 数据入 socket 接收队列，应用 read 取走。发包反向：socket → OUTPUT 钩子 → 路由 → POSTROUTING → 网卡。",
+    "subTopics": [
+      { "name": "NAPI", "note": "中断 + 轮询混合收包，避免高流量中断风暴" },
+      { "name": "sk_buff", "note": "网络包核心结构，各层协议头通过指针操作" },
+      { "name": "协议栈", "note": "IP 校验/分片、TCP 状态机、UDP 分发" },
+      { "name": "路由 FIB", "note": "转发信息库，决定包走本地还是转发、查表与缓存" },
+      { "name": "netfilter 钩子", "note": "PREROUTING/INPUT/FORWARD/OUTPUT/POSTROUTING，iptables 规则挂载点" }
+    ],
+    "books": ["csapp"]
+  }
 ]
