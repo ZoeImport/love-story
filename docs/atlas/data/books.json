@@ -4,7 +4,7 @@
       "id": "d2l",
       "title": "动手学深度学习（D2L）",
       "link": "https://zh.d2l.ai/",
-      "progress": "第 4 卷神经网络",
+      "progress": "多层感知机（MLP）→ 卷积神经网络",
       "detail": "当前读到「多层感知机与卷积」，卷积层：channel、padding、stride、池化与经典 CNN。",
       "tags": ["AI", "深度学习", "PyTorch"]
     },

@@ -36,7 +36,7 @@ details[open] summary {
         link: '/atlas/'
       },
       {
-        text: '📘 AI/ML 技术百科全书',
+        text: '📘 从张量到 Agent',
         items: [
           { text: '📖 术语表', link: '/ai/00-GLOSSARY' },
           {

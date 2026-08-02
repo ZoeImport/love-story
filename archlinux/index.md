@@ -6,28 +6,10 @@
 
 ## 目录
 
-- [pacman 包管理器](#pacman包管理器)
 - [yay (AUR) 包管理器](#yay-aur-包管理器)
 - [系统安装](#系统安装)
 
 ---
-
-## pacman包管理器
-
-| 命令 | 描述 |
-|------|------|
-| pacman -S | 安装包 |
-| pacman -U | 安装本地包 |
-| pacman -R | 只删除包不安装依赖 |
-| pacman -Q | 查询本地包数据库 |
-| pacman -Syu | 对整个系统进行更新，先同步再更新 |
-| pacman -Rs | 在删除软件包的同时也删除其依赖 |
-| pacman -Rd | 删除包是不检查依赖 |
-| pacman -Ss | 搜索包含关键字的包 |
-| pacman -Qi | 查看有关包名的信息 |
-| pacman -Sw | 只下载不安装 |
-| pacman -Sc | 清理未安装的包文件 |
-| pacman -Scc | 清理所有的缓存文件 |
 
 ## yay (AUR) 包管理器
 
