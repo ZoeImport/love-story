@@ -1,0 +1,15 @@
+{
+  "source": "token-atlas · Claude Code",
+  "window": "累计至 2026-08-02 导出",
+  "note": "Claude Code skill 调用次数（events.skill 聚合，每周导出快照）。Codex / OpenCode 未采集 skill 维度。",
+  "skills": [
+    { "name": "reviewcode", "invocations": 828 },
+    { "name": "grill-me", "invocations": 259 },
+    { "name": "unit-test-generate", "invocations": 248 },
+    { "name": "superpowers:brainstorming", "invocations": 242 },
+    { "name": "init", "invocations": 211 },
+    { "name": "superpowers:using-superpowers", "invocations": 121 },
+    { "name": "defect-handler", "invocations": 121 },
+    { "name": "code-review", "invocations": 116 }
+  ]
+}

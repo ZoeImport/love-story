@@ -1,0 +1,9 @@
+[
+  { "id": "ebpf", "title": "eBPF", "category": "Linux 内核", "tags": ["内核", "追踪", "XDP", "kprobe"], "summary": "在内核虚拟机上安全运行的字节码程序，用于追踪、观测与高性能网络数据面。", "link": "" },
+  { "id": "iptables", "title": "iptables", "category": "网络", "tags": ["防火墙", "netfilter", "NAT"], "summary": "Linux netfilter 框架的用户态规则表（filter / nat / mangle / raw），链与表的匹配流转。", "link": "" },
+  { "id": "clash-schedule", "title": "Clash / mihomo 整体调度原理", "category": "代理", "tags": ["clash", "mihomo", "内核"], "summary": "规则 → 策略组 → 出站节点的调度链：DNS 解析、FakeIP 地址分配、路由决策与出站代理的完整路径。", "link": "" },
+  { "id": "clash-rule", "title": "Clash Rule 规则体系", "category": "代理", "tags": ["clash", "规则", "DOMAIN", "IP-CIDR"], "summary": "MATCH / DOMAIN / DOMAIN-SUFFIX / IP-CIDR / GEOIP / SCRIPT 等规则的匹配优先级与写法。", "link": "" },
+  { "id": "fakeip", "title": "FakeIP 与 DNS 泄露", "category": "代理", "tags": ["dns", "fake-ip", "隐私"], "summary": "FakeIP 用虚拟地址接管域名解析，避免真实 IP 泄露；配置不当会导致 DNS 泄露与分流错误。", "link": "" },
+  { "id": "proxy-deploy", "title": "服务器代理部署", "category": "代理", "tags": ["服务器", "安全", "fallback"], "summary": "把节点配置部署到远程服务器作为出口：地区选点、fallback 容灾、systemd 常驻与出口 IP 校验。", "link": "" },
+  { "id": "linux-netstack", "title": "Linux 内核网络栈", "category": "Linux 内核", "tags": ["内核", "协议栈", "sk_buff"], "summary": "数据包从网卡到 socket 的路径：NAPI、协议层、netfilter 钩子与路由子系统。", "link": "" }
+]

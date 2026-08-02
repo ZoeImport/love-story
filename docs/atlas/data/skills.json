@@ -1,0 +1,10 @@
+{
+  "skills": [
+    { "id": "go", "label": "Go 后端", "group": "Backend", "knowledge": ["iptables", "linux-netstack"], "books": ["csapp"] },
+    { "id": "rust", "label": "Rust 系统", "group": "Systems", "knowledge": ["ebpf", "linux-netstack"], "books": ["csapp"] },
+    { "id": "k8s", "label": "Kubernetes", "group": "Infra", "knowledge": ["iptables", "proxy-deploy"], "books": [] },
+    { "id": "net", "label": "网络 / 代理", "group": "Infra", "knowledge": ["clash-schedule", "clash-rule", "fakeip", "proxy-deploy"], "books": [] },
+    { "id": "agent", "label": "Agent 工程", "group": "AI", "knowledge": ["clash-schedule", "fakeip"], "books": ["d2l"] },
+    { "id": "react", "label": "React + TS", "group": "Frontend", "knowledge": [], "books": [] }
+  ]
+}

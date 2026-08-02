@@ -32,6 +32,10 @@ details[open] summary {
   themeConfig: {
     sidebar: [
       {
+        text: '🗺️ Knowledge Atlas',
+        link: '/atlas/'
+      },
+      {
         text: '📘 AI/ML 技术百科全书',
         items: [
           { text: '📖 术语表', link: '/ai/00-GLOSSARY' },

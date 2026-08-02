@@ -2,4 +2,5 @@
 **/.vscode/
 **/.idea/
 package/
-*.tar
+*.tarnode_modules/
+docs/.vitepress/dist/

@@ -1,0 +1,50 @@
+{
+  "reading": [
+    {
+      "id": "d2l",
+      "title": "动手学深度学习（D2L）",
+      "link": "https://zh.d2l.ai/",
+      "progress": "第 4 卷神经网络",
+      "detail": "当前读到「多层感知机与卷积」，卷积层：channel、padding、stride、池化与经典 CNN。",
+      "tags": ["AI", "深度学习", "PyTorch"]
+    },
+    {
+      "id": "csapp",
+      "title": "深入理解计算机系统（CSAPP）",
+      "detail": "黑皮书，从比特到系统级程序视角的经典。",
+      "tags": ["系统", "C", "体系结构"]
+    },
+    {
+      "id": "qimen",
+      "title": "神奇之门",
+      "detail": "奇门遁甲，用九宫、天干地支、八门九星推演时局。",
+      "tags": ["奇门遁甲", "古典"]
+    },
+    {
+      "id": "zhouyi",
+      "title": "周易",
+      "detail": "六十四卦、卦爻辞与象数基础。",
+      "tags": ["古典", "易学"]
+    }
+  ],
+  "recommended": [
+    {
+      "id": "crowd",
+      "title": "乌合之众",
+      "detail": "群体心理与大众行为研究。",
+      "tags": ["社会心理"]
+    },
+    {
+      "id": "spiral",
+      "title": "沉默的螺旋",
+      "detail": "舆论形成与少数派沉默的机制。",
+      "tags": ["传播", "舆论"]
+    },
+    {
+      "id": "animal",
+      "title": "动物庄园",
+      "detail": "寓言体政治讽喻小说。",
+      "tags": ["文学", "寓言"]
+    }
+  ]
+}

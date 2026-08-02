@@ -1,0 +1,171 @@
+/* Cache 知识库 — 纸感 editorial 主题
+ *
+ * 与主站 ZoeImport.github.io 同一设计语言，并吸收 claude.com 的优雅：
+ * - 暖灰阶微差 + 1px 细环代替投影/渐变（层次靠"纸的厚度"）
+ * - 衬线大标题 + 无衬线正文 + 三层文字色阶
+ * - 陶土 accent 克制使用（页面 2–5% 像素）：链接用深档，展示用亮档
+ * - 区块大留白，内容限宽 60–68ch
+ */
+
+/* ---------- 自托管字体：Anthropic Serif（仓库内，无线上依赖） ---------- */
+@font-face {
+  font-family: "Anthropic Serif";
+  src: url("/Cache/fonts/AnthropicSerif-Text-Regular-Static.otf") format("opentype");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Anthropic Serif";
+  src: url("/Cache/fonts/AnthropicSerif-Text-Semibold-Static.otf") format("opentype");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Anthropic Serif Display";
+  src: url("/Cache/fonts/AnthropicSerif-Display-Medium-Static.otf") format("opentype");
+  font-weight: 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Anthropic Serif Display";
+  src: url("/Cache/fonts/AnthropicSerif-Display-Semibold-Static.otf") format("opentype");
+  font-weight: 600; font-style: normal; font-display: swap;
+}
+
+/* ---------- 设计 token ---------- */
+:root {
+  /* 纸面三层（比 Anthropic gray-050 右移一档，更暖更米白） */
+  --paper: #f3eee4;
+  --paper-card: #f8f3ea;
+  --paper-deep: #e9e0cf;
+  --paper-ink: #1e1b16;
+
+  /* 文字三层暖墨（禁纯黑） */
+  --text-strong: #2c2823;
+  --text-body: #4a443a;
+  --text-muted: #6f6759;
+  --text-faint: #948b7b;
+
+  /* 边框（纸面上需比 Anthropic 深一档才可见） */
+  --border-faint: #e2d9c7;
+  --border-base: #d5cbb6;
+  --border-strong: #b9ac93;
+
+  /* 陶土 accent（分层） */
+  --clay: #d97757;      /* 大号展示 / 插画 / 装饰 */
+  --clay-deep: #c05c42; /* 正文链接 / 交互文字（AA 达标） */
+  --clay-hover: #a94c35;
+  --clay-tint: #f2ddd2; /* 标签底 / 高亮底 */
+
+  /* 圆角 */
+  --radius-btn: 8px;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  /* 字体与动效 */
+  --font-serif: "Anthropic Serif Display", "Anthropic Serif", "Noto Serif SC", "Source Han Serif SC", Georgia, "Songti SC", serif;
+  --font-sans: "Noto Sans SC", -apple-system, "PingFang SC", "Hiragino Sans GB", sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", Consolas, monospace;
+  --ease-out-quart: cubic-bezier(.165, .84, .44, 1);
+  --dur-base: .2s;
+
+  /* ---------- 映射 VitePress 默认变量 ---------- */
+  --vp-c-bg: var(--paper);
+  --vp-c-bg-soft: var(--paper-card);
+  --vp-c-bg-mute: var(--paper-deep);
+  --vp-c-bg-alt: var(--paper-deep);
+  --vp-c-bg-elv: var(--paper-card);
+  --vp-c-text-1: var(--text-strong);
+  --vp-c-text-2: var(--text-muted);
+  --vp-c-text-3: var(--text-faint);
+  --vp-c-brand-1: var(--clay-deep);
+  --vp-c-brand-2: var(--clay-hover);
+  --vp-c-brand-3: var(--clay);
+  --vp-c-brand-soft: var(--clay-tint);
+  --vp-c-divider: var(--border-faint);
+  --vp-c-gutter: transparent;
+  --vp-border-radius: var(--radius-sm);
+  --vp-font-family-base: var(--font-sans);
+  --vp-font-family-heading: var(--font-serif);
+  --vp-font-family-mono: var(--font-mono);
+}
+
+/* 暗色（次级，暖黑底，不默认强制） */
+html.dark {
+  --paper: #1b1b16;
+  --paper-card: #23221c;
+  --paper-deep: #2b2a23;
+  --text-strong: #efe9de;
+  --text-body: #c9c2b4;
+  --text-muted: #9a9282;
+  --text-faint: #6f6759;
+  --border-faint: rgba(239, 233, 222, 0.10);
+  --border-base: rgba(239, 233, 222, 0.18);
+  --border-strong: rgba(239, 233, 222, 0.30);
+  --clay: #d09375;
+  --clay-deep: #e2a888;
+  --clay-hover: #f0b998;
+  --clay-tint: rgba(208, 147, 117, 0.16);
+  --vp-c-brand-1: var(--clay-deep);
+  --vp-c-brand-2: var(--clay-hover);
+  --vp-c-brand-3: var(--clay);
+  --vp-c-brand-soft: var(--clay-tint);
+}
+
+/* ---------- 布局与组件：去 Material 僵硬感 ---------- */
+
+/* 顶部导航：衬线标题、轻分隔 */
+.VPNavBarTitle .title {
+  font-family: var(--font-serif);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* 侧边栏：陶土点缀当前项，条目间距舒展 */
+.VPSidebarItem.level-0 > .item > .text { font-weight: 600; }
+.VPSidebarItem .link.active { color: var(--clay-deep); }
+.VPSidebarItem .link:hover { color: var(--clay-hover); }
+
+/* 正文：衬线标题、紧凑行高、正文宽松 */
+.vp-doc h1, .vp-doc h2, .vp-doc h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.vp-doc h1 { font-size: clamp(30px, 4vw, 38px); line-height: 1.2; margin: 1.2rem 0 1.6rem; }
+.vp-doc h2 {
+  font-size: 26px; line-height: 1.3;
+  margin-top: 2.8rem; padding-top: 1.6rem;
+  border-top: 1px solid var(--border-faint);
+}
+.vp-doc h3 { font-size: 20px; line-height: 1.4; }
+.vp-doc p { line-height: 1.75; color: var(--text-body); }
+.vp-doc a {
+  color: var(--clay-deep);
+  text-underline-offset: 3px;
+  transition: color var(--dur-base) var(--ease-out-quart);
+}
+.vp-doc a:hover { color: var(--clay-hover); }
+
+/* 代码块：深墨暖卡 + 陶土点缀 */
+.vp-doc div[class*="language-"] {
+  background: var(--paper-ink);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255,255,255,.05);
+  font-size: 13px;
+}
+
+/* 表格与分隔：hairline 细线 */
+.vp-doc table { border-color: var(--border-base); }
+.vp-doc th, .vp-doc td { border-color: var(--border-faint); }
+
+/* 首页 / 索引：更宽阅读列 */
+.VPDoc.has-aside .content-container { max-width: 860px; }
+
+/* 卡片类组件（自定义组件用） */
+.atlas-card {
+  background: var(--paper-card);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-md);
+  transition: border-color var(--dur-base) var(--ease-out-quart);
+}
+.atlas-card:hover { border-color: var(--border-strong); }
