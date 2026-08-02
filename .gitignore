@@ -2,5 +2,7 @@
 **/.vscode/
 **/.idea/
 package/
-*.tarnode_modules/
+*.tar
+node_modules/
 docs/.vitepress/dist/
+docs/.vitepress/cache/
